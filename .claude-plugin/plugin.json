@@ -1,0 +1,9 @@
+{
+  "name": "project-spec",
+  "version": "1.0.0",
+  "description": "Generate comprehensive project specifications through interactive interviews before building",
+  "author": {
+    "name": "Cagliostro Lab"
+  },
+  "keywords": ["planning", "specification", "design-document", "interview", "project-init"]
+}
