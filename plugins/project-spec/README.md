@@ -51,16 +51,21 @@ Fetches up-to-date documentation for your chosen tech stack to include best prac
 
 ## Installation
 
-### Option 1: Plugin Directory
+### Via Marketplace (Recommended)
 
 ```bash
-# Run Claude Code with the plugin
-claude --plugin-dir /path/to/project-spec
+# Add the marketplace
+/plugin marketplace add Linaqruf/cc-plugins
+
+# Install the plugin
+/plugin install project-spec@cc-plugins
 ```
 
-### Option 2: Copy to Project
+### Via Plugin Directory (Development)
 
-Copy the plugin to your project's `.claude-plugin/` directory for project-specific use.
+```bash
+claude --plugin-dir /path/to/cc-plugins/plugins/project-spec
+```
 
 ## Usage
 

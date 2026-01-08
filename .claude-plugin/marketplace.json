@@ -6,7 +6,8 @@
   "metadata": {
     "description": "Claude Code plugins by Linaqruf",
     "version": "1.0.0",
-    "pluginRoot": "./plugins"
+    "pluginRoot": "./plugins",
+    "repository": "https://github.com/Linaqruf/cc-plugins"
   },
   "plugins": [
     {
