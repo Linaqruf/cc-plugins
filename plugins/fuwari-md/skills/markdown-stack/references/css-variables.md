@@ -348,3 +348,76 @@ oklch(lightness chroma hue)
   --admonitions-color-caution: oklch(0.65 0.2 25);
 }
 ```
+
+## Theme Toggle Utility Variables
+
+These variables control visibility of theme toggle icons:
+
+| Variable | Light Mode | Dark Mode | Purpose |
+|----------|------------|-----------|---------|
+| `--display-light-icon` | `1` | `0` | Show sun icon in light mode |
+| `--display-dark-icon` | `0` | `1` | Show moon icon in dark mode |
+
+```css
+:root {
+  --display-light-icon: 1;
+  --display-dark-icon: 0;
+}
+
+:root.dark {
+  --display-light-icon: 0;
+  --display-dark-icon: 1;
+}
+
+/* Usage in theme toggle button */
+.light-icon {
+  opacity: var(--display-light-icon);
+}
+
+.dark-icon {
+  opacity: var(--display-dark-icon);
+}
+```
+
+## Selection Bar Gradient
+
+The `--color-selection-bar` variable creates a rainbow gradient for selection indicators:
+
+```css
+:root {
+  --color-selection-bar: linear-gradient(
+    to right,
+    oklch(0.85 0.15 0),    /* red */
+    oklch(0.85 0.15 30),   /* orange */
+    oklch(0.9 0.15 60),    /* yellow */
+    oklch(0.85 0.15 120),  /* green */
+    oklch(0.8 0.15 180),   /* cyan */
+    oklch(0.8 0.15 240),   /* blue */
+    oklch(0.8 0.15 280),   /* purple */
+    oklch(0.85 0.15 320),  /* pink */
+    oklch(0.85 0.15 0)     /* back to red */
+  );
+}
+
+:root.dark {
+  --color-selection-bar: linear-gradient(
+    to right,
+    oklch(0.7 0.2 0),
+    oklch(0.7 0.2 30),
+    oklch(0.75 0.2 60),
+    oklch(0.7 0.2 120),
+    oklch(0.65 0.2 180),
+    oklch(0.65 0.2 240),
+    oklch(0.65 0.2 280),
+    oklch(0.7 0.2 320),
+    oklch(0.7 0.2 0)
+  );
+}
+
+/* Usage for selection indicator */
+.selection-bar {
+  background: var(--color-selection-bar);
+  height: 3px;
+  border-radius: 2px;
+}
+```

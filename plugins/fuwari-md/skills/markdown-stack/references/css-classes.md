@@ -270,6 +270,27 @@ Repository owner section.
 }
 ```
 
+### `.gc-user`
+
+Username text within owner section.
+
+```css
+.gc-user {
+  font-weight: 300;
+}
+```
+
+### `.gc-divider`
+
+Slash separator between owner and repo name.
+
+```css
+.gc-divider {
+  font-weight: 300;
+  opacity: 0.5;
+}
+```
+
 ### `.gc-avatar`
 
 Owner avatar circle.
@@ -662,3 +683,60 @@ Moving indicator showing current section.
   }
 }
 ```
+
+---
+
+## Tailwind Component Classes
+
+These Tailwind @layer component classes are used throughout Fuwari.
+
+### `.card-base`
+
+Foundation class for card elements (used by GitHub cards).
+
+```css
+@layer components {
+  .card-base {
+    @apply rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] transition;
+  }
+}
+```
+
+### `.card-shadow`
+
+Subtle shadow for card elevation.
+
+```css
+@layer components {
+  .card-shadow {
+    @apply drop-shadow-[0_2px_4px_rgba(0,0,0,0.005)];
+  }
+}
+```
+
+### Text Opacity Classes
+
+Utility classes for text with light/dark mode opacity.
+
+```css
+@layer components {
+  .text-90 { @apply text-black/90 dark:text-white/90; }
+  .text-75 { @apply text-black/75 dark:text-white/75; }
+  .text-50 { @apply text-black/50 dark:text-white/50; }
+  .text-30 { @apply text-black/30 dark:text-white/30; }
+  .text-25 { @apply text-black/25 dark:text-white/25; }
+}
+```
+
+### `.collapsed`
+
+Used for collapsible content sections.
+
+```css
+.collapsed {
+  height: var(--collapsedHeight);
+  overflow: hidden;
+}
+```
+
+Note: `--collapsedHeight` is set dynamically via JavaScript.

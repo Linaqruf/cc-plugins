@@ -253,8 +253,10 @@ import adapter from '@sveltejs/adapter-auto';
 import { mdsvex } from 'mdsvex';
 import remarkMath from 'remark-math';
 import remarkDirective from 'remark-directive';
+import remarkGithubAdmonitionsToDirectives from 'remark-github-admonitions-to-directives';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 export default {
   extensions: ['.svelte', '.md', '.svx'],
@@ -263,11 +265,13 @@ export default {
       extensions: ['.md', '.svx'],
       remarkPlugins: [
         remarkMath,
+        remarkGithubAdmonitionsToDirectives,
         remarkDirective,
       ],
       rehypePlugins: [
         rehypeKatex,
         rehypeSlug,
+        [rehypeAutolinkHeadings, { behavior: 'append' }],
       ],
     }),
   ],
@@ -277,11 +281,75 @@ export default {
 };
 ```
 
+### Custom Components in mdsvex
+
+mdsvex allows custom Svelte components for directives:
+
+```svelte
+<!-- src/lib/components/Admonition.svelte -->
+<script>
+  export let type = 'note';
+  export let title = '';
+</script>
+
+<aside class="admonition admonition-{type}">
+  {#if title}
+    <div class="admonition-title">{title}</div>
+  {/if}
+  <slot />
+</aside>
+
+<style>
+  .admonition {
+    padding: 1rem;
+    border-left: 4px solid var(--admonition-color, #448aff);
+    margin: 1rem 0;
+  }
+  .admonition-note { --admonition-color: #448aff; }
+  .admonition-warning { --admonition-color: #ff9100; }
+  .admonition-tip { --admonition-color: #00c853; }
+</style>
+```
+
+### Layout with KaTeX CSS
+
+```svelte
+<!-- src/routes/+layout.svelte -->
+<script>
+  import 'katex/dist/katex.min.css';
+</script>
+
+<slot />
+```
+
+### Reading Time in SvelteKit
+
+```javascript
+// src/lib/utils/reading-time.js
+import readingTime from 'reading-time';
+
+export function getReadingTime(content) {
+  const stats = readingTime(content);
+  return Math.ceil(stats.minutes);
+}
+
+// Use in +page.server.js
+export async function load({ params }) {
+  const post = await getPost(params.slug);
+  return {
+    post,
+    readingTime: getReadingTime(post.content),
+  };
+}
+```
+
 ---
 
 ## Docusaurus
 
 Docusaurus has built-in MDX support with some features already included.
+
+### Configuration
 
 ```javascript
 // docusaurus.config.js
@@ -300,20 +368,155 @@ export default {
         blog: {
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
+          readingTime: ({ content }) => content.split(/\s+/).length / 200,
         },
       },
     ],
   ],
   stylesheets: [
     {
-      href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css',
       type: 'text/css',
     },
   ],
 };
 ```
 
-Note: Docusaurus has built-in admonition support with different syntax.
+### Built-in Admonitions
+
+Docusaurus uses different syntax for admonitions:
+
+```markdown
+:::note
+This is a note.
+:::
+
+:::tip
+This is a tip.
+:::
+
+:::info
+This is info.
+:::
+
+:::caution
+This is a caution.
+:::
+
+:::danger
+This is a danger warning.
+:::
+```
+
+### GitHub-style Admonitions
+
+To use `> [!NOTE]` syntax, add the conversion plugin:
+
+```javascript
+// docusaurus.config.js
+import remarkGithubAdmonitionsToDirectives from 'remark-github-admonitions-to-directives';
+
+export default {
+  presets: [
+    [
+      '@docusaurus/preset-classic',
+      {
+        docs: {
+          remarkPlugins: [
+            remarkGithubAdmonitionsToDirectives,
+            // Note: Docusaurus will map these to its built-in admonitions
+          ],
+        },
+      },
+    ],
+  ],
+};
+```
+
+### Custom Code Block Features
+
+Docusaurus supports code block features via comments:
+
+```javascript
+// highlight-next-line
+const highlighted = true;
+
+// highlight-start
+const block = 'of';
+const highlighted = 'lines';
+// highlight-end
+```
+
+### Adding GitHub Cards
+
+For GitHub cards in Docusaurus, use MDX components:
+
+```jsx
+// src/components/GitHubCard.jsx
+import React, { useState, useEffect } from 'react';
+
+export default function GitHubCard({ repo }) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(`https://api.github.com/repos/${repo}`)
+      .then(res => res.json())
+      .then(setData);
+  }, [repo]);
+
+  if (!data) return <div>Loading...</div>;
+
+  return (
+    <a href={data.html_url} className="github-card">
+      <h3>{data.full_name}</h3>
+      <p>{data.description}</p>
+      <span>⭐ {data.stargazers_count}</span>
+    </a>
+  );
+}
+```
+
+Usage in MDX:
+
+```mdx
+import GitHubCard from '@site/src/components/GitHubCard';
+
+<GitHubCard repo="facebook/docusaurus" />
+```
+
+---
+
+## Remix
+
+### Configuration with MDX
+
+```javascript
+// remix.config.js
+import remarkMath from 'remark-math';
+import remarkDirective from 'remark-directive';
+import rehypeKatex from 'rehype-katex';
+import rehypeSlug from 'rehype-slug';
+
+export default {
+  mdx: {
+    remarkPlugins: [remarkMath, remarkDirective],
+    rehypePlugins: [rehypeKatex, rehypeSlug],
+  },
+};
+```
+
+### MDX Route with Frontmatter
+
+```mdx
+---
+title: My Post
+description: A blog post with math
+---
+
+# {frontmatter.title}
+
+The equation $E = mc^2$ changed physics.
+```
 
 ---
 

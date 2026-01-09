@@ -17,33 +17,33 @@ A Claude Code plugin that generates comprehensive specification documents throug
 
 ## Features
 
-### `/spec` Command
+### `/project-spec:spec` Command
 
 Interactive command that guides you through project planning:
 
 ```bash
 # Full interview process
-/spec
+/project-spec:spec
 
 # Quick-start with project type template
-/spec web-app
-/spec cli
-/spec api
-/spec library
+/project-spec:spec web-app
+/project-spec:spec cli
+/project-spec:spec api
+/project-spec:spec library
 ```
 
-### `/feature` Command
+### `/project-spec:feature` Command
 
 Plan new features for existing projects:
 
 ```bash
 # Full feature interview
-/feature
+/project-spec:feature
 
 # Start with feature name
-/feature user-authentication
-/feature comments
-/feature export-to-pdf
+/project-spec:feature user-authentication
+/project-spec:feature comments
+/project-spec:feature export-to-pdf
 ```
 
 Generates `feature_spec.md` with:
@@ -52,18 +52,18 @@ Generates `feature_spec.md` with:
 - Implementation plan (step-by-step tasks)
 - Edge cases and testing strategy
 
-### `/design` Command
+### `/project-spec:design` Command
 
 Dedicated design system interview for frontend projects:
 
 ```bash
 # Full design interview
-/design
+/project-spec:design
 
 # Quick-start with style preset
-/design modern    # Clean, subtle, rounded
-/design minimal   # Sparse, typography-focused
-/design bold      # Vibrant, high contrast
+/project-spec:design modern    # Clean, subtle, rounded
+/project-spec:design minimal   # Sparse, typography-focused
+/project-spec:design bold      # Vibrant, high contrast
 ```
 
 Generates `design_spec.md` with:
@@ -84,7 +84,7 @@ Autonomous agent that triggers when you need planning help:
 
 ### Auto-Suggestion Hook
 
-Gently suggests running `/spec` when you start describing a new project.
+Gently suggests running `/project-spec:spec` when you start describing a new project.
 
 ### Context7 Integration
 
@@ -94,8 +94,8 @@ Fetches up-to-date documentation for your chosen tech stack.
 
 The generated specs work with the `feature-dev` skill:
 
-1. Run `/spec` to define project requirements
-2. Run `/feature` to plan a specific feature
+1. Run `/project-spec:spec` to define project requirements
+2. Run `/project-spec:feature` to plan a specific feature
 3. Use `code-explorer` to analyze existing patterns
 4. Use `code-architect` to design implementation
 5. Implement following the plan
@@ -127,17 +127,17 @@ claude --plugin-dir /path/to/cc-plugins/plugins/project-spec
 
 ### New Project
 ```bash
-/spec web-app
+/project-spec:spec web-app
 ```
 
 ### New Feature (existing project)
 ```bash
-/feature task-comments
+/project-spec:feature task-comments
 ```
 
 ### Design System
 ```bash
-/design modern
+/project-spec:design modern
 ```
 
 ### Interview Flow
@@ -158,9 +158,9 @@ claude --plugin-dir /path/to/cc-plugins/plugins/project-spec
 
 | Command | Output | Purpose |
 |---------|--------|---------|
-| `/spec` | `project_spec.md` | Full project specification |
-| `/feature` | `feature_spec.md` | Feature implementation plan |
-| `/design` | `design_spec.md` | Design system documentation |
+| `/project-spec:spec` | `project_spec.md` | Full project specification |
+| `/project-spec:feature` | `feature_spec.md` | Feature implementation plan |
+| `/project-spec:design` | `design_spec.md` | Design system documentation |
 
 ## Examples
 
