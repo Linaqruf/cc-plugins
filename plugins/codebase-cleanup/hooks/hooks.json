@@ -2,7 +2,7 @@
   "hooks": [
     {
       "event": "UserPromptSubmit",
-      "matcher": "(?i)\\b(refactor|clean\\s*up|remove\\s+unused|technical\\s+debt|dead\\s+code|unused\\s+(imports?|code|dependencies|packages|assets|variables|functions))\\b",
+      "matcher": "(?i)\\b(refactor|cleanup|clean\\s+up|remove\\s+unused|technical\\s+debt|dead\\s+code|unused\\s+(imports?|code|dependencies|packages|assets|variables|functions))\\b",
       "hooks": [
         {
           "type": "prompt",

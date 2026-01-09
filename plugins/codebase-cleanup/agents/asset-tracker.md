@@ -152,6 +152,12 @@ Normalize paths for matching:
 'hero.png'              // Just filename
 ```
 
+**Windows path handling:**
+Most JavaScript projects use Unix-style forward slashes (`/`) even on Windows. When normalizing paths:
+- Convert backslashes to forward slashes: `path.replace(/\\/g, '/')`
+- Handle both `C:\project\public\image.png` and `C:/project/public/image.png`
+- Compare paths case-insensitively on Windows if needed
+
 ### Step 5: Report Findings
 
 ```markdown

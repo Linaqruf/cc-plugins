@@ -40,13 +40,33 @@ Would you like to:
 
 ### Step 2: Scope Selection
 
-If an argument was provided, use it directly:
+If an argument was provided, validate it first.
+
+**Valid scopes:**
 - `all` - Run all analyzers
 - `imports` - Unused imports only
 - `deadcode` - Dead code only
 - `assets` - Unused assets only
 - `deps` - Dependencies only
 - `configs` - Configuration cleanup only
+
+**Multiple scopes:** Comma-separated values are allowed (e.g., `imports,deadcode`)
+
+**Invalid argument handling:**
+If an unrecognized scope is provided, inform the user:
+```
+Unknown scope: "[provided-value]"
+
+Valid scopes are:
+- all, imports, deadcode, assets, deps, configs
+
+You can also combine scopes: "imports,deadcode"
+
+Would you like to:
+1. Choose from valid scopes
+2. Run full analysis (all)
+3. Cancel
+```
 
 If no argument provided, ask the user:
 
