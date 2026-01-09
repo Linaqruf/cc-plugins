@@ -115,6 +115,63 @@ $E = mc^2$  <!-- inline math -->
 
 See [plugin documentation](./plugins/fuwari-md/README.md) for details.
 
+---
+
+### codebase-cleanup
+
+Comprehensive cleanup analysis for TypeScript/JavaScript codebases. Detect and remove unused imports, dead code, orphaned assets, unused dependencies, and obsolete configurations.
+
+**Commands:**
+
+| Command | Description |
+|---------|-------------|
+| `/cleanup` | Interactive cleanup analysis |
+| `/cleanup all` | Full analysis (all categories) |
+| `/cleanup imports` | Unused/duplicate/circular imports |
+| `/cleanup deadcode` | Unreachable code, unused functions |
+| `/cleanup assets` | Unused images, CSS, fonts |
+| `/cleanup deps` | Unused npm packages |
+| `/cleanup configs` | Unused env vars, obsolete configs |
+
+**Features:**
+- Unused import detection with duplicate and circular dependency checks
+- Dead code detection (unreachable code, unused functions, variables, exports)
+- Asset tracking for unused images, CSS, fonts, and static resources
+- Dependency auditing with security vulnerability detection
+- Configuration cleanup for env vars, feature flags, and obsolete configs
+- Interactive review with confidence levels (High/Medium/Low)
+- Structured markdown reports with actionable recommendations
+
+**Agents:**
+
+| Agent | Trigger | Purpose |
+|-------|---------|---------|
+| `import-analyzer` | "find unused imports" | Import statement analysis |
+| `dead-code-detector` | "find dead code" | Unreachable/unused code detection |
+| `asset-tracker` | "find unused assets" | Static file tracking |
+| `dependency-auditor` | "audit dependencies" | npm package analysis |
+| `config-cleaner` | "clean up configs" | Configuration file cleanup |
+
+**Install:**
+```bash
+/plugin install codebase-cleanup@cc-plugins
+```
+
+**Usage:**
+```bash
+# Interactive mode
+/cleanup
+
+# Full analysis
+/cleanup all
+
+# Specific categories
+/cleanup imports,deadcode
+/cleanup deps,configs
+```
+
+See [plugin documentation](./plugins/codebase-cleanup/README.md) for details.
+
 ## License
 
 MIT
