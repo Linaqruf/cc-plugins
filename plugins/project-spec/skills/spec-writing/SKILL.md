@@ -1,7 +1,7 @@
 ---
 name: spec-writing
 description: This skill should be used when the user asks to "create a project spec", "write a specification document", "plan a new project", "generate project_spec.md", "define project requirements", "create a design document", "update the project spec", "revise the specification", "add requirements to the spec", or mentions wanting to "plan before building", "document requirements", "structure a project", or "what should be in a project spec". Provides comprehensive guidance for interviewing users and generating project specification documents.
-version: 1.0.0
+version: 1.0.1
 ---
 
 # Spec Writing
@@ -151,7 +151,7 @@ See: `examples/api-spec.md`
 
 ### Library/Package
 Focus on: Public API, documentation, testing, publishing, versioning
-Adapt questions for library consumers vs end users
+See: `examples/library-spec.md`
 
 ## Best Practices
 
@@ -186,3 +186,4 @@ Working specification examples:
 - **`examples/web-app-spec.md`** - Web application specification
 - **`examples/cli-spec.md`** - CLI tool specification
 - **`examples/api-spec.md`** - REST API specification
+- **`examples/library-spec.md`** - Library/package specification
