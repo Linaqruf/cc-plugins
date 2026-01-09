@@ -14,12 +14,12 @@
       "name": "project-spec",
       "source": "./plugins/project-spec",
       "description": "Generate comprehensive project specifications through interactive interviews before building",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "Linaqruf"
       },
       "license": "MIT",
-      "keywords": ["planning", "specification", "design-document", "interview", "project-init"],
+      "keywords": ["planning", "specification", "design-system", "feature-planning", "interview", "project-init", "documentation"],
       "category": "productivity"
     }
   ]
