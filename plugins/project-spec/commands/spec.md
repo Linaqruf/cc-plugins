@@ -201,3 +201,5 @@ For example specifications:
 - `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/examples/cli-spec.md`
 - `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/examples/api-spec.md`
 - `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/examples/library-spec.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/examples/design-spec.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/examples/feature-spec.md`

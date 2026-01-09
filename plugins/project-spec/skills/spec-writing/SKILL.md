@@ -1,6 +1,6 @@
 ---
 name: spec-writing
-description: This skill should be used when the user asks to "create a project spec", "create a design spec", "define design system", "plan a feature", "feature spec", "add a feature", "write a specification document", "plan a new project", "generate project_spec.md", "define project requirements", "create a design document", "update the project spec", "revise the specification", "add requirements to the spec", or mentions wanting to "plan before building", "document requirements", "structure a project", or "what should be in a project spec". Provides comprehensive guidance for interviewing users and generating project specification documents.
+description: Use when the user wants to create project specs, design systems, or feature plans. Triggers on "create spec", "plan project", "design system", "plan feature", or "write specification".
 version: 1.0.2
 ---
 
