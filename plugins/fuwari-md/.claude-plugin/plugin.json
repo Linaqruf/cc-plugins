@@ -1,6 +1,6 @@
 {
   "name": "fuwari-md",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fuwari's markdown processing stack - admonitions, math, GitHub cards, code highlighting, and more for any markdown-first project",
   "author": {
     "name": "Linaqruf"

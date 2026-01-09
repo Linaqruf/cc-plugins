@@ -26,12 +26,12 @@
       "name": "fuwari-md",
       "source": "./plugins/fuwari-md",
       "description": "Fuwari's markdown processing stack - admonitions, math, GitHub cards, code highlighting for any framework",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "Linaqruf"
       },
       "license": "MIT",
-      "keywords": ["markdown", "remark", "rehype", "unified", "admonitions", "math", "katex", "code-highlighting", "astro", "nextjs"],
+      "keywords": ["markdown", "unified", "remark", "rehype", "admonitions", "math", "katex", "expressive-code"],
       "category": "development"
     }
   ]

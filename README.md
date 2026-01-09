@@ -33,14 +33,14 @@ Generate comprehensive specification documents through interactive interviews - 
 
 | Command | Description | Output |
 |---------|-------------|--------|
-| `/spec` | Project planning interview | `project_spec.md` |
-| `/design` | Design system interview | `design_spec.md` |
-| `/feature` | Feature planning interview | `feature_spec.md` |
+| `/project-spec:spec` | Project planning interview | `project_spec.md` |
+| `/project-spec:design` | Design system interview | `design_spec.md` |
+| `/project-spec:feature` | Feature planning interview | `feature_spec.md` |
 
 **Features:**
-- `/spec` command for guided project planning (web-app, cli, api, library)
-- `/design` command for design system specs (colors, typography, components, a11y)
-- `/feature` command for feature planning (requirements, technical design, implementation)
+- `/project-spec:spec` command for guided project planning (web-app, cli, api, library)
+- `/project-spec:design` command for design system specs (colors, typography, components, a11y)
+- `/project-spec:feature` command for feature planning (requirements, technical design, implementation)
 - `spec-writer` agent for autonomous planning assistance
 - Auto-suggestion hooks for new projects and features
 - Context7 integration for tech stack documentation
@@ -54,21 +54,21 @@ Generate comprehensive specification documents through interactive interviews - 
 **Usage:**
 ```bash
 # Project specification
-/spec              # Full interview
-/spec web-app      # Quick-start for web apps
-/spec cli          # Quick-start for CLI tools
-/spec api          # Quick-start for APIs
-/spec library      # Quick-start for libraries
+/project-spec:spec              # Full interview
+/project-spec:spec web-app      # Quick-start for web apps
+/project-spec:spec cli          # Quick-start for CLI tools
+/project-spec:spec api          # Quick-start for APIs
+/project-spec:spec library      # Quick-start for libraries
 
 # Design system specification
-/design            # Full design interview
-/design modern     # Clean, subtle preset
-/design minimal    # Sparse, typography-focused
-/design bold       # Vibrant, high contrast
+/project-spec:design            # Full design interview
+/project-spec:design modern     # Clean, subtle preset
+/project-spec:design minimal    # Sparse, typography-focused
+/project-spec:design bold       # Vibrant, high contrast
 
 # Feature specification
-/feature           # Full feature interview
-/feature comments  # Start with feature name
+/project-spec:feature           # Full feature interview
+/project-spec:feature comments  # Start with feature name
 ```
 
 See [plugin documentation](./plugins/project-spec/README.md) for details.

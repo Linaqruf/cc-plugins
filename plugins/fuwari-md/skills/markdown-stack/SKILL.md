@@ -1,7 +1,7 @@
 ---
 name: markdown-stack
 description: Use this skill when the user asks about "markdown setup", "remark plugins", "rehype configuration", "admonitions", "code highlighting", "math equations", "KaTeX", "GitHub cards", "expressive code", "unified ecosystem", "markdown pipeline", "image lightbox", "table of contents", "CSS variables", "markdown styling", or wants to set up advanced markdown features.
-version: 1.0.0
+version: 1.0.1
 ---
 
 # Fuwari Markdown Stack
@@ -251,7 +251,8 @@ See `references/css-variables.md` for theming with CSS custom properties.
 - `references/remark-plugins.md` - Detailed remark plugin documentation
 - `references/rehype-plugins.md` - Detailed rehype plugin documentation
 - `references/expressive-code.md` - Code block configuration
-- `references/framework-configs.md` - Framework integration guides
+- `references/framework-configs.md` - Framework integration guides (Astro, Next.js, Vite, SvelteKit, Docusaurus, Remix)
+- `references/advanced-customization.md` - Custom directives, Expressive Code plugins, theme customization
 - `references/photoswipe-lightbox.md` - Image lightbox integration guide
 - `references/toc-component.md` - Table of contents implementation
 - `references/css-variables.md` - Complete CSS variable reference (50+ variables)
