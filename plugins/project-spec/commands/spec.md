@@ -14,7 +14,7 @@ allowed-tools:
   - mcp__plugin_context7_context7__query-docs
 ---
 
-# Project Specification Generator v3.0
+# Project Specification Generator v3.1
 
 Generate comprehensive project specifications with SPEC.md as the core file and optional supplements for reference material.
 

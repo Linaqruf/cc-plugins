@@ -14,7 +14,7 @@ allowed-tools:
   - mcp__plugin_context7_context7__query-docs
 ---
 
-# Feature Specification Generator v3.0
+# Feature Specification Generator v3.1
 
 Generate focused feature specifications for planning new features. Output adapts to project structure.
 

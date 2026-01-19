@@ -235,7 +235,7 @@ After tech choices, fetch relevant documentation:
 ## Reference Files
 
 ### Templates
-- `templates/output-template.md` - SPEC.md structure
+- `references/output-template.md` - SPEC.md structure
 - `templates/index.template.md`
 - `templates/overview.template.md`
 - `templates/architecture.template.md`

@@ -20,7 +20,7 @@ Then install any plugin:
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| [project-spec](./plugins/project-spec) | Generate project specifications with SPEC.md as core and optional SPEC/ supplements | 3.0.0 |
+| [project-spec](./plugins/project-spec) | Generate project specifications with SPEC.md as core and optional SPEC/ supplements | 3.1.0 |
 | [fuwari-md](./plugins/fuwari-md) | Fuwari's markdown stack - admonitions, math, GitHub cards, code highlighting | 1.0.2 |
 | [codebase-cleanup](./plugins/codebase-cleanup) | Comprehensive cleanup analysis for TypeScript/JavaScript codebases | 1.0.4 |
 
