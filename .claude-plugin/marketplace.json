@@ -13,13 +13,13 @@
     {
       "name": "project-spec",
       "source": "./plugins/project-spec",
-      "description": "Generate comprehensive project specifications through interactive interviews before building",
-      "version": "2.0.0",
+      "description": "Generate project specifications with SPEC.md as core file and optional SPEC/ supplements. Includes git-aware /sync command.",
+      "version": "3.0.0",
       "author": {
         "name": "Linaqruf"
       },
       "license": "MIT",
-      "keywords": ["planning", "specification", "design-system", "feature-planning", "interview", "project-init", "documentation"],
+      "keywords": ["planning", "specification", "design-system", "feature-planning", "interview", "project-init", "documentation", "sync", "git-aware"],
       "category": "productivity"
     },
     {

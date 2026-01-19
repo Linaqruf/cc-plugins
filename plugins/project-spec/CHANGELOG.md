@@ -2,6 +2,44 @@
 
 All notable changes to project-spec will be documented in this file.
 
+## [3.0.0] - 2026-01-19
+
+### Changed
+- **Single adaptive flow** - Removed Quick/SPEC/DEEP mode selection
+  - SPEC.md is always the core, complete specification
+  - SPEC/ files are now optional supplements for reference material only
+  - Interview offers supplements mid-flow when hitting reference-heavy topics
+- **Core principle**: SPEC.md = things you READ, SPEC/ = things you LOOK UP
+- **Opinionated recommendations** baked into interview
+  - Lead with recommended option + rationale
+  - User can always override
+  - Examples: bun over npm, Drizzle for ORM, PostgreSQL for database
+- **Trigger-based references** in SPEC.md and CLAUDE.md
+  - Format: `→ When implementing API endpoints: SPEC/api-reference.md`
+- **System Maps section** added to SPEC.md template
+  - Architecture diagrams (ASCII)
+  - Data model relations
+  - User flow diagrams
+  - Wireframes
+
+### Added
+- **`/project-spec:sync` command** - Git-aware spec drift detection
+  - Detects when spec was last updated
+  - Analyzes commits since then
+  - Maps file changes to spec sections
+  - Suggests targeted updates
+  - Arguments: `spec`, `design`, `feature`, or none (all)
+
+### Removed
+- Quick/SPEC/DEEP mode selection
+- `references/interview-questions-deep.md` (consolidated into main file)
+- Complex SPEC/ folder structure with numbered files
+
+### Breaking Changes
+- No more mode selection at start of `/spec` command
+- SPEC/ folder is now optional, not the default for complex projects
+- Interview structure simplified (15-20 questions, always grouped)
+
 ## [2.0.0] - 2026-01-15
 
 ### Added
