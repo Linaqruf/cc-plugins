@@ -1,6 +1,6 @@
 ---
 name: song-composition
-description: This skill should be used when the user asks to "compose a song", "write lyrics", "create Suno prompts", "generate song ideas", "make a J-pop song", "write music for Suno", or mentions Suno AI, song composition, or lyric writing. Provides comprehensive knowledge about Suno v5 style tags, genre conventions, song structures, and lyric writing techniques.
+description: Provides comprehensive knowledge for composing Suno AI songs including style tags, genre conventions, song structures, and lyric writing techniques. This skill enables composing songs, writing lyrics, creating Suno prompts, generating song ideas, making J-pop or other genre songs, and working with Suno AI v5.
 version: 1.0.0
 ---
 
@@ -255,6 +255,7 @@ When composing songs, generate each song with:
 ### Reference Files
 
 For detailed information, consult:
+- **`references/suno-metatags.md`** - Complete Suno v5 metatags, structure tags, vocal styles, production tags
 - **`references/genre-deep-dive.md`** - Extended genre conventions and subgenres
 - **`references/japanese-lyric-patterns.md`** - Japanese lyric writing patterns and vocabulary
 

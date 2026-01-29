@@ -10,7 +10,11 @@ Compose songs optimized for Suno AI v5 based on user preferences and session par
 
 ## Step 1: Load Knowledge and Preferences
 
-First, load the `song-composition` skill for comprehensive Suno v5 knowledge including style tags, genre conventions, and lyric writing techniques.
+First, use the Skill tool to invoke the `song-composition` skill. This provides comprehensive Suno v5 knowledge including:
+- Style tags and metatags (see `references/suno-metatags.md`)
+- Genre conventions and patterns
+- Song structure templates
+- Lyric writing techniques
 
 Then check for user preferences file at `.claude/suno-composer.local.md` in the current project or home directory. If found, read and note:
 - Favorite genres

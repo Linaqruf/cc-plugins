@@ -1,6 +1,10 @@
 # Local settings
 .claude/*.local.md
 
+# Project specs (local development only)
+SPEC.md
+CLAUDE.md
+
 # OS files
 .DS_Store
 Thumbs.db
