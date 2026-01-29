@@ -76,34 +76,29 @@ climax, polished production
 
 ## Advanced Metatags in Lyrics
 
-Enhance lyrics with embedded directions that Suno interprets:
+Suno interprets embedded directions in lyrics. **Use sparingly** - see "Lyric Tagging Guidelines" in Output Formats section for when to use these vs. simple section markers.
 
-### Section-Specific Vocal Directions
+### Arrangement Tags (Recommended)
 ```
-[Verse 1][soft, breathy]
-[Chorus][powerful belting]
-[Bridge][whisper, intimate]
-```
-
-### Emotion Progression Markers
-```
-[Bridge][Mood: vulnerable → building hope]
-[Verse 2][Mood: reflective → determined]
-```
-
-### Instrument/Arrangement Specification
-```
-[Intro: Piano only, atmospheric]
-[Chorus: Full band with brass section]
+[Intro: Piano only]
+[Chorus: Full band]
 [Bridge: Stripped back, acoustic only]
-[Outro: Fade out, strings only]
+[Outro: Fade out]
 ```
 
-### Combined Advanced Tags
+### Vocal Direction Tags (Use Sparingly)
 ```
-[Verse 2][whisper → building power][sparse arrangement]
-[Final Chorus][Mood: triumphant][Full arrangement, key change up]
+[Intro][whisper]
+[Bridge][intimate]
 ```
+
+### Emotion Progression (Use Rarely)
+Only when you need a specific shift within a single section:
+```
+[Bridge][Mood: vulnerable → hopeful]
+```
+
+**Warning:** Don't use intensity/emotion tags on every section - this causes cumulative pitch escalation. Most sections should have only the section marker.
 
 ## Genre Conventions
 
