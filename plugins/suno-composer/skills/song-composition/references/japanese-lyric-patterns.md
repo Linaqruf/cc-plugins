@@ -96,7 +96,7 @@ Most modern J-pop doesn't strictly follow traditional patterns but considers nat
 
 ```
 
-## Romanization for Suno
+## Romanization
 
 ### Standard Romanization
 Use Hepburn romanization for clarity:

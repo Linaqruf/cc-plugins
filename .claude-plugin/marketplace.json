@@ -26,7 +26,7 @@
       "name": "suno-composer",
       "source": "./plugins/suno-composer",
       "description": "Guided workflow for composing Suno AI songs with lyrics, style tags, and arrangements. Features file output, Chrome integration for auto-filling Suno forms, album mode, variations, and song extensions.",
-      "version": "4.0.0",
+      "version": "4.0.1",
       "author": {
         "name": "Linaqruf"
       },

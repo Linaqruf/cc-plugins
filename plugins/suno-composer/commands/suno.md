@@ -87,7 +87,6 @@ Using the skill's knowledge directly, compose the requested number of songs foll
    - Embed section-specific vocal directions: `[Verse 1][soft, breathy]`
    - Add emotion progression markers: `[Bridge][Mood: vulnerable → hopeful]`
    - Include arrangement specifications: `[Chorus: Full band with strings]`
-   - For Japanese: provide both characters and romanization
 
 4. **Craft Style Prompt** (Descriptive prose, not just comma-separated tags)
    - Start with primary genre and subgenre/era influence
@@ -111,7 +110,6 @@ Using the skill's knowledge directly, compose the requested number of songs foll
 - Lyrics must include advanced metatags (section-specific vocal directions, emotion progression, arrangement specs)
 - Production tags must match genre/mood
 - Each song in a batch must feel distinct
-- Japanese lyrics must include romanization
 - Output must be copy-paste ready for Suno's two-field interface
 
 ### Step 4: Present Results
@@ -165,6 +163,9 @@ Create directory structure:
 - Mood Arc: ...
 - Key Instruments: ...
 - Production Style: ...
+
+## Romanization (Japanese songs only)
+[Line-by-line pronunciation guide]
 ```
 
 **_index.md format:**

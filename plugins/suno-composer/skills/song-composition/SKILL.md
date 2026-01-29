@@ -1,7 +1,7 @@
 ---
 name: song-composition
 description: This skill should be used when the user wants to compose songs for Suno AI, write lyrics, create style prompts, or generate Suno v5 metatags. Supports J-pop, K-pop, EDM, ballads, rock, and Latin genres, plus album/EP composition, acoustic or remix variations, and song extensions. Triggers on "write a song", "Suno prompt", "Suno metatags", "style of music", "acoustic version", "create an album", "extend this song".
-version: 4.0.0
+version: 4.0.1
 ---
 
 # Song Composition for Suno AI
@@ -248,7 +248,6 @@ For subgenres and common Spanish phrases, see `references/genre-deep-dive.md` �
 **Considerations:**
 - Syllable count per line (7-5 or 5-7 patterns traditional)
 - Particle placement affects rhythm
-- Romanization for Suno input
 - Mix of hiragana vocabulary and kanji concepts
 
 **Emotional vocabulary:**
@@ -419,6 +418,9 @@ Target 8-15 elements. Copy-paste ready.)
 - **Mood Arc:** [opening → middle → climax]
 - **Key Instruments:** [by prominence]
 - **Production Style:** [aesthetic and key effects]
+
+### Romanization (Japanese songs only)
+(Line-by-line pronunciation guide)
 ```
 
 **Copy-Paste Guide:**
