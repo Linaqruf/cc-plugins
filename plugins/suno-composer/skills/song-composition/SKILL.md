@@ -1,7 +1,7 @@
 ---
 name: song-composition
 description: This skill should be used when the user wants to compose songs for Suno AI, write lyrics, create style prompts, or generate Suno v5 metatags. Supports J-pop, K-pop, EDM, ballads, rock, and Latin genres, plus album/EP composition, acoustic or remix variations, and song extensions. Triggers on "write a song", "Suno prompt", "Suno metatags", "style of music", "acoustic version", "create an album", "extend this song".
-version: 4.0.1
+version: 4.1.0
 ---
 
 # Song Composition for Suno AI
@@ -374,9 +374,27 @@ Select production tags based on genre and mood:
 - Medium: balanced mix, natural reverb, full arrangement
 - High: compressed, punchy, layered, side-chained, crisp
 
-## Output Format
+## Output Formats
 
-When composing songs, generate each song with:
+### Preview Format (Token-Efficient)
+
+When generating song previews (before user confirmation), output metadata only:
+
+```markdown
+### Song [N]: [Title]
+- **Genre/Style:** [primary genre, subgenre, key descriptors]
+- **Tempo:** ~[BPM] BPM, [feel]
+- **Vocal:** [type], [style description]
+- **Structure:** [section flow, e.g., Intro → Verse → Pre-Chorus → Chorus → ...]
+- **Theme:** [1-line description of emotional/narrative content]
+- **Hook Concept:** [brief description of the chorus hook idea]
+```
+
+**Important:** Previews do NOT include full lyrics. This saves tokens by letting users confirm direction before full generation.
+
+### Full Song Format (For File Output)
+
+When composing full songs (after user confirmation), generate each song with:
 
 ```markdown
 ## Song: [Creative Title]
@@ -388,34 +406,34 @@ Target 8-15 elements. Copy-paste ready.)
 
 ### Lyrics
 
-[Intro: Instrument/mood description]
-(instrumental direction or opening lyrics)
+[Intro: Piano only]
+(instrumental)
 
-[Verse 1][vocal-direction]
-(lyrics)
+[Verse 1]
+(lyrics - establish baseline energy)
 
-[Pre-Chorus][building]
-(lyrics)
+[Pre-Chorus]
+(lyrics - natural tension from lyrics, no explicit "building" tag)
 
-[Chorus][Mood: emotion][Arrangement: instruments]
-(lyrics)
+[Chorus]
+(lyrics - peak of section, arrangement carries energy)
 
-[Verse 2][vocal-direction][arrangement notes]
-(lyrics)
+[Verse 2]
+(lyrics - return to verse energy, contrast with chorus)
 
-[Bridge][Mood: start → end][Arrangement: stripped/full]
-(lyrics)
+[Bridge][stripped, intimate]
+(lyrics - contrast moment, pull back before final push)
 
-[Final Chorus][peak-intensity markers]
-(lyrics)
+[Final Chorus][full arrangement]
+(lyrics - arrangement tag only, not intensity)
 
-[Outro: fade/end description]
-(closing)
+[Outro]
+(closing - resolve, fade or end)
 
 ### Specifications
 - **Tempo:** [BPM or tempo feel]
-- **Vocal:** [type, style, and progression]
-- **Mood Arc:** [opening → middle → climax]
+- **Vocal:** [type and style]
+- **Dynamics:** [describe the wave pattern, e.g., "soft verse → full chorus → stripped bridge → final chorus"]
 - **Key Instruments:** [by prominence]
 - **Production Style:** [aesthetic and key effects]
 
@@ -423,10 +441,81 @@ Target 8-15 elements. Copy-paste ready.)
 (Line-by-line pronunciation guide)
 ```
 
+### Lyric Tagging Guidelines (IMPORTANT)
+
+**Avoid over-tagging** - Suno interprets cumulative modifiers as escalation:
+
+| ❌ Causes Pitch Drift | ✅ Better Approach |
+|----------------------|-------------------|
+| `[Verse 1][soft, building]` | `[Verse 1]` |
+| `[Pre-Chorus][building tension]` | `[Pre-Chorus]` |
+| `[Chorus][powerful, soaring]` | `[Chorus]` |
+| `[Bridge][Mood: vulnerable → triumphant]` | `[Bridge][stripped]` |
+| `[Final Chorus][peak, explosive, maximum]` | `[Final Chorus][full arrangement]` |
+
+**When to use modifiers:**
+- **Arrangement changes:** `[Bridge][acoustic only]`, `[Chorus][full band]`
+- **Contrast points:** `[Verse 2][stripped back]` after a big chorus
+- **Specific vocal needs:** `[Intro][whisper]` for effect
+
+**When NOT to use modifiers:**
+- Don't tag every section - let the song breathe
+- Don't stack intensity words (powerful + soaring + explosive)
+- Don't use arrow progressions on every bridge (`→` implies escalation)
+- Don't add "building" to pre-chorus - the structure already implies it
+
+**Dynamic Wave Pattern:**
+Songs should breathe like a wave, not climb like stairs:
+```
+Energy:  ▁▂▃▅▃▂▅▆▅▃▂▁
+Section: I V1 PC C V2 PC C Br FC O
+```
+- Verse 2 should reset closer to Verse 1 energy
+- Bridge should pull back before the final push
+- Not every chorus needs to be bigger than the last
+
 **Copy-Paste Guide:**
 1. **Style Prompt** → Suno's "Style of Music" field
 2. **Lyrics** (with all [bracket] tags) → Suno's "Lyrics" field
 3. **Specifications** → Reference for tempo lock and settings
+
+### Album Preview Format
+
+```markdown
+## Album: [Album Title]
+**Concept:** [1-2 sentence description]
+**Sonic Palette:** [core instruments, production style, tempo range]
+**Arc:** [journey/concept/mood flow description]
+
+### Track Listing Preview:
+1. **[Title]** (Opener) - [genre], ~[BPM] BPM - [1-line theme]
+2. **[Title]** (Journey) - [genre], ~[BPM] BPM - [1-line theme]
+...
+```
+
+### Variation Preview Format
+
+```markdown
+## Source: [Original Title]
+**Hook:** [core hook preserved across variations]
+**Theme:** [central theme]
+
+### Variation Previews:
+1. **Acoustic Version** - ~[BPM] BPM, [key changes from original]
+2. **Remix Version** - ~[BPM] BPM, [key changes from original]
+...
+```
+
+### Continuation Preview Format
+
+```markdown
+## Continuation: [New Title] ([Type])
+**Connection to Source:** [how it relates]
+**Genre/Style:** [genre, key sonic DNA elements]
+**Tempo:** ~[BPM] BPM
+**Theme:** [1-line description]
+**Planned Callbacks:** [2-3 callback concepts]
+```
 
 ## Additional Resources
 
