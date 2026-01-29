@@ -12,9 +12,9 @@ Use this skill to compose songs optimized for Suno AI music generation. It cover
 
 ## Suno v5 Style Tags
 
-### Tag Format
+### Style Elements
 
-Suno v5 uses comma-separated style tags in the "Style of Music" field. Effective tags combine:
+Suno v5 accepts style information in the "Style of Music" field. While individual tags can be comma-separated, **the recommended approach is descriptive prose combining 8-15 elements** (see "Style Prompt Construction" below). The following element categories should be included:
 
 1. **Genre tags**: Primary musical style (j-pop, electronic, rock, ballad)
 2. **Mood tags**: Emotional quality (melancholic, upbeat, dreamy, intense)
@@ -40,13 +40,14 @@ j-pop, electronic, vocaloid style, fast tempo, synthesizer, driving beat, energe
 city pop, 80s, funky bass, saxophone, groovy, nostalgic, japanese, smooth vocals
 ```
 
-### Tag Best Practices
+### Style Prompt Best Practices
 
-- Place most important genre tags first
-- Use 6-12 tags for optimal results
-- Avoid contradictory tags (e.g., "calm" and "intense")
-- Include vocal descriptor for consistent voice
-- Specify tempo feel (fast, mid-tempo, slow) when important
+- Lead with primary genre and subgenre
+- Target 8-15 descriptive elements in flowing prose
+- Avoid contradictory descriptors (e.g., "calm" and "intense")
+- Include vocal style for consistent voice
+- Specify tempo feel (e.g., "slow around 75 bpm")
+- Add production tags for desired sound quality
 
 ## Separated Style and Lyrics Prompts
 

@@ -1,5 +1,7 @@
 # Suno Composer
 
+**Version 3.0.0**
+
 A Claude Code plugin for composing Suno AI songs with a guided workflow. Generates complete song specifications including lyrics, style tags, tempo, vocal arrangements, and more - all based on your musical preferences.
 
 ## Features
