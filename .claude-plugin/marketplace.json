@@ -23,28 +23,16 @@
       "category": "productivity"
     },
     {
-      "name": "fuwari-md",
-      "source": "./plugins/fuwari-md",
-      "description": "Portable markdown stack - admonitions, math, GitHub cards, code highlighting for any framework",
-      "version": "1.0.2",
+      "name": "suno-composer",
+      "source": "./plugins/suno-composer",
+      "description": "Guided workflow for composing Suno AI songs with lyrics, style tags, and arrangements. Supports album mode, variations, and song extensions.",
+      "version": "3.0.0",
       "author": {
         "name": "Linaqruf"
       },
       "license": "MIT",
-      "keywords": ["markdown", "unified", "remark", "rehype", "admonitions", "math", "katex", "expressive-code"],
-      "category": "development"
-    },
-    {
-      "name": "codebase-cleanup",
-      "source": "./plugins/codebase-cleanup",
-      "description": "Comprehensive cleanup analysis for TypeScript/JavaScript codebases - detect unused imports, dead code, orphaned assets, and technical debt",
-      "version": "1.0.2",
-      "author": {
-        "name": "Linaqruf"
-      },
-      "license": "MIT",
-      "keywords": ["cleanup", "refactoring", "dead-code", "unused-imports", "technical-debt", "code-analysis", "dependency-audit"],
-      "category": "productivity"
+      "keywords": ["suno", "music", "composition", "lyrics", "ai-music", "j-pop", "song-generation", "album", "remix"],
+      "category": "creative"
     }
   ]
 }

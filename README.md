@@ -21,8 +21,7 @@ Then install any plugin:
 | Plugin | Description | Version |
 |--------|-------------|---------|
 | [project-spec](./plugins/project-spec) | Generate project specifications with SPEC.md as core and optional SPEC/ supplements | 3.1.0 |
-| [fuwari-md](./plugins/fuwari-md) | Fuwari's markdown stack - admonitions, math, GitHub cards, code highlighting | 1.0.2 |
-| [codebase-cleanup](./plugins/codebase-cleanup) | Comprehensive cleanup analysis for TypeScript/JavaScript codebases | 1.0.4 |
+| [suno-composer](./plugins/suno-composer) | Guided workflow for composing Suno AI songs with lyrics, style tags, and arrangements | 3.0.0 |
 
 ## Plugins
 
@@ -75,101 +74,51 @@ See [plugin documentation](./plugins/project-spec/README.md) for details.
 
 ---
 
-### fuwari-md
+### suno-composer
 
-Fuwari's production-ready markdown processing stack for any framework. Includes admonitions, math equations, GitHub repository cards, enhanced code blocks, and more.
-
-**Commands:**
-
-| Command | Description |
-|---------|-------------|
-| `/fuwari-md:syntax` | Quick markdown syntax reference |
-| `/fuwari-md:setup` | Generate config for your framework |
-| `/fuwari-md:component` | Create custom remark/rehype plugins |
-
-**Features:**
-- Admonitions (`:::note`, `:::tip`, `> [!WARNING]`)
-- Math equations (KaTeX)
-- GitHub repository cards (`::github{repo="owner/repo"}`)
-- Enhanced code blocks (line numbers, copy button, language badges)
-- Reading time calculation
-- Fuwari source code included as references
-- `markdown-architect` agent for debugging
-
-**Install:**
-```bash
-/plugin install fuwari-md@cc-plugins
-```
-
-**Quick Syntax:**
-```markdown
-:::note[Title]
-Admonition content
-:::
-
-$E = mc^2$  <!-- inline math -->
-
-::github{repo="withastro/astro"}
-```
-
-See [plugin documentation](./plugins/fuwari-md/README.md) for details.
-
----
-
-### codebase-cleanup
-
-Comprehensive cleanup analysis for TypeScript/JavaScript codebases. Detect and remove unused imports, dead code, orphaned assets, unused dependencies, and obsolete configurations.
+A guided workflow for composing Suno AI songs with professional songwriter techniques. Generates complete song specifications including lyrics, style tags, tempo, vocal arrangements, and more.
 
 **Commands:**
 
 | Command | Description |
 |---------|-------------|
-| `/cleanup` | Interactive cleanup analysis |
-| `/cleanup all` | Full analysis (all categories) |
-| `/cleanup imports` | Unused/duplicate/circular imports |
-| `/cleanup deadcode` | Unreachable code, unused functions |
-| `/cleanup assets` | Unused images, CSS, fonts |
-| `/cleanup deps` | Unused npm packages |
-| `/cleanup configs` | Unused env vars, obsolete configs |
+| `/suno` | Guided composition workflow |
+| `/suno [theme]` | Start with a theme |
+| `/suno:album [concept]` | Create thematically coherent albums/EPs |
+| `/suno:variation` | Generate acoustic, remix, stripped versions |
+| `/suno:extend` | Create song continuations (sequel, prequel, response) |
 
 **Features:**
-- Unused import detection with duplicate and circular dependency checks
-- Dead code detection (unreachable code, unused functions, variables, exports)
-- Asset tracking for unused images, CSS, fonts, and static resources
-- Dependency auditing with security vulnerability detection
-- Configuration cleanup for env vars, feature flags, and obsolete configs
-- Interactive review with confidence levels (High/Medium/Low)
-- Structured markdown reports with actionable recommendations
-
-**Agents:**
-
-| Agent | Trigger | Purpose |
-|-------|---------|---------|
-| `import-analyzer` | "find unused imports" | Import statement analysis |
-| `dead-code-detector` | "find dead code" | Unreachable/unused code detection |
-| `asset-tracker` | "find unused assets" | Static file tracking |
-| `dependency-auditor` | "audit dependencies" | npm package analysis |
-| `config-cleaner` | "clean up configs" | Configuration file cleanup |
+- Preset moods (upbeat, melancholic, energetic, dreamy, intense, chill)
+- Batch generation of 1-10 songs per session
+- Multi-genre support (J-pop, K-pop, EDM, Latin, rock, ballads)
+- Album mode with journey arc patterns
+- Variation mode (acoustic, remix, stripped, extended, cinematic)
+- Extend mode (sequel, prequel, response, alternate POV, epilogue)
+- Professional songwriter techniques (hook-first, tension/release)
+- Suno v5 metatag optimization
 
 **Install:**
 ```bash
-/plugin install codebase-cleanup@cc-plugins
+/plugin install suno-composer@cc-plugins
 ```
 
 **Usage:**
 ```bash
-# Interactive mode
-/cleanup
+# Guided workflow
+/suno
 
-# Full analysis
-/cleanup all
+# With theme
+/suno summer heartbreak ballad
 
-# Specific categories
-/cleanup imports,deadcode
-/cleanup deps,configs
+# Album mode
+/suno:album summer memories
+
+# Variations
+/suno:variation
 ```
 
-See [plugin documentation](./plugins/codebase-cleanup/README.md) for details.
+See [plugin documentation](./plugins/suno-composer/README.md) for details.
 
 ## License
 
