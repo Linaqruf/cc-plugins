@@ -1,11 +1,14 @@
 # Suno Composer
 
-**Version 4.3.0**
+**Version 4.5.0**
 
 A Claude Code plugin for composing Suno AI songs with a guided workflow. Generates complete song specifications including lyrics, style tags, tempo, vocal arrangements, and more - all based on your musical preferences.
 
+> **Note:** This plugin is optimized for **J-pop and Japanese music** styles, with deep knowledge of artists like YOASOBI, Yorushika, Ado, and others. However, it fully supports general music composition across all genres including K-pop, Western pop/rock, EDM, Latin, and more.
+
 ## Features
 
+- **Reference-Based**: Compose using artist profiles (`/suno like YOASOBI`) with 29 built-in artists
 - **Guided Composition**: Interactive workflow that asks key questions about mood, theme, and style
 - **Preference-Based**: Stores your taste profile for consistent results across sessions
 - **Complete Output**: Generates title, style prompt, lyrics with metatags, and detailed specifications
@@ -17,7 +20,7 @@ A Claude Code plugin for composing Suno AI songs with a guided workflow. Generat
 - **Variation Mode**: Generate acoustic, remix, stripped, extended, or cinematic versions
 - **Extend Mode**: Create song continuations (sequels, prequels, responses, alternate POVs)
 - **Multi-Genre**: J-pop, K-pop, Western pop/rock, EDM, Latin, and more
-- **Language Agnostic**: Supports any language with optional romanization for Japanese
+- **Language Agnostic**: Supports any language (Japanese, English, Korean, mixed, etc.)
 
 ## Installation
 
@@ -58,6 +61,16 @@ This starts the guided composition workflow which will ask about:
 ```
 
 Start composition with a theme already in mind.
+
+### With Artist Reference (New in v4.4)
+
+```
+/suno like YOASOBI about finding hope
+/suno in the style of Aimer
+/suno Eve-style energetic
+```
+
+Compose using an artist's characteristics as the base style. The plugin includes profiles for 29 artists spanning J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres.
 
 ### Album Mode
 
@@ -122,7 +135,7 @@ When you choose to save compositions, they're organized as:
 
 ```
 ./songs/
-├── 2024-01-15-summer-vibes/
+├── [date]-summer-vibes/
 │   ├── song-1-endless-summer.md
 │   ├── song-2-ocean-breeze.md
 │   └── _index.md
@@ -191,6 +204,7 @@ Create a preferences file at `.claude/suno-composer.local.md` in your project or
 | Command | Description | Prerequisite |
 |---------|-------------|--------------|
 | `/suno` | Main composition workflow with file output | None |
+| `/suno like <artist>` | Compose using artist profile | None |
 | `/suno:album` | Create thematically coherent albums/EPs | None |
 | `/suno:variation` | Generate song variations | None |
 | `/suno:extend` | Create song continuations | None |
@@ -251,6 +265,22 @@ climax, polished production
 ```
 
 **Note:** Lyrics use **sparse tagging** - most sections have only the section marker. Technique tags (`[stripped]`, `[key change up]`) appear only at 3-4 inflection points. Emotion arc goes in the style prompt.
+
+## What's New in v4.5
+
+- **J-pop Tier Presets**: Use ecosystem-level presets (`/suno anisong`, `/suno surface`, `/suno mainstream`, `/suno doujin`)
+  - Note: `viral` is an alias for `surface` tier (both work)
+- **Doujin Subgenres**: Support for symphonic, denpa, and eurobeat doujin styles
+- **Tier + Artist Merging**: Combine tier base sound with specific artist characteristics (`/suno anisong like Aimer`)
+- **Legacy Tier**: Added for foundational artists like Tatsuro Yamashita
+
+## What's New in v4.4
+
+- **Reference-Based Composition**: Say `/suno like YOASOBI` to compose using an artist's style
+- **29 Artist Profiles**: Comprehensive artist database covering J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres
+- **Artists Include**: YOASOBI, Yorushika, Ado, Eve, Kenshi Yonezu, LiSA, Aimer, Official HIGE DANdism, King Gnu, Vaundy, RADWIMPS, Mrs. GREEN APPLE, Aimyon, back number, BUMP OF CHICKEN, Fujii Kaze, imase, TUYU, Zutomayo, Creepy Nuts, Ariabl'eyeS, Kobukuro, Reol, Hatsune Miku, Kasane Teto, Spitz, Mr.Children, Tatsuro Yamashita, Yuki Kajiura
+- **Smart Style Generation**: Artist name + descriptors in style prompt (user can remove name if Suno rejects)
+- **Fallback Handling**: Unknown artists prompt for manual description or mood presets
 
 ## What's New in v4.3
 

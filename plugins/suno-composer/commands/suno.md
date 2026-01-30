@@ -1,7 +1,7 @@
 ---
 description: Compose Suno AI songs with guided workflow
-argument-hint: [theme/mode:album|variation|extend]
-allowed-tools: Read, Glob, AskUserQuestion, Write, Skill, Bash
+argument-hint: [theme/like <artist>/mode:album|variation|extend]
+allowed-tools: Read, Glob, AskUserQuestion, Write, Skill
 ---
 
 # Suno Song Composition Workflow
@@ -15,6 +15,60 @@ Parse $ARGUMENTS to detect mode:
 - If starts with `:variation` → Variation Mode
 - If starts with `:extend` → Extend Mode
 - Otherwise → Standard Mode (existing behavior)
+
+## Reference Detection
+
+Before gathering parameters, check if $ARGUMENTS contains an artist reference:
+
+**Reference patterns to detect:**
+- `like [artist]` → extract artist name
+- `in the style of [artist]` → extract artist name
+- `similar to [artist]` → extract artist name
+- `[artist]-style` → extract artist name
+
+**If reference detected:**
+1. Read `skills/song-composition/references/artist-profiles.md`
+2. Search for artist name (case-insensitive) or alias match
+3. If found: Store profile data for style prompt generation
+4. If not found: Ask user to describe the style or use presets
+
+**Example parsing:**
+- `/suno like YOASOBI about hope` → artist: "YOASOBI", theme: "about hope"
+- `/suno in the style of Aimer` → artist: "Aimer", theme: none
+- `/suno Eve-style energetic` → artist: "Eve", theme: "energetic"
+
+---
+
+## Tier Detection
+
+Before gathering parameters, check if $ARGUMENTS contains a J-pop tier keyword:
+
+**Tier keywords to detect (case-insensitive):**
+- Anisong: `anisong`, `anime`, `anime opening`, `anime op`, `anime ed`
+- Surface: `surface`, `viral`, `viral jpop`, `producer scene`, `utaite`, `neo jpop`, `nico nico`, `internet music`
+- Mainstream: `mainstream`, `normie`, `normie jpop`, `radio jpop`
+- Doujin: `doujin`, `touhou`, `underground`, `convention`, `comiket`
+- Doujin subgenres: `doujin symphonic`, `doujin denpa`, `doujin eurobeat`
+- Legacy: `legacy`, `classic`, `golden age`, `city pop`
+
+**If tier keyword detected:**
+1. Read `skills/song-composition/references/jpop-tiers.md`
+2. Find matching tier profile
+3. Store tier data (auto-tags, style preset, tempo, production elements)
+4. If artist reference ALSO detected: merge tier + artist (tier base, artist refinements)
+5. Continue with normal flow
+
+**Tier + Artist merge logic:**
+- Tier provides: base metatags, general sound, structure expectations
+- Artist provides: specific vocal style, production quirks, tempo override
+- Artist takes precedence for conflicts (tempo, vocal type)
+- User's theme shapes the emotion arc
+
+**Example parsing:**
+- `/suno anisong about courage` → tier: "anisong", theme: "about courage"
+- `/suno viral jpop melancholic` → tier: "surface", theme: "melancholic"
+- `/suno doujin symphonic fantasy` → tier: "doujin", subgenre: "symphonic", theme: "fantasy"
+- `/suno anisong like Aimer` → tier: "anisong", artist: "Aimer" (merged)
 
 ---
 
@@ -44,9 +98,39 @@ Then check for user preferences file at `.claude/suno-composer.local.md` in the 
 
 Use AskUserQuestion to gather session-specific parameters:
 
-**If no theme provided in arguments ($ARGUMENTS is empty):**
+**If artist reference was detected:**
+Show the matched profile summary:
+```
+Found artist profile: [Artist Name]
+- Genre: [genres]
+- Tempo: [tempo range]
+- Vocal: [vocal type and style]
+- Mood: [mood range]
 
-Ask about mood/theme with preset options:
+Using this as the base style. You can specify a theme to add (e.g., "about finding hope").
+```
+Then ask for optional theme/mood modifier.
+
+**If artist reference was NOT found (but attempted):**
+```
+I don't have a profile for "[artist name]" yet.
+
+Options:
+1. Describe their style briefly (I'll use that)
+2. Use mood presets instead
+```
+
+**If no reference in arguments and $ARGUMENTS is empty:**
+
+Ask about reference or mood:
+```
+Do you have a reference artist in mind?
+- Yes, let me specify
+- No, use mood presets
+```
+
+If "Yes": Ask for artist name, then lookup profile.
+If "No": Show mood presets (existing behavior):
 - Upbeat - Bright, energetic, feel-good vibes
 - Melancholic - Sad, bittersweet, emotional depth
 - Energetic - High-energy, powerful, driving
@@ -55,7 +139,7 @@ Ask about mood/theme with preset options:
 - Chill - Relaxed, smooth, laid-back
 - (Allow custom description)
 
-**If theme WAS provided in arguments:**
+**If theme WAS provided in arguments (no reference):**
 Use the provided theme: $ARGUMENTS
 
 **Always ask:**
@@ -80,6 +164,8 @@ Generate **metadata previews only** (no full lyrics yet) for each song:
 
 1. **Design Song Concepts** (Hook-First Approach)
    - Review mood/theme requirements and user preferences
+   - **If tier detected:** Start from tier's style preset as foundation
+   - **If tier + artist:** Blend tier structure with artist characteristics
    - Start with the chorus hook concept - the most memorable element
    - Create evocative title (often derived from hook)
    - Plan tension/release arc: verse (low) → pre-chorus (build) → chorus (peak/release)
@@ -136,9 +222,23 @@ Use AskUserQuestion to let user review previews:
    - **Use technique cues** not emotion words: `[half-time]`, `[key change up]`, `[stripped]`
    - **Avoid** intensity words on every section: `[building]`, `[soaring]`, `[triumphant]`
    - **Emotion arc goes in style prompt** - Suno V5 reads it there
-   - For Japanese: provide romanization optionally for pronunciation clarity
 
 3. **Craft Style Prompt** (Descriptive prose, not just comma-separated tags)
+
+   **If tier was detected (with or without artist):**
+   - Start from tier's style preset as foundation
+   - If artist also matched: blend artist characteristics (vocal, production)
+   - Artist overrides tier for tempo and vocal type conflicts
+   - User's theme shapes the emotion arc
+   - Include tier's auto-tags in the overall style
+   - Example: "J-rock anime opening [from tier], 120 bpm [from Aimer], husky female vocals [from Aimer]..."
+
+   **If artist reference was matched (no tier):**
+   - Lead with "[Artist]-inspired" or "[Artist] style" (user can remove if Suno rejects)
+   - Include all profile descriptors: genre, tempo feel, vocal style, instruments, production
+   - User's theme shapes the emotion arc
+   - Example: "YOASOBI-inspired j-pop electronic synth-pop, 140 bpm driving tempo, female vocals with clear enunciation and fast melodic runs, synthesizer and piano-driven, polished compressed mix, emotion arc: [from user theme]"
+
    - Start with primary genre and subgenre/era influence
    - Add tempo feel (e.g., "slow around 75 bpm")
    - Include vocal style description
