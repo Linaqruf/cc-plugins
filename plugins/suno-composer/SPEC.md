@@ -492,6 +492,14 @@ Combinations create section variety:
 - [x] Improve skill trigger phrases for reference-based composition
 - [x] Address audit findings (remove duplication, standardize formatting)
 
+### Phase 11: J-pop Tier Presets (v4.5) ✓
+- [x] Create tier reference file with 4 tiers (anisong, surface, mainstream, doujin)
+- [x] Add tier field to existing artist profiles
+- [x] Implement tier detection in /suno command
+- [x] Support tier + artist merging
+- [x] Add doujin subgenres (symphonic, denpa, eurobeat)
+- [x] Document tier feature in SKILL.md
+
 ## Open Questions
 
 1. **Suno Studio integration** - Should we add guidance for Suno Studio's region editing workflow?
@@ -520,3 +528,4 @@ Combinations create section variety:
 → When implementing genre patterns: `skills/song-composition/references/genre-deep-dive.md`
 → When writing Japanese lyrics: `skills/song-composition/references/japanese-lyric-patterns.md`
 → When using artist references: `skills/song-composition/references/artist-profiles.md`
+→ When using J-pop tier presets: `skills/song-composition/references/jpop-tiers.md`
