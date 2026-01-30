@@ -62,7 +62,7 @@ This starts the guided composition workflow which will ask about:
 
 Start composition with a theme already in mind.
 
-### With Artist Reference (New in v4.4)
+### With Artist Reference (v4.4+)
 
 ```
 /suno like YOASOBI about finding hope
@@ -71,6 +71,27 @@ Start composition with a theme already in mind.
 ```
 
 Compose using an artist's characteristics as the base style. The plugin includes profiles for 29 artists spanning J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres.
+
+### With J-pop Tier Preset (v4.5+)
+
+```
+/suno anisong about never giving up
+/suno surface city nights theme
+/suno mainstream romantic ballad
+/suno doujin symphonic fantasy battle
+```
+
+Use ecosystem-level presets instead of specific artists:
+
+| Tier | Sound | Example Artists |
+|------|-------|-----------------|
+| `anisong` | Anime OP/ED - dramatic builds, catchy hooks | LiSA, Aimer |
+| `surface` | Viral/producer scene - complex rhythms, layered synths | YOASOBI, Ado |
+| `mainstream` | Radio-friendly - band sound, sing-along | Official HIGE DANdism |
+| `doujin` | Convention scene - high production, niche genres | Ariabl'eyeS |
+| `legacy` | Golden age - city pop, warm analog | Tatsuro Yamashita |
+
+Combine tier + artist for blended results: `/suno anisong like Aimer about farewell`
 
 ### Album Mode
 
@@ -205,6 +226,7 @@ Create a preferences file at `.claude/suno-composer.local.md` in your project or
 |---------|-------------|--------------|
 | `/suno` | Main composition workflow with file output | None |
 | `/suno like <artist>` | Compose using artist profile | None |
+| `/suno <tier>` | Compose using J-pop tier preset (anisong, surface, mainstream, doujin, legacy) | None |
 | `/suno:album` | Create thematically coherent albums/EPs | None |
 | `/suno:variation` | Generate song variations | None |
 | `/suno:extend` | Create song continuations | None |
