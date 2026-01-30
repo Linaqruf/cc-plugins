@@ -339,6 +339,53 @@ For subgenres and common Spanish phrases, see `references/genre-deep-dive.md` �
 | Intense | 130-160 BPM | Minor | dramatic, powerful, dark, cinematic |
 | Chill | 85-110 BPM | Major | relaxed, smooth, laid-back, groovy |
 
+## Reference-Based Composition
+
+### Using Artist References
+
+Users can specify a reference artist instead of mood presets:
+
+```
+/suno like YOASOBI about finding hope
+/suno in the style of Aimer
+/suno Eve-style energetic
+```
+
+### How It Works
+
+1. Command detects reference pattern in arguments
+2. Looks up artist in `references/artist-profiles.md`
+3. Extracts: genre, tempo, vocal style, instruments, production, mood
+4. Generates style prompt with artist name + descriptors
+
+### Style Prompt from Reference
+
+**Input:** `/suno like YOASOBI about finding hope`
+
+**Generated style prompt:**
+```
+YOASOBI-inspired j-pop electronic synth-pop, 140 bpm driving tempo,
+female vocals with clear enunciation and fast melodic runs,
+synthesizer and piano-driven with electronic drums, polished compressed mix,
+emotion arc: searching uncertainty → building momentum → hopeful breakthrough
+```
+
+**Note:** Artist name is included for Suno to potentially recognize. If Suno ignores or rejects it, user can remove the "[Artist]-inspired" part and retry - descriptors remain as fallback.
+
+### Supported Artists
+
+See `references/artist-profiles.md` for full list. Initial coverage includes:
+- YOASOBI, Yorushika, Ado, Eve, Kenshi Yonezu
+- LiSA, Aimer, Official HIGE DANdism, King Gnu, Vaundy
+- RADWIMPS, Mrs. GREEN APPLE, Aimyon, back number, BUMP OF CHICKEN
+- Fujii Kaze, imase, TUYU, Zutomayo, Creepy Nuts
+
+### Unknown Artists
+
+If artist not in database, user can:
+1. Describe the style manually
+2. Fall back to mood presets
+
 ## Vocal Specifications
 
 ### Female Vocals
@@ -611,6 +658,7 @@ For detailed information, consult:
 - **`references/album-composition.md`** - Album coherence, arc patterns, track roles
 - **`references/variation-patterns.md`** - Transformation matrices for song variations
 - **`references/continuation-patterns.md`** - Callback techniques, narrative bridges for song continuations
+- **`references/artist-profiles.md`** - Artist characteristics for reference-based composition
 
 ### Working with User Preferences
 
