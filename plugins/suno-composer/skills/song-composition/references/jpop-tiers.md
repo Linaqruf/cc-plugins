@@ -26,8 +26,6 @@ Reference database for J-pop ecosystem tiers. When user mentions a tier keyword,
 
 ## Tier: Anisong
 
-**Aliases:** anisong, anime, anime opening, anime op, anime ed
-
 **Auto-tags:**
 - [Anime OP]
 - [J-rock]
@@ -62,8 +60,6 @@ emotion arc: determination → struggle → triumphant breakthrough
 ---
 
 ## Tier: Surface
-
-**Aliases:** surface, viral, viral jpop, producer scene, utaite, neo jpop, nico nico, internet music
 
 **What is "Surface"?** Artists who "surfaced" from the underground internet music scene (NicoNico Douga, Vocaloid producers, utaite cover singers) to mainstream success. Also called "neo J-pop" or "internet-born" artists.
 
@@ -103,8 +99,6 @@ narrative storytelling in lyrics, emotion arc: discovery → momentum → resolu
 
 ## Tier: Mainstream
 
-**Aliases:** mainstream, normie, normie jpop, radio jpop
-
 **Auto-tags:**
 - [J-pop]
 - [Band Sound]
@@ -137,8 +131,6 @@ emotion arc: everyday moment → reflection → hopeful resolution
 ---
 
 ## Tier: Doujin
-
-**Aliases:** doujin, touhou, underground, convention, comiket
 
 **Auto-tags:**
 - [Doujin]
@@ -233,8 +225,6 @@ driving energy for night racing, emotion arc: adrenaline → peak → cruise
 ---
 
 ## Tier: Legacy
-
-**Aliases:** legacy, classic, golden age, city pop
 
 **Note:** Reserved for foundational artists who defined genres before the modern J-pop ecosystem. These artists influenced current tiers but don't fit neatly into them.
 

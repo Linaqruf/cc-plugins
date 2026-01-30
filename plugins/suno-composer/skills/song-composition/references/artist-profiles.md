@@ -11,6 +11,7 @@ Reference database for artist-based composition. When user provides a reference 
 ## Profile Format
 
 Each artist entry contains:
+- **Tier:** J-pop ecosystem tier (surface, anisong, mainstream, doujin, legacy)
 - **Aliases:** Alternative names/spellings for matching
 - **Genre:** Primary genres and subgenres
 - **Tempo:** BPM range and feel
@@ -20,6 +21,7 @@ Each artist entry contains:
 - **Themes:** Common lyrical/conceptual themes
 - **Mood:** Emotional range
 - **Similar:** Related artists for discovery
+- **Notable:** (Optional) Special notes - tier classification rationale, collaborations, status changes, unique characteristics
 
 ---
 
@@ -95,6 +97,7 @@ Each artist entry contains:
 - **Themes:** human connection, loneliness, growth, anime/film soundtracks, surreal imagery
 - **Mood:** contemplative, hopeful, melancholic, uplifting, complex
 - **Similar:** YOASOBI, Eve, King Gnu, Vaundy
+- **Notable:** Originally known as Vocaloid producer "Hachi" on NicoNico Douga. Classified as surface tier due to his producer-scene origins and production style, despite later mainstream crossover success.
 
 ---
 

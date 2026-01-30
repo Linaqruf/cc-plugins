@@ -403,6 +403,9 @@ Instead of specifying individual artists, users can invoke ecosystem-level prese
 | **Surface** | `surface`, `viral`, `viral jpop` | Viral/producer scene - complex rhythms, narrative, layered synths |
 | **Mainstream** | `mainstream`, `normie`, `radio jpop` | Radio-friendly - band sound, accessible, sing-along |
 | **Doujin** | `doujin`, `touhou`, `underground` | Convention scene - high production, niche genres |
+| **Legacy** | `legacy`, `classic`, `city pop` | Golden age J-pop - foundational artists, warm analog sound |
+
+**Note:** `viral` alone triggers the Surface tier (internet-born J-pop artists). For non-J-pop viral content, specify genre explicitly (e.g., `viral pop` or `viral edm`).
 
 ### Doujin Subgenres
 
