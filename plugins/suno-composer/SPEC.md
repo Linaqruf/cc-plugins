@@ -1,5 +1,7 @@
 # Suno Composer
 
+> **Purpose:** Technical specification for developers and AI agents. For user-facing quick-start documentation, see `README.md`. This file is the authoritative reference for implementation details, architecture decisions, and internal APIs.
+
 A Claude Code plugin for composing Suno AI songs with professional songwriter techniques and a guided workflow.
 
 ## Overview
