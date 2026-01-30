@@ -483,10 +483,14 @@ Combinations create section variety:
 - [x] Remove romanization from lyric output (clean lyrics only)
 
 ### Phase 10: Reference-Based Composition (v4.4) ✓
-- [x] Create artist profile database (20 J-pop artists)
+- [x] Create artist profile database (29 artists across multiple genres)
 - [x] Add reference parsing to /suno command
 - [x] Integrate profile data into style prompt generation
 - [x] Document feature in SKILL.md
+- [x] Expand genre coverage: J-pop, J-rock, Vocaloid, city pop, doujin, anime soundtrack
+- [x] Fact-check and verify artist profiles (tempo, genre, characteristics)
+- [x] Improve skill trigger phrases for reference-based composition
+- [x] Address audit findings (remove duplication, standardize formatting)
 
 ## Open Questions
 

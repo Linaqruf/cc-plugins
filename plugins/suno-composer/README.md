@@ -8,7 +8,7 @@ A Claude Code plugin for composing Suno AI songs with a guided workflow. Generat
 
 ## Features
 
-- **Reference-Based**: Compose using artist profiles (`/suno like YOASOBI`) with 20 built-in J-pop artists
+- **Reference-Based**: Compose using artist profiles (`/suno like YOASOBI`) with 29 built-in artists
 - **Guided Composition**: Interactive workflow that asks key questions about mood, theme, and style
 - **Preference-Based**: Stores your taste profile for consistent results across sessions
 - **Complete Output**: Generates title, style prompt, lyrics with metatags, and detailed specifications
@@ -70,7 +70,7 @@ Start composition with a theme already in mind.
 /suno Eve-style energetic
 ```
 
-Compose using an artist's characteristics as the base style. The plugin includes profiles for 20 J-pop artists with detailed genre, tempo, vocal, and production information.
+Compose using an artist's characteristics as the base style. The plugin includes profiles for 29 artists spanning J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres.
 
 ### Album Mode
 
@@ -269,7 +269,8 @@ climax, polished production
 ## What's New in v4.4
 
 - **Reference-Based Composition**: Say `/suno like YOASOBI` to compose using an artist's style
-- **20 Artist Profiles**: Pre-built profiles for YOASOBI, Yorushika, Ado, Eve, Kenshi Yonezu, LiSA, Aimer, Official HIGE DANdism, King Gnu, Vaundy, RADWIMPS, Mrs. GREEN APPLE, Aimyon, back number, BUMP OF CHICKEN, Fujii Kaze, imase, TUYU, Zutomayo, Creepy Nuts
+- **29 Artist Profiles**: Comprehensive artist database covering J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres
+- **Artists Include**: YOASOBI, Yorushika, Ado, Eve, Kenshi Yonezu, LiSA, Aimer, Official HIGE DANdism, King Gnu, Vaundy, RADWIMPS, Mrs. GREEN APPLE, Aimyon, back number, BUMP OF CHICKEN, Fujii Kaze, imase, TUYU, Zutomayo, Creepy Nuts, Ariabl'eyeS, Kobukuro, Reol, Hatsune Miku, Kasane Teto, Spitz, Mr.Children, Tatsuro Yamashita, Yuki Kajiura
 - **Smart Style Generation**: Artist name + descriptors in style prompt (user can remove name if Suno rejects)
 - **Fallback Handling**: Unknown artists prompt for manual description or mood presets
 
