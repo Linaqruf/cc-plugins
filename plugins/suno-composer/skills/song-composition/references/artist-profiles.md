@@ -163,3 +163,143 @@ Each artist entry contains:
 
 ---
 
+## RADWIMPS
+
+- **Aliases:** radwimps, ラッドウィンプス
+- **Genre:** j-rock, alternative, soundtrack, emotional rock
+- **Tempo:** 80-150 BPM, varied
+- **Vocal:** male, emotional, raw, distinctive phrasing, english mixing
+- **Instruments:** guitar, bass, drums, piano, strings, orchestral
+- **Production:** cinematic, dynamic, film-quality, atmospheric, layered
+- **Themes:** love, cosmos, "Your Name" soundtrack, weather, human connection
+- **Mood:** emotional, epic, intimate, hopeful, bittersweet
+- **Similar:** King Gnu, back number, Kenshi Yonezu, Bump of Chicken
+
+---
+
+## Mrs. GREEN APPLE
+
+- **Aliases:** mrs green apple, ミセスグリーンアップル, mga
+- **Genre:** j-pop, pop-rock, synth-pop, upbeat pop
+- **Tempo:** 120-160 BPM, energetic
+- **Vocal:** male, bright, high register, youthful energy, clear
+- **Instruments:** synths, guitar, bass, drums, keys
+- **Production:** bright, polished, synth-forward, radio-friendly, punchy
+- **Themes:** youth, positivity, moving forward, everyday struggles, hope
+- **Mood:** upbeat, cheerful, inspiring, energetic, youthful
+- **Similar:** Official HIGE DANdism, Vaundy, YOASOBI, Aimyon
+
+---
+
+## Aimyon
+
+- **Aliases:** aimyon, あいみょん
+- **Genre:** j-pop, folk-pop, acoustic, singer-songwriter
+- **Tempo:** 90-130 BPM, mid-tempo
+- **Vocal:** female, natural, conversational, warm, relatable
+- **Instruments:** acoustic guitar, piano, bass, drums, strings
+- **Production:** organic, warm, singer-songwriter feel, intimate, clean
+- **Themes:** everyday life, relationships, nostalgia, simple moments, youth
+- **Mood:** warm, nostalgic, relatable, gentle, bittersweet
+- **Similar:** back number, Yorushika, Vaundy, Fujii Kaze
+
+---
+
+## back number
+
+- **Aliases:** back number, バックナンバー
+- **Genre:** j-rock, ballad rock, emotional rock, pop-rock
+- **Tempo:** 70-120 BPM, often slower
+- **Vocal:** male, emotional, raw vulnerability, heartfelt delivery
+- **Instruments:** guitar, bass, drums, piano, strings
+- **Production:** guitar-driven, emotional dynamics, clear vocals forward, warm
+- **Themes:** unrequited love, heartbreak, relationships, everyday sadness
+- **Mood:** melancholic, vulnerable, romantic, bittersweet, heartfelt
+- **Similar:** Official HIGE DANdism, Aimyon, RADWIMPS, Aimer
+
+---
+
+## BUMP OF CHICKEN
+
+- **Aliases:** bump of chicken, バンプオブチキン, bump
+- **Genre:** j-rock, alternative rock, emotional rock
+- **Tempo:** 100-150 BPM, varied
+- **Vocal:** male, gentle, storytelling quality, emotional restraint
+- **Instruments:** guitar, bass, drums, synth accents
+- **Production:** guitar-forward, atmospheric, layered, stadium-ready, warm
+- **Themes:** friendship, journey, games/anime tie-ins, perseverance, stars
+- **Mood:** hopeful, nostalgic, inspiring, gentle intensity, warm
+- **Similar:** RADWIMPS, back number, Mr.Children, Spitz
+
+---
+
+## Fujii Kaze
+
+- **Aliases:** fujii kaze, 藤井風, kaze fujii
+- **Genre:** j-pop, r&b, soul, funk, piano pop
+- **Tempo:** 80-120 BPM, groove-based
+- **Vocal:** male, soulful, smooth, Okayama dialect, emotional, falsetto
+- **Instruments:** piano, keys, bass, drums, brass, strings
+- **Production:** retro-modern, warm, soul-influenced, organic, rich
+- **Themes:** home, dialect, self-acceptance, spirituality, simple life
+- **Mood:** soulful, warm, groovy, contemplative, uplifting
+- **Similar:** Vaundy, Kenshi Yonezu, imase, tofubeats
+
+---
+
+## imase
+
+- **Aliases:** imase, いませ
+- **Genre:** j-pop, city pop revival, r&b, groovy pop
+- **Tempo:** 100-130 BPM, mid-tempo groove
+- **Vocal:** male, smooth, laid-back, youthful, catchy hooks
+- **Instruments:** synths, bass, guitar, drums, retro keys
+- **Production:** city pop influenced, groovy, polished, nostalgic-modern blend
+- **Themes:** night drives, city life, romance, carefree youth
+- **Mood:** groovy, nostalgic, romantic, carefree, cool
+- **Similar:** Vaundy, Fujii Kaze, Tani Yuuki, 80s city pop
+
+---
+
+## TUYU
+
+- **Aliases:** tuyu, ツユ, つゆ
+- **Genre:** j-rock, emotional rock, vocaloid-influenced, emo
+- **Tempo:** 140-180 BPM, fast and intense
+- **Vocal:** female, raw emotion, crying quality, intense delivery, vulnerable
+- **Instruments:** guitar, bass, drums, piano, synth
+- **Production:** emotional, dynamic, rock-forward, raw, intense
+- **Themes:** mental health, anxiety, self-doubt, inner struggles, rain
+- **Mood:** intense, vulnerable, cathartic, dark, emotional release
+- **Similar:** Yorushika, Ado, Eve, Zutomayo
+
+---
+
+## Zutomayo
+
+- **Aliases:** zutomayo, ずっと真夜中でいいのに。, ztmy, zutomayonightforever
+- **Genre:** j-rock, art rock, experimental pop, vocaloid-influenced
+- **Tempo:** 130-170 BPM, energetic and complex
+- **Vocal:** female (ACAね), unique tone, fast delivery, playful, emotional
+- **Instruments:** guitar, bass, drums, synths, experimental sounds
+- **Production:** intricate, layered, genre-blending, detailed, artistic
+- **Themes:** night, emotions, surreal imagery, relationships, artistic expression
+- **Mood:** energetic, playful, complex, melancholic undertones, artistic
+- **Similar:** YOASOBI, Eve, Yorushika, Ado
+
+---
+
+## Creepy Nuts
+
+- **Aliases:** creepy nuts, クリーピーナッツ, r-指定, dj松永
+- **Genre:** j-hip-hop, rap, hip-hop, comedic rap
+- **Tempo:** 90-140 BPM, hip-hop grooves
+- **Vocal:** male rap, fast flow, wordplay, storytelling, comedic timing
+- **Instruments:** turntables, samples, bass, drums, funk elements
+- **Production:** hip-hop beats, sample-based, punchy, groove-heavy, clean
+- **Themes:** otaku culture, everyday life, humor, self-deprecation, battle rap
+- **Mood:** fun, clever, energetic, comedic, confident
+- **Similar:** RIP SLYME, RHYMESTER, Kreva, Scha Dara Parr
+
+---
+
