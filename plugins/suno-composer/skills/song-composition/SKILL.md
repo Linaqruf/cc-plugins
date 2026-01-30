@@ -1,7 +1,7 @@
 ---
 name: song-composition
 description: This skill should be used when the user wants to compose songs for Suno AI, write lyrics, create style prompts, or generate Suno v5 metatags. Supports J-pop, K-pop, EDM, ballads, rock, and Latin genres, plus album/EP composition, acoustic or remix variations, and song extensions. Triggers on "write a song", "Suno prompt", "Suno metatags", "style of music", "song lyrics", "Suno AI", "acoustic version", "remix version", "create an album", "extend this song", "compose music".
-version: 4.1.0
+version: 4.2.0
 ---
 
 # Song Composition for Suno AI
@@ -76,29 +76,41 @@ climax, polished production
 
 ## Advanced Metatags in Lyrics
 
-Suno interprets embedded directions in lyrics. **Use sparingly** - see "Lyric Tagging Guidelines" in Output Formats section for when to use these vs. simple section markers.
+Suno interprets embedded directions in lyrics. Use these to create expressive, dynamic songs. The key is **variety and contrast**, not restraint.
+
+### Vocal Technique Tags (Recommended)
+Describe *how* to sing - these don't cause escalation when used consistently:
+```
+[Verse 1][soft, breathy]
+[Verse 2][intimate, tender]
+[Bridge][whisper]
+[Chorus][belting, powerful]
+```
 
 ### Arrangement Tags (Recommended)
+Control instrumentation and texture:
 ```
 [Intro: Piano only]
-[Chorus: Full band]
+[Chorus: Full band with strings]
 [Bridge: Stripped back, acoustic only]
 [Outro: Fade out]
 ```
 
-### Vocal Direction Tags (Use Sparingly)
-```
-[Intro][whisper]
-[Bridge][intimate]
-```
-
-### Emotion Progression (Use Rarely)
-Only when you need a specific shift within a single section:
+### Emotion Progression (Use Strategically)
+For emotional shifts within a section:
 ```
 [Bridge][Mood: vulnerable → hopeful]
+[Final Chorus][Mood: bittersweet → triumphant]
 ```
 
-**Warning:** Don't use intensity/emotion tags on every section - this causes cumulative pitch escalation. Most sections should have only the section marker.
+### Intensity Tags (Use at Peaks Only)
+Reserve escalation words for genuine climactic moments:
+```
+[Final Chorus][soaring, powerful]    ← OK at climax
+[Chorus][powerful][Verse 2][more powerful][Bridge][even more powerful]  ← BAD: cumulative
+```
+
+**Guideline:** Create **contrast**, not escalation. A soft verse makes the chorus feel bigger. A stripped bridge makes the final chorus hit harder.
 
 ## Genre Conventions
 
@@ -244,6 +256,7 @@ For subgenres and common Spanish phrases, see `references/genre-deep-dive.md` �
 - Syllable count per line (7-5 or 5-7 patterns traditional)
 - Particle placement affects rhythm
 - Mix of hiragana vocabulary and kanji concepts
+- Romanization optional - can help Suno with pronunciation clarity
 
 **Emotional vocabulary:**
 - 切ない (setsunai) - bittersweet longing
@@ -401,70 +414,72 @@ Target 8-15 elements. Copy-paste ready.)
 
 ### Lyrics
 
-[Intro: Piano only]
+[Intro: Piano, atmospheric]
 (instrumental)
 
-[Verse 1]
-(lyrics - establish baseline energy)
+[Verse 1][soft, intimate]
+(lyrics - establish mood and baseline)
 
-[Pre-Chorus]
-(lyrics - natural tension from lyrics, no explicit "building" tag)
+[Pre-Chorus][building]
+(lyrics - tension rises naturally)
 
-[Chorus]
-(lyrics - peak of section, arrangement carries energy)
+[Chorus][full arrangement]
+(lyrics - emotional release, peak energy)
 
-[Verse 2]
-(lyrics - return to verse energy, contrast with chorus)
+[Verse 2][tender, reflective]
+(lyrics - return to intimate space, contrast with chorus)
 
-[Bridge][stripped, intimate]
-(lyrics - contrast moment, pull back before final push)
+[Bridge][stripped, vulnerable]
+(lyrics - pull back, create space before climax)
 
-[Final Chorus][full arrangement]
-(lyrics - arrangement tag only, not intensity)
+[Final Chorus][soaring, triumphant]
+(lyrics - climactic moment, earned escalation)
 
-[Outro]
-(closing - resolve, fade or end)
+[Outro: Fade with piano]
+(closing - gentle resolution)
 
 ### Specifications
 - **Tempo:** [BPM or tempo feel]
-- **Vocal:** [type and style]
-- **Dynamics:** [describe the wave pattern, e.g., "soft verse → full chorus → stripped bridge → final chorus"]
+- **Vocal:** [type and style, progression through song]
+- **Mood Arc:** [opening → middle → climax, e.g., "intimate longing → building hope → triumphant release"]
 - **Key Instruments:** [by prominence]
 - **Production Style:** [aesthetic and key effects]
 ```
 
-### Lyric Tagging Guidelines (IMPORTANT)
+### Lyric Tagging Guidelines
 
-**Avoid over-tagging** - Suno interprets cumulative modifiers as escalation:
+**Create contrast, not monotony.** Expressive tags make songs interesting - the key is **variety**.
 
-| ❌ Causes Pitch Drift | ✅ Better Approach |
-|----------------------|-------------------|
-| `[Verse 1][soft, building]` | `[Verse 1]` |
-| `[Pre-Chorus][building tension]` | `[Pre-Chorus]` |
-| `[Chorus][powerful, soaring]` | `[Chorus]` |
-| `[Bridge][Mood: vulnerable → triumphant]` | `[Bridge][stripped]` |
-| `[Final Chorus][peak, explosive, maximum]` | `[Final Chorus][full arrangement]` |
+| Tag Type | Purpose | Examples |
+|----------|---------|----------|
+| **Vocal technique** | How to sing | `[soft, breathy]`, `[belting]`, `[whisper]`, `[intimate]` |
+| **Arrangement** | Instrumentation | `[piano only]`, `[full band]`, `[stripped]`, `[acoustic]` |
+| **Emotion** | Feeling/mood | `[vulnerable]`, `[triumphant]`, `[tender]`, `[fierce]` |
+| **Progression** | Within-section shift | `[Mood: lost → found]`, `[building → release]` |
 
-**When to use modifiers:**
-- **Arrangement changes:** `[Bridge][acoustic only]`, `[Chorus][full band]`
-- **Contrast points:** `[Verse 2][stripped back]` after a big chorus
-- **Specific vocal needs:** `[Intro][whisper]` for effect
+**What causes pitch drift (avoid):**
+```
+❌ Stacking escalation on EVERY section:
+[Verse 1][building] → [Pre-Chorus][rising] → [Chorus][powerful] → [Verse 2][more intense] → [Bridge][explosive]
+```
 
-**When NOT to use modifiers:**
-- Don't tag every section - let the song breathe
-- Don't stack intensity words (powerful + soaring + explosive)
-- Don't use arrow progressions on every bridge (`→` implies escalation)
-- Don't add "building" to pre-chorus - the structure already implies it
+**What creates great dynamics (do this):**
+```
+✅ Contrast through variety:
+[Verse 1][soft, intimate] → [Pre-Chorus][building] → [Chorus][full, soaring] → [Verse 2][tender] → [Bridge][stripped, vulnerable] → [Final Chorus][triumphant]
+```
 
 **Dynamic Wave Pattern:**
-Songs should breathe like a wave, not climb like stairs:
+Songs should breathe - pull back to make peaks feel bigger:
 ```
 Energy:  ▁▂▃▅▃▂▅▆▅▃▂▁
 Section: I V1 PC C V2 PC C Br FC O
+         ↑        ↑     ↑
+       soft    reset  contrast
 ```
-- Verse 2 should reset closer to Verse 1 energy
-- Bridge should pull back before the final push
-- Not every chorus needs to be bigger than the last
+- Verse 2 should reset to intimate energy (not "bigger than verse 1")
+- Bridge should pull back (stripped, vulnerable) before final push
+- Final Chorus earns intensity through contrast, not accumulation
 
 **Copy-Paste Guide:**
 1. **Style Prompt** → Suno's "Style of Music" field
@@ -521,12 +536,6 @@ For detailed information, consult:
 - **`references/album-composition.md`** - Album coherence, arc patterns, track roles
 - **`references/variation-patterns.md`** - Transformation matrices for song variations
 - **`references/continuation-patterns.md`** - Callback techniques, narrative bridges for song continuations
-
-### Example Outputs
-
-For complete song examples demonstrating the output format and selective tagging:
-- **`examples/jpop-ballad-example.md`** - J-pop ballad with Japanese lyrics
-- **`examples/edm-dance-example.md`** - EDM/progressive house with build-drop structure
 
 ### Working with User Preferences
 

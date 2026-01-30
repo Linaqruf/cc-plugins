@@ -1,6 +1,6 @@
 # Suno Composer
 
-**Version 4.1.0**
+**Version 4.2.0**
 
 A Claude Code plugin for composing Suno AI songs with a guided workflow. Generates complete song specifications including lyrics, style tags, tempo, vocal arrangements, and more - all based on your musical preferences.
 
@@ -17,7 +17,7 @@ A Claude Code plugin for composing Suno AI songs with a guided workflow. Generat
 - **Variation Mode**: Generate acoustic, remix, stripped, extended, or cinematic versions
 - **Extend Mode**: Create song continuations (sequels, prequels, responses, alternate POVs)
 - **Multi-Genre**: J-pop, K-pop, Western pop/rock, EDM, Latin, and more
-- **Language Agnostic**: Supports any language including Japanese
+- **Language Agnostic**: Supports any language with optional romanization for Japanese
 
 ## Installation
 
@@ -218,44 +218,52 @@ climax, polished production
 [Intro: Piano, atmospheric]
 (instrumental)
 
-[Verse 1]
+[Verse 1][soft, intimate]
 ...
 
-[Pre-Chorus]
+[Pre-Chorus][building]
 ...
 
-[Chorus]
+[Chorus][full arrangement]
 ...
 
-[Verse 2]
+[Verse 2][tender, reflective]
 ...
 
-[Bridge][stripped, intimate]
+[Bridge][stripped, vulnerable]
 ...
 
-[Final Chorus][full arrangement]
+[Final Chorus][soaring, triumphant]
 ...
 
-[Outro]
+[Outro: Fade with piano]
 
 → Copy to Suno's "Lyrics" field (keep all [bracket] tags)
 
 ### Specifications
 - **Tempo:** 85 BPM
 - **Vocal:** Soft female vocals, building to emotional delivery
-- **Dynamics:** Soft verse → full chorus → stripped bridge → final chorus
+- **Mood Arc:** Intimate longing → building hope → triumphant release
 - **Key Instruments:** Piano (lead), strings, subtle percussion
 - **Production Style:** Reverb-heavy, polished, dynamic
 ```
 
-**Note:** Lyrics use selective tagging - most sections have only the section marker. Tags are added only for arrangement changes (`[stripped]`, `[full arrangement]`) to avoid cumulative pitch drift.
+**Note:** Lyrics use expressive tagging with **contrast** - soft verses, stripped bridges, and climactic final choruses create dynamic interest through variety, not monotony.
+
+## What's New in v4.2
+
+- **Restored Expressive Tags**: Vocal technique tags (`[soft, breathy]`, `[belting]`) are back for richer output
+- **Contrast Over Restraint**: Focus on dynamic variety, not minimal tagging - soft makes loud feel bigger
+- **Strategic Escalation**: Intensity tags allowed at climactic moments (Final Chorus) where earned
+- **Optional Romanization**: Japanese lyrics can include romanization for pronunciation clarity
+- **Mood Arc Restored**: Specifications include emotional journey, not just dynamics
+- **Removed Redundant Examples**: Skill knowledge is comprehensive; examples were unnecessary bloat
 
 ## What's New in v4.1
 
 - **Preview-First Workflow**: Generate metadata previews before full lyrics to save tokens
 - **Confirm/Modify/Regenerate**: Review song concepts before committing to full generation
-- **Fixed Pitch Drift**: Selective tagging approach prevents cumulative pitch escalation
-- **Dynamic Control**: New guidelines for creating proper energy waves (peaks AND valleys)
+- **Dynamic Control**: Guidelines for creating proper energy waves (peaks AND valleys)
 - **Direct-to-File**: Full lyrics written directly to files, not duplicated in console
 
 ## What's New in v4.0

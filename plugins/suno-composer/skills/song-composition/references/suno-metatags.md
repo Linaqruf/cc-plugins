@@ -147,9 +147,19 @@ rock, powerful vocals, electric guitar, driving drums, anthem, stadium, epic cho
 
 ## Advanced Techniques
 
+### Vocal Technique Tags (Recommended)
+
+Describe *how* to sing - use freely for expressive variety:
+```
+[Verse 1][soft, breathy]
+[Verse 2][intimate, tender]
+[Bridge][whisper]
+[Chorus][belting, powerful]
+```
+
 ### Instrument/Arrangement Specification (Recommended)
 
-Use tags to control arrangement, not intensity:
+Control instrumentation and texture:
 ```
 [Chorus: Full band with brass section]
 [Verse 2: Stripped back, acoustic only]
@@ -157,62 +167,61 @@ Use tags to control arrangement, not intensity:
 [Final Chorus: Full arrangement]
 ```
 
-### When to Use Emotion Progression (Sparingly)
+### Emotion Progression (Use Strategically)
 
-Only use arrow progressions (`→`) when you specifically need an emotional shift within a single section:
+Arrow progressions (`→`) work well for emotional shifts within a section:
 ```
 [Bridge][Mood: vulnerable → hopeful]
+[Final Chorus][Mood: bittersweet → triumphant]
 ```
 
-**Warning:** Don't use on every section - this causes cumulative pitch escalation.
+## Dynamic Control Through Contrast
 
-## Dynamic Control (Avoiding Pitch Drift)
+### The Problem: Monotonous Escalation
 
-### The Problem: Cumulative Escalation
-
-When every section has intensity modifiers, Suno interprets this as continuous escalation:
+When every section stacks escalation words, Suno interprets this as continuous climb:
 ```
-❌ BAD - causes pitch to keep rising:
+❌ BAD - monotonous escalation:
 [Verse 1][building]
-[Pre-Chorus][building tension]
+[Pre-Chorus][rising tension]
 [Chorus][powerful, soaring]
 [Verse 2][more intense]
-[Bridge][vulnerable → triumphant]
+[Bridge][even more powerful]
 [Final Chorus][peak, explosive, maximum]
 ```
 
-### The Solution: Selective Tagging
+### The Solution: Contrast and Variety
 
-Let most sections breathe without modifiers. Only tag when you need specific changes:
+Create interest through variety - soft makes loud feel bigger:
 ```
-✅ GOOD - natural dynamics:
-[Intro: Piano only]
-[Verse 1]
-[Pre-Chorus]
-[Chorus]
-[Verse 2]
-[Bridge][stripped, intimate]
-[Final Chorus][full arrangement]
-[Outro]
+✅ GOOD - dynamic contrast:
+[Intro: Piano, atmospheric]
+[Verse 1][soft, intimate]
+[Pre-Chorus][building]
+[Chorus][full arrangement]
+[Verse 2][tender, reflective]
+[Bridge][stripped, vulnerable]
+[Final Chorus][soaring, triumphant]
+[Outro: Fade with piano]
 ```
 
-### Reset Points
+### Creating Reset Points
 
-After a peak (Chorus), reset energy before building again:
-- Verse 2 should feel similar to Verse 1, not "bigger"
-- Bridge is often a contrast point - pull back here
-- Use `[stripped]`, `[intimate]`, `[acoustic only]` to create valleys
+After a peak (Chorus), reset energy to create contrast:
+- Verse 2 should return to intimate space (not "bigger than verse 1")
+- Bridge is your contrast point - pull back here
+- Use `[stripped]`, `[vulnerable]`, `[tender]` to create valleys
+- Final Chorus earns its intensity through the preceding contrast
 
-### Tag Hierarchy
+### Tag Categories
 
-| Tag Type | When to Use | Example |
-|----------|------------|---------|
-| Section only | Most sections | `[Verse 1]` |
-| + Arrangement | Specific instrument changes | `[Bridge][piano only]` |
-| + Vocal style | Specific vocal effect | `[Intro][whisper]` |
-| + Mood arrow | Emotional shift within section | `[Bridge][Mood: lost → found]` |
-
-Use simpler tags more often, complex tags rarely.
+| Tag Type | Purpose | Examples |
+|----------|---------|----------|
+| Vocal technique | How to sing | `[soft, breathy]`, `[belting]`, `[whisper]` |
+| Arrangement | Instrumentation | `[piano only]`, `[full band]`, `[stripped]` |
+| Emotion | Feeling/mood | `[vulnerable]`, `[triumphant]`, `[tender]` |
+| Progression | Within-section shift | `[Mood: lost → found]` |
+| Intensity | Climactic peaks | `[soaring]`, `[powerful]` (use at peaks only) |
 
 ## Style Prompt vs Lyrics Prompt
 

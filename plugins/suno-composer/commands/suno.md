@@ -127,15 +127,15 @@ Use AskUserQuestion to let user review previews:
    - Consider vocal type preferences
    - Check for any user preferences loaded in Step 1
 
-2. **Write Lyrics with Selective Metatags**
+2. **Write Lyrics with Expressive Metatags**
    - Match language to user preference
    - Use genre-appropriate vocabulary (consult skill references)
    - Create memorable chorus hooks
-   - **Use minimal tagging** - most sections need only the section marker: `[Verse 1]`
-   - **Tag arrangement changes**, not intensity: `[Bridge][piano only]`, `[Final Chorus][full arrangement]`
-   - **Avoid cumulative intensity tags** - don't stack "powerful", "building", "soaring" on every section
-   - **Create reset points** - after Chorus, Verse 2 should feel like Verse 1 energy, not bigger
-   - Use emotion arrows sparingly, only for specific in-section shifts
+   - **Use vocal technique tags** for expressiveness: `[Verse 1][soft, breathy]`, `[Chorus][belting]`
+   - **Use arrangement tags** for texture: `[Bridge][stripped, piano only]`, `[Final Chorus][full arrangement]`
+   - **Create contrast** - soft verses make choruses feel bigger, stripped bridges make final choruses hit harder
+   - **Save intensity words** for climactic moments: `[Final Chorus][soaring, triumphant]` (not every section)
+   - For Japanese: provide romanization optionally for pronunciation clarity
 
 3. **Craft Style Prompt** (Descriptive prose, not just comma-separated tags)
    - Start with primary genre and subgenre/era influence
@@ -156,7 +156,8 @@ Use AskUserQuestion to let user review previews:
 **Quality Standards:**
 - Lyrics must be singable with natural rhythm
 - Style Prompt must be descriptive prose (not just comma-separated tags)
-- Lyrics must include advanced metatags (section-specific vocal directions, emotion progression, arrangement specs)
+- Lyrics must include expressive metatags (vocal techniques, arrangement, emotion where appropriate)
+- Use **contrast** - soft/loud, stripped/full, vulnerable/triumphant
 - Production tags must match genre/mood
 - Each song in a batch must feel distinct
 - Output must be copy-paste ready for Suno's two-field interface
