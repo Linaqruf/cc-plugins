@@ -25,6 +25,7 @@ Each artist entry contains:
 
 ## YOASOBI
 
+- **Tier:** surface
 - **Aliases:** yoasobi, ヨアソビ, Ayase, ikura
 - **Genre:** j-pop, electronic, synth-pop, vocaloid-influenced
 - **Tempo:** 90-180 BPM, varied (ballads to high-energy)
@@ -39,6 +40,7 @@ Each artist entry contains:
 
 ## Yorushika
 
+- **Tier:** surface
 - **Aliases:** yorushika, ヨルシカ, n-buna, suis
 - **Genre:** j-rock, indie pop, acoustic-electronic blend, literary rock
 - **Tempo:** 100-140 BPM, varied (ballads to uptempo)
@@ -53,6 +55,7 @@ Each artist entry contains:
 
 ## Ado
 
+- **Tier:** surface
 - **Aliases:** ado, アド
 - **Genre:** j-pop, rock, electronic, chaotic pop, vocaloid-influenced
 - **Tempo:** 120-180 BPM, high energy
@@ -67,6 +70,7 @@ Each artist entry contains:
 
 ## Eve
 
+- **Tier:** surface
 - **Aliases:** eve, イブ
 - **Genre:** j-rock, alternative, vocaloid-influenced, art rock
 - **Tempo:** 120-160 BPM, driving
@@ -81,6 +85,7 @@ Each artist entry contains:
 
 ## Kenshi Yonezu
 
+- **Tier:** surface
 - **Aliases:** kenshi yonezu, 米津玄師, yonezu kenshi, hachi
 - **Genre:** j-pop, alternative, electronic, art pop
 - **Tempo:** 90-140 BPM, varied
@@ -95,6 +100,7 @@ Each artist entry contains:
 
 ## LiSA
 
+- **Tier:** anisong
 - **Aliases:** lisa, リサ, risa oribe
 - **Genre:** j-rock, anisong, pop-rock, power pop
 - **Tempo:** 140-180 BPM, high energy
@@ -109,6 +115,7 @@ Each artist entry contains:
 
 ## Aimer
 
+- **Tier:** anisong
 - **Aliases:** aimer, エメ
 - **Genre:** j-pop, ballad, rock, electronic, cinematic
 - **Tempo:** 70-130 BPM, varied (ballads to mid-tempo)
@@ -123,6 +130,7 @@ Each artist entry contains:
 
 ## Official HIGE DANdism
 
+- **Tier:** mainstream
 - **Aliases:** official hige dandism, ヒゲダン, higedan, ohd
 - **Genre:** j-pop, pop-rock, piano pop, sophisticated pop
 - **Tempo:** 80-140 BPM, varied
@@ -137,6 +145,7 @@ Each artist entry contains:
 
 ## King Gnu
 
+- **Tier:** mainstream
 - **Aliases:** king gnu, キングヌー
 - **Genre:** j-rock, alternative, art rock, progressive pop
 - **Tempo:** 90-150 BPM, varied and complex
@@ -151,6 +160,7 @@ Each artist entry contains:
 
 ## Vaundy
 
+- **Tier:** surface
 - **Aliases:** vaundy, バウンディ
 - **Genre:** j-pop, r&b, rock, genre-fluid
 - **Tempo:** 90-140 BPM, groove-oriented
@@ -165,6 +175,7 @@ Each artist entry contains:
 
 ## RADWIMPS
 
+- **Tier:** mainstream
 - **Aliases:** radwimps, ラッドウィンプス
 - **Genre:** j-rock, alternative, soundtrack, emotional rock
 - **Tempo:** 80-150 BPM, varied
@@ -179,6 +190,7 @@ Each artist entry contains:
 
 ## Mrs. GREEN APPLE
 
+- **Tier:** mainstream
 - **Aliases:** mrs green apple, ミセスグリーンアップル, mga
 - **Genre:** j-pop, pop-rock, rock with electronic elements, upbeat pop
 - **Tempo:** 120-160 BPM, energetic
@@ -193,6 +205,7 @@ Each artist entry contains:
 
 ## Aimyon
 
+- **Tier:** mainstream
 - **Aliases:** aimyon, あいみょん
 - **Genre:** j-pop, folk-pop, acoustic, singer-songwriter
 - **Tempo:** 90-130 BPM, mid-tempo
@@ -207,6 +220,7 @@ Each artist entry contains:
 
 ## back number
 
+- **Tier:** mainstream
 - **Aliases:** back number, バックナンバー
 - **Genre:** j-rock, ballad rock, emotional rock, pop-rock
 - **Tempo:** 70-120 BPM, often slower
@@ -221,6 +235,7 @@ Each artist entry contains:
 
 ## BUMP OF CHICKEN
 
+- **Tier:** mainstream
 - **Aliases:** bump of chicken, バンプオブチキン, bump
 - **Genre:** j-rock, alternative rock, emotional rock
 - **Tempo:** 100-150 BPM, varied
@@ -235,6 +250,7 @@ Each artist entry contains:
 
 ## Fujii Kaze
 
+- **Tier:** mainstream
 - **Aliases:** fujii kaze, 藤井風, kaze fujii
 - **Genre:** j-pop, r&b, soul, funk, piano pop
 - **Tempo:** 80-120 BPM, groove-based
@@ -249,6 +265,7 @@ Each artist entry contains:
 
 ## imase
 
+- **Tier:** mainstream
 - **Aliases:** imase, いませ
 - **Genre:** j-pop, city pop revival, r&b, groovy pop
 - **Tempo:** 100-130 BPM, mid-tempo groove
@@ -265,6 +282,7 @@ Each artist entry contains:
 
 > **Note:** TUYU officially disbanded in June 2024. Profile retained for reference-based composition of similar styles.
 
+- **Tier:** surface
 - **Aliases:** tuyu, ツユ, つゆ
 - **Genre:** j-rock, emotional rock, vocaloid-influenced, emo
 - **Tempo:** 140-180 BPM, fast and intense
@@ -279,6 +297,7 @@ Each artist entry contains:
 
 ## Zutomayo
 
+- **Tier:** surface
 - **Aliases:** zutomayo, ずっと真夜中でいいのに。, ztmy, zutomayonightforever
 - **Genre:** j-rock, art rock, experimental pop, vocaloid-influenced
 - **Tempo:** 130-170 BPM, energetic and complex
@@ -293,6 +312,7 @@ Each artist entry contains:
 
 ## Creepy Nuts
 
+- **Tier:** mainstream
 - **Aliases:** creepy nuts, クリーピーナッツ, r-指定, dj松永, R-Shitei, DJ Matsunaga
 - **Genre:** j-hip-hop, rap, hip-hop, Jersey Club, comedic rap
 - **Tempo:** 90-150 BPM, hip-hop grooves to uptempo Jersey Club
@@ -308,6 +328,7 @@ Each artist entry contains:
 
 ## Ariabl'eyeS
 
+- **Tier:** doujin
 - **Aliases:** ariableyes, アリアブルアイズ, Lyse, Luna, Rena
 - **Genre:** doujin, gothic metal, symphonic metal, power metal, fantasy rock
 - **Tempo:** 140-180 BPM, fast and dramatic
@@ -322,6 +343,7 @@ Each artist entry contains:
 
 ## Kobukuro
 
+- **Tier:** mainstream
 - **Aliases:** kobukuro, コブクロ, Kentaro Kobuchi, Shunsuke Kuroda
 - **Genre:** j-pop, folk-pop, folk-rock, acoustic pop, ballad
 - **Tempo:** 70-120 BPM, mid-tempo to slow
@@ -337,6 +359,7 @@ Each artist entry contains:
 
 ## Reol
 
+- **Tier:** surface
 - **Aliases:** reol, れをる, REOL
 - **Genre:** j-pop, electronic, EDM, dance-pop, vocaloid-influenced
 - **Tempo:** 120-160 BPM, energetic
@@ -352,6 +375,7 @@ Each artist entry contains:
 
 ## Hatsune Miku
 
+- **Tier:** surface
 - **Aliases:** hatsune miku, 初音ミク, miku, vocaloid
 - **Genre:** vocaloid, electronic, j-pop, dance, experimental, any genre
 - **Tempo:** 100-200 BPM, highly varied by producer
@@ -367,6 +391,7 @@ Each artist entry contains:
 
 ## Kasane Teto
 
+- **Tier:** surface
 - **Aliases:** kasane teto, 重音テト, teto, UTAU, SynthV
 - **Genre:** vocaloid-style, electronic, j-pop, rock, experimental
 - **Tempo:** 120-180 BPM, varied by producer
@@ -382,6 +407,7 @@ Each artist entry contains:
 
 ## Spitz
 
+- **Tier:** mainstream
 - **Aliases:** spitz, スピッツ, Masamune Kusano
 - **Genre:** j-rock, pop-rock, alternative rock, indie rock
 - **Tempo:** 100-140 BPM, mid-tempo
@@ -397,6 +423,7 @@ Each artist entry contains:
 
 ## Mr.Children
 
+- **Tier:** mainstream
 - **Aliases:** mr.children, ミスチル, misu-chiru, Kazutoshi Sakurai
 - **Genre:** j-rock, pop-rock, arena rock, alternative rock
 - **Tempo:** 90-140 BPM, varied
@@ -412,6 +439,7 @@ Each artist entry contains:
 
 ## Tatsuro Yamashita
 
+- **Tier:** legacy
 - **Aliases:** tatsuro yamashita, 山下達郎, tatsu
 - **Genre:** city pop, funk, soft rock, R&B, AOR, boogie
 - **Tempo:** 100-130 BPM, groovy mid-tempo
@@ -427,6 +455,7 @@ Each artist entry contains:
 
 ## Yuki Kajiura
 
+- **Tier:** doujin
 - **Aliases:** yuki kajiura, 梶浦由記, kajiura, FictionJunction, Kalafina
 - **Genre:** anime soundtrack, orchestral, electronic, choral, neo-classical
 - **Tempo:** 80-150 BPM, varied by piece
