@@ -93,3 +93,73 @@ Each artist entry contains:
 
 ---
 
+## LiSA
+
+- **Aliases:** lisa, リサ, risa oribe
+- **Genre:** j-rock, anisong, pop-rock, power pop
+- **Tempo:** 140-180 BPM, high energy
+- **Vocal:** female, powerful belting, rock edge, emotional intensity, wide range
+- **Instruments:** electric guitar, bass, drums, synth accents
+- **Production:** rock-forward, punchy, energetic, arena-ready, crisp
+- **Themes:** fighting spirit, never giving up, anime themes, passion, strength
+- **Mood:** energetic, inspiring, passionate, intense, triumphant
+- **Similar:** Aimer, YOASOBI, Ado, ReoNa
+
+---
+
+## Aimer
+
+- **Aliases:** aimer, エメ
+- **Genre:** j-pop, ballad, rock, electronic, cinematic
+- **Tempo:** 70-130 BPM, varied (ballads to mid-tempo)
+- **Vocal:** female, husky, breathy, emotional depth, distinctive rasp, intimate
+- **Instruments:** piano, guitar, strings, synths, full orchestra (ballads)
+- **Production:** atmospheric, cinematic, reverb-heavy, dynamic, lush arrangements
+- **Themes:** love, loss, longing, anime soundtracks, night, stars, distance
+- **Mood:** melancholic, romantic, bittersweet, powerful, ethereal
+- **Similar:** Yorushika, LiSA, back number, Uru
+
+---
+
+## Official HIGE DANdism
+
+- **Aliases:** official hige dandism, ヒゲダン, higedan, ohd
+- **Genre:** j-pop, pop-rock, piano pop, sophisticated pop
+- **Tempo:** 80-140 BPM, varied
+- **Vocal:** male, smooth, high register, clear falsetto, emotional control
+- **Instruments:** piano, guitar, bass, drums, strings, brass
+- **Production:** polished, rich arrangements, layered harmonies, radio-ready
+- **Themes:** love, relationships, everyday emotions, growth, sincerity
+- **Mood:** uplifting, romantic, heartfelt, joyful, bittersweet
+- **Similar:** King Gnu, back number, Mrs. GREEN APPLE, Vaundy
+
+---
+
+## King Gnu
+
+- **Aliases:** king gnu, キングヌー
+- **Genre:** j-rock, alternative, art rock, progressive pop
+- **Tempo:** 90-150 BPM, varied and complex
+- **Vocal:** male (dual vocalists), contrast between smooth and raw, harmonies
+- **Instruments:** guitar, bass, drums, piano, synths, experimental elements
+- **Production:** artistic, layered, dynamic shifts, genre-blending, intricate
+- **Themes:** duality, society, human nature, artistic expression, philosophy
+- **Mood:** complex, intense, contemplative, unpredictable, powerful
+- **Similar:** Official HIGE DANdism, Kenshi Yonezu, Vaundy, RADWIMPS
+
+---
+
+## Vaundy
+
+- **Aliases:** vaundy, バウンディ
+- **Genre:** j-pop, r&b, rock, genre-fluid
+- **Tempo:** 90-140 BPM, groove-oriented
+- **Vocal:** male, soulful, smooth, rhythmic delivery, emotional range
+- **Instruments:** guitar, bass, drums, synths, keys
+- **Production:** modern, r&b influenced, tight groove, polished, warm
+- **Themes:** youth, relationships, self-discovery, everyday feelings, city life
+- **Mood:** cool, introspective, groovy, emotional, laid-back energy
+- **Similar:** Kenshi Yonezu, King Gnu, Fujii Kaze, imase
+
+---
+
