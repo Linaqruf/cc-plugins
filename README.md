@@ -21,7 +21,7 @@ Then install any plugin:
 | Plugin | Description | Version |
 |--------|-------------|---------|
 | [project-spec](./plugins/project-spec) | Generate project specifications with SPEC.md as core and optional SPEC/ supplements | 3.1.0 |
-| [suno-composer](./plugins/suno-composer) | Guided workflow for composing Suno AI songs with lyrics, style tags, and arrangements | 4.1.0 |
+| [suno-composer](./plugins/suno-composer) | Guided workflow for composing Suno AI songs with 29 artist profiles, J-pop tier presets, lyrics, style tags, and arrangements | 4.5.0 |
 
 ## Plugins
 
@@ -84,14 +84,18 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 |---------|-------------|
 | `/suno` | Guided composition workflow |
 | `/suno [theme]` | Start with a theme |
+| `/suno like <artist>` | Compose using artist profile (29 artists) |
+| `/suno <tier>` | Use J-pop tier preset (anisong, surface, mainstream, doujin, legacy) |
 | `/suno:album [concept]` | Create thematically coherent albums/EPs |
 | `/suno:variation` | Generate acoustic, remix, stripped versions |
 | `/suno:extend` | Create song continuations (sequel, prequel, response) |
 
 **Features:**
+- **Reference-based composition** - 29 artist profiles (YOASOBI, Ado, Aimer, etc.)
+- **J-pop tier presets** - anisong, surface, mainstream, doujin, legacy
 - Preview-first workflow (confirm concepts before full generation)
 - Direct-to-file output (saves tokens, no console duplication)
-- Selective tagging for proper dynamics (fixes pitch drift)
+- Sparse tagging for proper dynamics (3-4 technique tags at inflection points)
 - Preset moods (upbeat, melancholic, energetic, dreamy, intense, chill)
 - Batch generation of 1-10 songs per session
 - Multi-genre support (J-pop, K-pop, EDM, Latin, rock, ballads)
@@ -112,6 +116,12 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 
 # With theme
 /suno summer heartbreak ballad
+
+# With artist reference
+/suno like YOASOBI about finding hope
+
+# With tier preset
+/suno anisong about never giving up
 
 # Album mode
 /suno:album summer memories
