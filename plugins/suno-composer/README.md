@@ -1,6 +1,6 @@
 # Suno Composer
 
-**Version 4.1.0**
+**Version 4.3.0**
 
 A Claude Code plugin for composing Suno AI songs with a guided workflow. Generates complete song specifications including lyrics, style tags, tempo, vocal arrangements, and more - all based on your musical preferences.
 
@@ -17,7 +17,7 @@ A Claude Code plugin for composing Suno AI songs with a guided workflow. Generat
 - **Variation Mode**: Generate acoustic, remix, stripped, extended, or cinematic versions
 - **Extend Mode**: Create song continuations (sequels, prequels, responses, alternate POVs)
 - **Multi-Genre**: J-pop, K-pop, Western pop/rock, EDM, Latin, and more
-- **Language Agnostic**: Supports any language including Japanese
+- **Language Agnostic**: Supports any language with optional romanization for Japanese
 
 ## Installation
 
@@ -230,10 +230,12 @@ climax, polished production
 [Verse 2]
 ...
 
-[Bridge][stripped, intimate]
+[Breakdown][stripped, half-time]
 ...
 
-[Final Chorus][full arrangement]
+[Build]
+
+[Final Chorus][key change up]
 ...
 
 [Outro]
@@ -243,19 +245,27 @@ climax, polished production
 ### Specifications
 - **Tempo:** 85 BPM
 - **Vocal:** Soft female vocals, building to emotional delivery
-- **Dynamics:** Soft verse → full chorus → stripped bridge → final chorus
 - **Key Instruments:** Piano (lead), strings, subtle percussion
 - **Production Style:** Reverb-heavy, polished, dynamic
+- **Inflection Points:** Intro texture, breakdown contrast, key change finale
 ```
 
-**Note:** Lyrics use selective tagging - most sections have only the section marker. Tags are added only for arrangement changes (`[stripped]`, `[full arrangement]`) to avoid cumulative pitch drift.
+**Note:** Lyrics use **sparse tagging** - most sections have only the section marker. Technique tags (`[stripped]`, `[key change up]`) appear only at 3-4 inflection points. Emotion arc goes in the style prompt.
+
+## What's New in v4.3
+
+- **Sparse Tagging**: Only 3-4 technique tags at inflection points, not every section
+- **Technique Over Emotion**: Use `[half-time]`, `[key change up]`, `[stripped]` instead of `[triumphant]`, `[soaring]`
+- **Emotion Arc in Style Prompt**: Suno V5 reads emotion arc from style prompt, not per-section tags
+- **Trust the Structure**: Verse/chorus contrast is built-in - don't over-explain with tags
+- **Silence Creates Tension**: Added `[Break]` and pause techniques for anticipation
+- **Removed Redundant Examples**: Skill knowledge is comprehensive; inline examples are sufficient
 
 ## What's New in v4.1
 
 - **Preview-First Workflow**: Generate metadata previews before full lyrics to save tokens
 - **Confirm/Modify/Regenerate**: Review song concepts before committing to full generation
-- **Fixed Pitch Drift**: Selective tagging approach prevents cumulative pitch escalation
-- **Dynamic Control**: New guidelines for creating proper energy waves (peaks AND valleys)
+- **Dynamic Control**: Guidelines for creating proper energy waves (peaks AND valleys)
 - **Direct-to-File**: Full lyrics written directly to files, not duplicated in console
 
 ## What's New in v4.0

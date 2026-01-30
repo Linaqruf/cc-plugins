@@ -1,7 +1,7 @@
 ---
 name: song-composition
 description: This skill should be used when the user wants to compose songs for Suno AI, write lyrics, create style prompts, or generate Suno v5 metatags. Supports J-pop, K-pop, EDM, ballads, rock, and Latin genres, plus album/EP composition, acoustic or remix variations, and song extensions. Triggers on "write a song", "Suno prompt", "Suno metatags", "style of music", "song lyrics", "Suno AI", "acoustic version", "remix version", "create an album", "extend this song", "compose music".
-version: 4.1.0
+version: 4.3.0
 ---
 
 # Song Composition for Suno AI
@@ -65,40 +65,101 @@ Combine these elements into flowing prose (target 8-15 descriptive elements):
 4. Key instruments
 5. Production style tags
 6. Mood and energy descriptors
+7. **Emotion arc** (Suno V5 reads this well)
 
 **Example Style Prompt:**
 ```
 emotional j-pop ballad, anime soundtrack influence, slow tempo around 75 bpm,
-soft female vocals with emotional delivery, piano-driven with orchestral strings,
-reverb-heavy atmospheric mix, bittersweet melancholic mood, building to powerful
-climax, polished production
+soft female vocals building to powerful delivery, piano-driven with orchestral strings,
+reverb-heavy atmospheric mix, bittersweet mood,
+emotion arc: intimate verse → building anticipation → euphoric chorus → stripped reflection → triumphant finale
 ```
 
-## Advanced Metatags in Lyrics
+**Key insight:** Put the emotion journey in the style prompt, not in per-section lyric tags. Suno V5 handles this effectively.
 
-Suno interprets embedded directions in lyrics. **Use sparingly** - see "Lyric Tagging Guidelines" in Output Formats section for when to use these vs. simple section markers.
+## Metatags in Lyrics
 
-### Arrangement Tags (Recommended)
+Suno interprets embedded directions in lyrics. **The key is sparse, strategic tagging at inflection points** - not tagging every section.
+
+### The Sparse Tagging Principle
+
+**Tag only 3-4 key moments** in a song. Most sections need just the section marker. The verse/chorus structure already creates contrast - don't over-explain it.
+
 ```
-[Intro: Piano only]
-[Chorus: Full band]
-[Bridge: Stripped back, acoustic only]
-[Outro: Fade out]
+✅ GOOD - sparse, technique-focused:
+[Intro: Piano, atmospheric]
+[Verse 1]
+[Pre-Chorus]
+[Chorus]
+[Verse 2]
+[Breakdown][stripped, half-time]
+[Build]
+[Final Chorus][key change up]
+[Outro]
+
+❌ BAD - every section tagged:
+[Verse 1][soft, intimate]
+[Pre-Chorus][building]
+[Chorus][powerful, full]
+[Verse 2][tender, reflective]
+[Bridge][vulnerable, stripped]
+[Final Chorus][soaring, triumphant]
 ```
 
-### Vocal Direction Tags (Use Sparingly)
+### When to Tag (The 3-4 Inflection Points)
+
+| Moment | Purpose | Example Tags |
+|--------|---------|--------------|
+| **Intro** | Set opening texture | `[Intro: Piano, atmospheric]`, `[Intro: Filtered, building]` |
+| **Breakdown/Bridge** | Contrast point | `[Breakdown][stripped]`, `[Bridge][half-time]`, `[whisper]` |
+| **Build** | Pre-climax tension | `[Build]`, `[Build][snare roll]`, `[rising]` |
+| **Final Chorus** | Earned peak | `[key change up]`, `[Full band]`, `[double-time]` |
+
+### When NOT to Tag
+
+- **Verse 1, Verse 2** - let them breathe, structure implies lower energy
+- **Pre-Chorus** - the name already implies "building toward chorus"
+- **Regular Chorus** - arrangement info goes in style prompt
+- **Every section** - over-tagging creates noise, not dynamics
+
+### Technique Cues vs Emotion Words
+
+Use **technique/arrangement cues** that create dynamics, not **emotion words** that describe them:
+
+| ✅ Technique Cues (actionable) | ❌ Emotion Words (vague) |
+|-------------------------------|-------------------------|
+| `[stripped]`, `[half-time]` | `[vulnerable]`, `[intimate]` |
+| `[key change up]`, `[modulation]` | `[triumphant]`, `[soaring]` |
+| `[filtered]`, `[snare roll]` | `[building]`, `[rising tension]` |
+| `[breakdown]`, `[drop]` | `[powerful]`, `[explosive]` |
+| `[whisper]`, `[belting]` | `[emotional]`, `[passionate]` |
+
+**Exception:** Vocal technique tags (`[whisper]`, `[belting]`, `[falsetto]`) are useful at specific moments because they describe HOW to sing, not intensity level.
+
+### Genre-Specific Technique Tags
+
+**Ballad/Pop:**
+- `[stripped]`, `[piano only]`, `[key change up]`, `[a cappella]`
+
+**EDM/Dance:**
+- `[breakdown]`, `[build]`, `[drop]`, `[filtered]`, `[half-time]`, `[double-time]`
+
+**Rock:**
+- `[guitar solo]`, `[breakdown]`, `[half-time]`, `[gang vocals]`
+
+### Silence and Space
+
+Use pauses and breaks to create anticipation:
 ```
-[Intro][whisper]
-[Bridge][intimate]
+[Bridge][stripped]
+...lyrics...
+
+[Break]
+
+[Final Chorus][key change up]
 ```
 
-### Emotion Progression (Use Rarely)
-Only when you need a specific shift within a single section:
-```
-[Bridge][Mood: vulnerable → hopeful]
-```
-
-**Warning:** Don't use intensity/emotion tags on every section - this causes cumulative pitch escalation. Most sections should have only the section marker.
+The `[Break]` or a blank line before a climax creates tension through silence.
 
 ## Genre Conventions
 
@@ -244,6 +305,7 @@ For subgenres and common Spanish phrases, see `references/genre-deep-dive.md` �
 - Syllable count per line (7-5 or 5-7 patterns traditional)
 - Particle placement affects rhythm
 - Mix of hiragana vocabulary and kanji concepts
+- Romanization optional - can help Suno with pronunciation clarity
 
 **Emotional vocabulary:**
 - 切ない (setsunai) - bittersweet longing
@@ -395,76 +457,105 @@ When composing full songs (after user confirmation), generate each song with:
 ## Song: [Creative Title]
 
 ### Style Prompt
-(Descriptive prose for Suno's "Style of Music" field. Combine: genre, subgenre/era,
-tempo feel, vocal style, key instruments, production tags, mood descriptors.
-Target 8-15 elements. Copy-paste ready.)
+(Descriptive prose for Suno's "Style of Music" field. Include: genre, subgenre/era,
+tempo feel, vocal style, key instruments, production tags, mood descriptors,
+AND emotion arc. Target 8-15 elements. Copy-paste ready.)
+
+Example:
+emotional j-pop ballad, anime soundtrack influence, 75 bpm, soft female vocals
+building to powerful delivery, piano-driven with orchestral strings, reverb-heavy,
+emotion arc: intimate verse → building anticipation → euphoric chorus → stripped bridge → triumphant finale
 
 ### Lyrics
 
-[Intro: Piano only]
+[Intro: Piano, atmospheric]
 (instrumental)
 
 [Verse 1]
-(lyrics - establish baseline energy)
+(lyrics)
 
 [Pre-Chorus]
-(lyrics - natural tension from lyrics, no explicit "building" tag)
+(lyrics)
 
 [Chorus]
-(lyrics - peak of section, arrangement carries energy)
+(lyrics)
 
 [Verse 2]
-(lyrics - return to verse energy, contrast with chorus)
+(lyrics)
 
-[Bridge][stripped, intimate]
-(lyrics - contrast moment, pull back before final push)
+[Breakdown][stripped, half-time]
+(lyrics - contrast point, pull back before climax)
 
-[Final Chorus][full arrangement]
-(lyrics - arrangement tag only, not intensity)
+[Build]
+
+[Final Chorus][key change up]
+(lyrics)
 
 [Outro]
-(closing - resolve, fade or end)
+(closing)
 
 ### Specifications
 - **Tempo:** [BPM or tempo feel]
 - **Vocal:** [type and style]
-- **Dynamics:** [describe the wave pattern, e.g., "soft verse → full chorus → stripped bridge → final chorus"]
 - **Key Instruments:** [by prominence]
 - **Production Style:** [aesthetic and key effects]
+- **Inflection Points:** [where the 3-4 technique tags are placed and why]
 ```
 
-### Lyric Tagging Guidelines (IMPORTANT)
+**Note:** Most sections have only the section marker. Tags appear only at inflection points (intro texture, breakdown contrast, build, final chorus peak).
 
-**Avoid over-tagging** - Suno interprets cumulative modifiers as escalation:
+### Lyric Tagging Guidelines
 
-| ❌ Causes Pitch Drift | ✅ Better Approach |
-|----------------------|-------------------|
-| `[Verse 1][soft, building]` | `[Verse 1]` |
-| `[Pre-Chorus][building tension]` | `[Pre-Chorus]` |
-| `[Chorus][powerful, soaring]` | `[Chorus]` |
-| `[Bridge][Mood: vulnerable → triumphant]` | `[Bridge][stripped]` |
-| `[Final Chorus][peak, explosive, maximum]` | `[Final Chorus][full arrangement]` |
+**Sparse tagging at inflection points.** Dynamics come from structure and contrast, not from describing every section.
 
-**When to use modifiers:**
-- **Arrangement changes:** `[Bridge][acoustic only]`, `[Chorus][full band]`
-- **Contrast points:** `[Verse 2][stripped back]` after a big chorus
-- **Specific vocal needs:** `[Intro][whisper]` for effect
+**The 1-3-4 Rule:**
+- **1** intro texture tag
+- **3** technique tags max in the song body (breakdown, build, final chorus)
+- **4** total inflection points maximum
 
-**When NOT to use modifiers:**
-- Don't tag every section - let the song breathe
-- Don't stack intensity words (powerful + soaring + explosive)
-- Don't use arrow progressions on every bridge (`→` implies escalation)
-- Don't add "building" to pre-chorus - the structure already implies it
+**What creates great dynamics:**
+```
+✅ Sparse technique cues at key moments:
+[Intro: Piano, atmospheric]
+[Verse 1]
+[Pre-Chorus]
+[Chorus]
+[Verse 2]
+[Breakdown][stripped, half-time]
+[Build]
+[Final Chorus][key change up]
+[Outro]
+```
+
+**What causes problems (avoid):**
+```
+❌ Tagging every section with emotion words:
+[Verse 1][soft, intimate]
+[Pre-Chorus][building]
+[Chorus][powerful, soaring]
+[Verse 2][tender, reflective]
+[Bridge][vulnerable, stripped]
+[Final Chorus][triumphant, explosive]
+```
+
+**Why sparse works better:**
+- Verse/chorus contrast is built into the structure
+- Pre-chorus already implies "building" - don't need to say it
+- Emotion arc goes in style prompt where Suno V5 reads it
+- Technique cues (`[half-time]`, `[key change]`) create actual dynamics
+- Emotion words (`[triumphant]`, `[soaring]`) just add noise
 
 **Dynamic Wave Pattern:**
-Songs should breathe like a wave, not climb like stairs:
 ```
 Energy:  ▁▂▃▅▃▂▅▆▅▃▂▁
 Section: I V1 PC C V2 PC C Br FC O
+              ↑           ↑  ↑
+           (no tag)    stripped key change
 ```
-- Verse 2 should reset closer to Verse 1 energy
-- Bridge should pull back before the final push
-- Not every chorus needs to be bigger than the last
+- Most sections need no tag - structure handles the energy
+- Tag only where you need a TECHNIQUE change (breakdown, build, modulation)
+- Bridge should pull back (stripped, vulnerable) before final push
+- Final Chorus earns intensity through contrast, not accumulation
 
 **Copy-Paste Guide:**
 1. **Style Prompt** → Suno's "Style of Music" field
@@ -521,12 +612,6 @@ For detailed information, consult:
 - **`references/album-composition.md`** - Album coherence, arc patterns, track roles
 - **`references/variation-patterns.md`** - Transformation matrices for song variations
 - **`references/continuation-patterns.md`** - Callback techniques, narrative bridges for song continuations
-
-### Example Outputs
-
-For complete song examples demonstrating the output format and selective tagging:
-- **`examples/jpop-ballad-example.md`** - J-pop ballad with Japanese lyrics
-- **`examples/edm-dance-example.md`** - EDM/progressive house with build-drop structure
 
 ### Working with User Preferences
 
