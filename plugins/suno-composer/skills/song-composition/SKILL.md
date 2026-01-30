@@ -14,14 +14,14 @@ Compose songs optimized for Suno AI music generation. This skill covers style ta
 
 ### Style Elements
 
-Suno v5 accepts style information in the "Style of Music" field. While individual tags can be comma-separated, **the recommended approach is descriptive prose combining 8-15 elements** (see "Style Prompt Construction" below). The following element categories should be included:
+Use the "Style of Music" field to provide style information. Combine 8-15 elements in descriptive prose (see "Style Prompt Construction" below). Include these element categories:
 
-1. **Genre tags**: Primary musical style (j-pop, electronic, rock, ballad)
-2. **Mood tags**: Emotional quality (melancholic, upbeat, dreamy, intense)
-3. **Vocal tags**: Voice characteristics (female vocals, soft voice, powerful belting)
-4. **Instrument tags**: Key instruments (piano, synthesizer, acoustic guitar)
-5. **Production tags**: Sound quality (lo-fi, polished, reverb-heavy)
-6. **Era/influence tags**: Time period or artist influence (80s, city pop, anime)
+1. **Genre tags**: Specify primary musical style (j-pop, electronic, rock, ballad)
+2. **Mood tags**: Define emotional quality (melancholic, upbeat, dreamy, intense)
+3. **Vocal tags**: Describe voice characteristics (female vocals, soft voice, powerful belting)
+4. **Instrument tags**: List key instruments (piano, synthesizer, acoustic guitar)
+5. **Production tags**: Set sound quality (lo-fi, polished, reverb-heavy)
+6. **Era/influence tags**: Add time period or artist influence (80s, city pop, anime)
 
 ### Effective Tag Combinations
 
@@ -165,55 +165,55 @@ The `[Break]` or a blank line before a climax creates tension through silence.
 
 ### J-pop
 
-**Characteristics:**
-- Catchy melodic hooks
-- Complex chord progressions (borrowed chords common)
-- Mix of verse-chorus with bridge sections
-- Often includes dramatic key changes
-- Blend of electronic and acoustic elements
+Apply these J-pop conventions:
+- Use catchy melodic hooks
+- Include complex chord progressions (borrowed chords work well)
+- Mix verse-chorus with bridge sections
+- Add dramatic key changes for impact
+- Blend electronic and acoustic elements
 
 **Common tags:** j-pop, japanese pop, catchy melody, emotional, anime
 
 ### Doujin/Vocaloid Style
 
-**Characteristics:**
-- Electronic-heavy production
-- Fast tempos common (140-180 BPM)
-- Intricate melodic runs
-- Synth-driven arrangements
-- Often features dramatic dynamics
+Apply these Doujin/Vocaloid conventions:
+- Use electronic-heavy production
+- Set fast tempos (140-180 BPM)
+- Include intricate melodic runs
+- Build synth-driven arrangements
+- Create dramatic dynamic shifts
 
 **Common tags:** vocaloid style, electronic, synthesizer, fast tempo, dramatic, anime
 
 ### Ballad
 
-**Characteristics:**
-- Slow to mid tempo (60-90 BPM)
-- Emotional, expressive vocals
-- Piano or guitar-driven
-- Builds to emotional climax
-- Minimal percussion in verses
+Apply these ballad conventions:
+- Set slow to mid tempo (60-90 BPM)
+- Use emotional, expressive vocals
+- Lead with piano or guitar
+- Build to emotional climax
+- Keep percussion minimal in verses
 
 **Common tags:** ballad, emotional, piano, slow tempo, heartfelt, orchestral
 
 ### Rock/J-rock
 
-**Characteristics:**
-- Guitar-driven arrangements
-- Strong rhythmic foundation
-- Powerful vocals
-- Dynamic verse-chorus contrast
-- Often includes guitar solos
+Apply these rock conventions:
+- Lead with guitar-driven arrangements
+- Establish strong rhythmic foundation
+- Use powerful vocals
+- Create dynamic verse-chorus contrast
+- Include guitar solos where appropriate
 
 **Common tags:** j-rock, rock, electric guitar, powerful vocals, driving drums
 
 ### Western Pop/Rock
 
-**Characteristics:**
-- Polished, radio-ready production
-- Strong hooks and memorable choruses
-- Verse-chorus-verse structures
-- Wide range of subgenres (arena rock, indie, synth-pop)
+Apply these Western pop/rock conventions:
+- Use polished, radio-ready production
+- Create strong hooks and memorable choruses
+- Follow verse-chorus-verse structures
+- Draw from subgenres (arena rock, indie, synth-pop)
 
 **Common tags:** pop, rock, mainstream, catchy, uplifting, guitar-driven
 
@@ -221,11 +221,11 @@ For detailed subgenres, see `references/genre-deep-dive.md` → Western Pop, Wes
 
 ### EDM / Electronic Dance
 
-**Characteristics:**
-- Four-on-the-floor or breakbeat rhythms
-- Build-drop structures
-- Synthesizer-driven
-- Genre-specific tempos (house 120-130, dubstep 140, D&B 160-180)
+Apply these EDM conventions:
+- Use four-on-the-floor or breakbeat rhythms
+- Structure around build-drop patterns
+- Lead with synthesizers
+- Match tempo to subgenre (house 120-130, dubstep 140, D&B 160-180)
 
 **Common tags:** edm, electronic, dance, house, techno, bass heavy
 
@@ -233,11 +233,11 @@ For detailed subgenres (house, techno, dubstep, trance, etc.), see `references/g
 
 ### K-pop
 
-**Characteristics:**
-- Highly polished production
-- Genre-blending (pop, hip-hop, R&B, EDM)
-- Strong visual/choreography influence on song structure
-- Mix of Korean and English lyrics
+Apply these K-pop conventions:
+- Use highly polished production
+- Blend genres (pop, hip-hop, R&B, EDM)
+- Structure for visual/choreography impact
+- Mix Korean and English lyrics
 
 **Common tags:** k-pop, korean pop, polished, energetic, synchronized, hook-driven
 
@@ -245,11 +245,11 @@ For subgenres and common Korean phrases, see `references/genre-deep-dive.md` →
 
 ### Latin
 
-**Characteristics:**
-- Distinctive rhythms (dembow, clave, bossa)
-- Spanish/Portuguese lyrics
-- Strong percussion and bass
-- Wide range from romantic to party
+Apply these Latin conventions:
+- Use distinctive rhythms (dembow, clave, bossa)
+- Write in Spanish/Portuguese
+- Emphasize percussion and bass
+- Range from romantic to party styles
 
 **Common tags:** latin, reggaeton, bachata, tropical, spanish, romantic
 
@@ -301,12 +301,12 @@ For subgenres and common Spanish phrases, see `references/genre-deep-dive.md` �
 
 ### Japanese Lyrics
 
-**Considerations:**
-- Syllable count per line (7-5 or 5-7 patterns traditional)
-- Particle placement affects rhythm
-- Mix of hiragana vocabulary and kanji concepts
+When writing Japanese lyrics:
+- Count syllables per line (use 7-5 or 5-7 patterns for traditional feel)
+- Place particles carefully to maintain rhythm
+- Mix hiragana vocabulary with kanji concepts
 
-**Emotional vocabulary:**
+**Use emotional vocabulary:**
 - 切ない (setsunai) - bittersweet longing
 - 儚い (hakanai) - fleeting, ephemeral
 - 懐かしい (natsukashii) - nostalgic
@@ -314,19 +314,19 @@ For subgenres and common Spanish phrases, see `references/genre-deep-dive.md` �
 
 ### English Lyrics
 
-**Considerations:**
-- Natural stress patterns
-- Rhyme schemes (ABAB, AABB, ABCB)
-- Syllable emphasis matching melody
-- Internal rhymes for flow
+When writing English lyrics:
+- Match natural stress patterns to the melody
+- Use rhyme schemes (ABAB, AABB, ABCB)
+- Align syllable emphasis with melodic accents
+- Add internal rhymes for flow
 
 ### Mixed Language (Japanese-English)
 
-**Effective techniques:**
-- English in chorus hooks for catchiness
-- Japanese verses for emotional depth
-- Code-switching at phrase boundaries
-- Consistent language per section
+When mixing Japanese and English:
+- Place English in chorus hooks for catchiness
+- Use Japanese verses for emotional depth
+- Switch languages at phrase boundaries
+- Keep language consistent within sections
 
 ## Mood-to-Style Mapping
 

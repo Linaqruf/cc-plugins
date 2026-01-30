@@ -515,3 +515,4 @@ Combinations create section variety:
 → When using Suno metatags: `skills/song-composition/references/suno-metatags.md`
 → When implementing genre patterns: `skills/song-composition/references/genre-deep-dive.md`
 → When writing Japanese lyrics: `skills/song-composition/references/japanese-lyric-patterns.md`
+→ When using artist references: `skills/song-composition/references/artist-profiles.md`
