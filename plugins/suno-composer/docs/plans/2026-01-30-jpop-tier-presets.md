@@ -444,7 +444,7 @@ Add `tier` field to existing artist profiles in `references/artist-profiles.md`:
 ## Implementation Phases
 
 ### Phase 1: Tier Reference File
-- Create `references/jpop-tiers.md` with all 4 tiers
+- Create `references/jpop-tiers.md` with all 5 tiers
 - Include full style presets for each tier
 - Add subgenre variants for Doujin tier
 
@@ -493,6 +493,6 @@ None - all questions resolved.
 ## Success Criteria
 
 - User can invoke `/suno tier:anisong` and get anime-OP-appropriate output
-- All 4 tiers recognized with aliases
+- All 5 tiers recognized with aliases
 - Tier + artist combinations work smoothly
 - Unknown tier names fall back gracefully to artist lookup or presets

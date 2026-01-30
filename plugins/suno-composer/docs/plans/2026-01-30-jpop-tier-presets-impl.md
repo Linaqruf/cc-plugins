@@ -283,7 +283,7 @@ Expected: File exists with ~200 lines
 git add skills/song-composition/references/jpop-tiers.md
 git commit -m "feat(suno-composer): add J-pop tier reference file
 
-Defines 4 tiers (anisong, surface, mainstream, doujin) with:
+Defines 5 tiers (anisong, surface, mainstream, doujin, legacy) with:
 - Keyword aliases for detection
 - Auto-apply metatags
 - Full style presets
@@ -575,7 +575,7 @@ Find "Phase 10: Reference-Based Composition (v4.4)" and add after it:
 
 ```markdown
 ### Phase 11: J-pop Tier Presets (v4.5) ✓
-- [x] Create tier reference file with 4 tiers (anisong, surface, mainstream, doujin)
+- [x] Create tier reference file with 5 tiers (anisong, surface, mainstream, doujin, legacy)
 - [x] Add tier field to existing artist profiles
 - [x] Implement tier detection in /suno command
 - [x] Support tier + artist merging

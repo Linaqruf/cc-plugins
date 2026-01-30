@@ -351,7 +351,7 @@ Users can specify a reference artist instead of mood presets:
 /suno Eve-style energetic
 ```
 
-### How It Works
+### How Artist Lookup Works
 
 1. Command detects reference pattern in arguments
 2. Looks up artist in `references/artist-profiles.md`
@@ -374,12 +374,7 @@ emotion arc: searching uncertainty → building momentum → hopeful breakthroug
 
 ### Supported Artists
 
-See `references/artist-profiles.md` for the complete database of **29 artist profiles** spanning:
-- **Surface tier:** YOASOBI, Yorushika, Ado, Eve, Kenshi Yonezu, Vaundy, TUYU, Zutomayo, Reol, Hatsune Miku, Kasane Teto
-- **Anisong tier:** LiSA, Aimer, Yuki Kajiura (composer)
-- **Mainstream tier:** Official HIGE DANdism, King Gnu, RADWIMPS, Mrs. GREEN APPLE, Aimyon, back number, BUMP OF CHICKEN, Fujii Kaze, imase, Creepy Nuts, Kobukuro, Spitz, Mr.Children
-- **Doujin tier:** Ariabl'eyeS
-- **Legacy tier:** Tatsuro Yamashita
+See `references/artist-profiles.md` for the complete database of **29 artist profiles** across 5 tiers (surface, anisong, mainstream, doujin, legacy).
 
 ### Unknown Artists
 
@@ -429,7 +424,7 @@ This uses:
 - Aimer's husky vocals and cinematic production
 - Artist's tempo overrides tier's default
 
-### How It Works
+### How Tier Lookup Works
 
 1. Command detects tier keyword in arguments
 2. Looks up tier in `references/jpop-tiers.md`
