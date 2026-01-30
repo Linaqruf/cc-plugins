@@ -28,7 +28,7 @@ A Claude Code plugin for composing Suno AI songs with professional songwriter te
 | References | `skills/song-composition/references/` | Genre deep-dives, Japanese patterns |
 | Settings | `.claude/suno-composer.local.md` | User preferences |
 
-### Workflow (v4.4 - Reference-Based + Sparse Tags)
+### Workflow (v4.5 - Tier Presets + Reference-Based)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐

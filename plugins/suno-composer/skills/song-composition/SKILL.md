@@ -1,5 +1,6 @@
 ---
 name: song-composition
+version: 4.5.0
 description: This skill should be used when the user wants to compose songs for Suno AI, write lyrics, create style prompts, or generate Suno v5 metatags. Supports J-pop, K-pop, EDM, ballads, rock, and Latin genres, plus album/EP composition, acoustic or remix variations, and song continuations. Also handles reference-based composition ("like YOASOBI", "in the style of Aimer") and J-pop tier presets ("anisong", "viral jpop", "mainstream", "doujin"). Triggers on "write a song", "make a song", "Suno prompt", "Suno metatags", "Suno v5", "style of music", "song lyrics", "Suno AI", "acoustic version", "remix version", "create an album", "extend this song", "compose music", "generate lyrics", "like [artist]", "in the style of", "/suno", "anisong", "viral jpop", "mainstream jpop", "doujin".
 ---
 
@@ -599,16 +600,6 @@ emotion arc: intimate verse → building anticipation → euphoric chorus → st
 ```
 
 **Note:** Most sections have only the section marker. Tags appear only at inflection points (intro texture, breakdown contrast, build, final chorus peak).
-
-### Lyric Tagging Guidelines
-
-Apply the sparse tagging principle (see "The Sparse Tagging Principle" and "When to Tag" sections above).
-
-**Quick reference:**
-- Tag only 3-4 inflection points (intro, breakdown, build, final chorus)
-- Use technique cues (`[stripped]`, `[key change up]`), not emotion words
-- Put emotion arc in style prompt, not per-section tags
-- Most sections need only the section marker - structure creates contrast
 
 **Copy-Paste Guide:**
 1. **Style Prompt** → Suno's "Style of Music" field

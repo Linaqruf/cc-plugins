@@ -266,6 +266,12 @@ climax, polished production
 
 **Note:** Lyrics use **sparse tagging** - most sections have only the section marker. Technique tags (`[stripped]`, `[key change up]`) appear only at 3-4 inflection points. Emotion arc goes in the style prompt.
 
+## What's New in v4.5
+
+- **J-pop Tier Presets**: Use ecosystem-level presets (`/suno anisong`, `/suno viral`, `/suno mainstream`, `/suno doujin`)
+- **Doujin Subgenres**: Support for symphonic, denpa, and eurobeat doujin styles
+- **Tier + Artist Merging**: Combine tier base sound with specific artist characteristics (`/suno anisong like Aimer`)
+
 ## What's New in v4.4
 
 - **Reference-Based Composition**: Say `/suno like YOASOBI` to compose using an artist's style
