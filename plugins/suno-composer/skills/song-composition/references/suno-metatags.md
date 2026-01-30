@@ -310,6 +310,9 @@ We're dancing in the moonlight...
 - **Optimal**: 8-12 tags for balanced control
 - **Maximum**: 15+ tags may cause conflicts
 
+> **Artistic License:** These tags are options, not requirements. A great song
+> might use 3 tags or 12. Choose what serves the music, not what fills a quota.
+
 ## Negative Prompting
 
 Include exclusions in your style prompt to remove unwanted elements. Suno v5 handles exclusions more reliably than previous versions.
