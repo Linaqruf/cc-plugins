@@ -21,7 +21,7 @@ Then install any plugin:
 | Plugin | Description | Version |
 |--------|-------------|---------|
 | [project-spec](./plugins/project-spec) | Generate project specifications with SPEC.md as core and optional SPEC/ supplements | 3.1.0 |
-| [suno-composer](./plugins/suno-composer) | Guided workflow for composing Suno AI songs with 29 artist profiles, J-pop tier presets, lyrics, style tags, and arrangements | 4.5.0 |
+| [suno-composer](./plugins/suno-composer) | Compose Suno AI songs with adaptive preferences, dual-mode workflows, and narrative style prompts | 5.4.0 |
 
 ## Plugins
 
@@ -91,13 +91,13 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 | `/suno:extend` | Create song continuations (sequel, prequel, response) |
 
 **Features:**
+- **Dual-mode workflow** - Vision-first (Claude proposes) or guided (step-by-step wizard)
+- **Adaptive preferences** - First-run wizard + session reflection learns your taste
+- **Narrative style prompts** - Arrangement descriptions that Suno v5 interprets as instructions
 - **Reference-based composition** - 29 artist profiles (YOASOBI, Ado, Aimer, etc.)
 - **J-pop tier presets** - anisong, surface, mainstream, doujin, legacy
 - Preview-first workflow (confirm concepts before full generation)
-- Direct-to-file output (saves tokens, no console duplication)
 - Sparse tagging for proper dynamics (3-4 technique tags at inflection points)
-- Preset moods (upbeat, melancholic, energetic, dreamy, intense, chill)
-- Batch generation of 1-10 songs per session
 - Multi-genre support (J-pop, K-pop, EDM, Latin, rock, ballads)
 - Album mode with journey arc patterns
 - Variation mode (acoustic, remix, stripped, extended, cinematic)
