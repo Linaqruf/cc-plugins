@@ -12,6 +12,23 @@ Question bank organized by interview turns with skip conditions and AskUserQuest
 
 ---
 
+## Smart Batching Summary
+
+| Turn | Questions | Skip When |
+|------|-----------|-----------|
+| 1 | Problem + Target User + Success Criteria | Never skip |
+| 2 | MVP Features + Out of Scope | Never skip |
+| 3 | Primary User Flow | CLI or library project (no interactive user flow) |
+| 4 | Architecture Pattern | Project type is "library" |
+| 5 | Package Manager + Frontend Framework | Skip package manager if lockfile detected. Skip frontend if CLI/API/library |
+| 6 | Styling + Component Library | No frontend selected |
+| 7 | Backend Framework + API Style | Skip API Style if user chose Next.js API Routes. Skip entire turn if project is a library |
+| 8 | Database + ORM | User said "no database" |
+| 9 | Deployment + Auth Approach | Skip auth if project has no users |
+| 10 | Visual Style + Accessibility | No frontend selected |
+
+---
+
 ## Turn 1: Vision & Problem (Never Skip)
 
 Ask all three together in one turn:

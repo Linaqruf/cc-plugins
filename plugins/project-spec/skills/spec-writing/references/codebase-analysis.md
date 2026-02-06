@@ -74,4 +74,41 @@ When documenting an existing project, scan these patterns:
 
 ---
 
+## Codebase-Aware Skipping
+
+When codebase analysis detects answers, pre-fill and confirm instead of asking:
+
+| Detected Signal | Auto-Fill | Confirmation |
+|----------------|-----------|-------------|
+| `bun.lockb` exists | Package manager: bun | "Detected bun. Continuing with that." |
+| `pnpm-lock.yaml` exists | Package manager: pnpm | "Detected pnpm. Continuing with that." |
+| `package-lock.json` exists | Package manager: npm | "Detected npm. Continuing with that." |
+| `yarn.lock` exists | Package manager: yarn | "Detected yarn. Continuing with that." |
+| `next` in package.json dependencies | Frontend: Next.js | "Detected Next.js in dependencies." |
+| `tailwindcss` in package.json | Styling: Tailwind CSS | Confirm silently |
+| `prisma/schema.prisma` exists | ORM: Prisma | "Found Prisma schema." |
+| `drizzle/` directory or `drizzle-orm` in deps | ORM: Drizzle | "Found Drizzle config." |
+| `.github/workflows/` exists | CI/CD: GitHub Actions | Note in spec, do not ask |
+| `Dockerfile` exists | Containerized deployment | Note in spec |
+
+---
+
+## Auto-Detect Project Type
+
+When no project type argument is provided, infer from codebase signals:
+
+| Signal | Inferred Type |
+|--------|--------------|
+| `bin` field in package.json | CLI |
+| `src/app/` or `pages/` directory with frontend deps | Web App |
+| `src/api/` or `routes/` without frontend directories | API |
+| `exports` or `main` field + `types` field, no `src/app/` | Library |
+| `pyproject.toml` with `[tool.poetry.scripts]` | CLI (Python) |
+| `Cargo.toml` with `[[bin]]` | CLI (Rust) |
+| `cmd/` directory in Go project | CLI (Go) |
+
+If inferred, confirm with user: "This looks like a [type] project. Is that correct?"
+
+---
+
 *Lookup reference. For interview methodology, see SKILL.md.*

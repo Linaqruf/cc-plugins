@@ -15,7 +15,7 @@ allowed-tools:
   - mcp__plugin_context7_context7__query-docs
 ---
 
-# Specification Generator v4.0
+# Specification Generator v4.0.0
 
 Generate specifications for projects, features, and design systems. Follow the methodology in the spec-writing skill (`${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/SKILL.md`).
 

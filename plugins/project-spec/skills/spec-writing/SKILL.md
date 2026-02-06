@@ -64,7 +64,7 @@ These rules are non-negotiable:
 2. Use AskUserQuestion with options for every choice — open-ended information-gathering questions may use free-text format
 3. Lead with recommended option first, include "(Recommended)" in label
 4. Create SPEC/ supplements only when: user agrees AND content is reference material (schemas, tables, SDK patterns)
-5. If Context7 fails, follow the Context7 Failure Handling table below
+5. If Context7 fails, continue without external docs (see § Context7 Integration for failure handling)
 6. If Write fails, check directory permissions and offer to output content directly
 7. Never invent requirements — only document what the user confirms
 
@@ -129,20 +129,9 @@ Present architecture options with tradeoffs. Reason through the recommendation b
 
 ### Phase 4: Tech Stack
 
-Present each tech choice with a recommended option. Adapt recommendations based on project type and earlier answers.
+Present each tech choice with a recommended option first. Adapt recommendations based on project type and earlier answers. Skip categories that do not apply (e.g., no Frontend/Styling/Components for CLI/API/library).
 
-**Note:** The defaults below apply to JavaScript/TypeScript projects. For Python, Rust, Go, or other ecosystems, adapt recommendations using context-aware rules in `references/interview-questions.md`.
-
-- **Package manager**: bun (recommended), pnpm, npm
-- **Frontend**: Next.js (recommended for web apps), Vite + React, SvelteKit, None
-- **Styling**: Tailwind CSS (recommended), CSS Modules, Styled Components
-- **Components**: shadcn/ui (recommended), Radix UI, Material UI, Custom
-- **Backend**: Hono (recommended), Express, FastAPI, Next.js API Routes
-- **Database**: PostgreSQL (recommended), SQLite, MongoDB, None
-- **ORM**: Drizzle (recommended), Prisma, Raw SQL
-- **Deployment**: Vercel (recommended for Next.js), Cloudflare Pages, Railway/Fly.io, Self-hosted
-
-Skip categories that do not apply. If the project type is CLI, API, or library, skip Frontend/Styling/Components.
+→ Full defaults and ecosystem-specific rules: `references/interview-questions.md` Turns 5-9
 
 ### Phase 5: Design & Security
 
@@ -152,55 +141,12 @@ Ask only when relevant (has frontend or handles sensitive data):
 - Authentication approach (if project has users)
 - Compliance requirements (if project handles sensitive data)
 
-### Smart Batching Rules
+### Smart Batching, Detection, and Auto-Detect
 
-Group questions that share context into single AskUserQuestion turns. Skip turns when codebase analysis or prior answers already provide the answer.
+Group questions that share context into single AskUserQuestion turns. Skip turns when codebase analysis or prior answers already provide the answer. When codebase analysis detects answers (lockfiles, configs, dependencies), pre-fill and confirm instead of asking. When no project type argument is provided, infer from codebase signals and confirm with user.
 
-| Turn | Questions | Skip When |
-|------|-----------|-----------|
-| 1 | Problem + Target User + Success Criteria | Never skip |
-| 2 | MVP Features + Out of Scope | Never skip |
-| 3 | Primary User Flow | CLI or library project (no interactive user flow) |
-| 4 | Architecture Pattern | Project type is "library" |
-| 5 | Package Manager + Frontend Framework | Skip package manager if lockfile detected. Skip frontend if CLI/API/library |
-| 6 | Styling + Component Library | No frontend selected |
-| 7 | Backend Framework + API Style | Skip API Style if user chose Next.js API Routes. Skip entire turn if project is a library |
-| 8 | Database + ORM | User said "no database" |
-| 9 | Deployment + Auth Approach | Skip auth if project has no users |
-| 10 | Visual Style + Accessibility | No frontend selected |
-
-### Codebase-Aware Skipping
-
-When codebase analysis detects answers, pre-fill and confirm instead of asking:
-
-| Detected Signal | Auto-Fill | Confirmation |
-|----------------|-----------|-------------|
-| `bun.lockb` exists | Package manager: bun | "Detected bun. Continuing with that." |
-| `pnpm-lock.yaml` exists | Package manager: pnpm | "Detected pnpm. Continuing with that." |
-| `package-lock.json` exists | Package manager: npm | "Detected npm. Continuing with that." |
-| `yarn.lock` exists | Package manager: yarn | "Detected yarn. Continuing with that." |
-| `next` in package.json dependencies | Frontend: Next.js | "Detected Next.js in dependencies." |
-| `tailwindcss` in package.json | Styling: Tailwind CSS | Confirm silently |
-| `prisma/schema.prisma` exists | ORM: Prisma | "Found Prisma schema." |
-| `drizzle/` directory or `drizzle-orm` in deps | ORM: Drizzle | "Found Drizzle config." |
-| `.github/workflows/` exists | CI/CD: GitHub Actions | Note in spec, do not ask |
-| `Dockerfile` exists | Containerized deployment | Note in spec |
-
-### Auto-Detect Project Type
-
-When no project type argument is provided, infer from codebase signals:
-
-| Signal | Inferred Type |
-|--------|--------------|
-| `bin` field in package.json | CLI |
-| `src/app/` or `pages/` directory with frontend deps | Web App |
-| `src/api/` or `routes/` without frontend directories | API |
-| `exports` or `main` field + `types` field, no `src/app/` | Library |
-| `pyproject.toml` with `[tool.poetry.scripts]` | CLI (Python) |
-| `Cargo.toml` with `[[bin]]` | CLI (Rust) |
-| `cmd/` directory in Go project | CLI (Go) |
-
-If inferred, confirm with user: "This looks like a [type] project. Is that correct?"
+→ Full 10-turn batching table with skip conditions: `references/interview-questions.md`
+→ Codebase signal detection and auto-fill rules: `references/codebase-analysis.md`
 
 ### Supplement Prompts (Mid-Interview)
 
@@ -482,73 +428,11 @@ Use design specs to implement components following the specification.
 
 ## Session Prompt (Compound Engineering)
 
-### Purpose
+After generating a spec with implementation phases, offer to create `prompt.md` at the project root. This bootstraps a compound engineering loop where each session: **Read** (find next unchecked phase) → **Ask** (clarify ambiguities) → **Plan** (Plan Mode) → **Work** (execute, test) → **Compound** (update checkboxes, record learnings) → **Report** (summarize progress). Each session makes the next smarter.
 
-After generating a spec with implementation phases, offer to create `prompt.md` at the project root. This is a short structured prompt the user pastes into each new Claude Code session. It encodes a compound engineering loop where each session:
+**Offer when**: Generated output has `- [ ]` checkboxes (always for project/feature/overhaul, conditional for design).
+**Skip when**: No implementation phases, or "Document existing project" mode without new features.
 
-1. **Read** — Finds the next unchecked phase in the spec
-2. **Ask** — Clarifies ambiguities via AskUserQuestion
-3. **Plan** — Creates implementation plan in Plan Mode
-4. **Work** — Executes the plan, runs tests
-5. **Compound** — Updates spec checkboxes, records learnings in Open Questions, updates CLAUDE.md constraints
-6. **Report** — Summarizes progress and next steps
+→ Full template, parameterization rules, adaptation logic, and AskUserQuestion format: `references/session-prompt-template.md`
 
-The compound step is what makes each session smarter than the last — discoveries feed back into the spec for future sessions to consume.
-
-### When to Offer
-
-| Spec Type | Condition | Offer? |
-|-----------|-----------|--------|
-| Project | Generated output has Development Phases with `- [ ]` | Yes (always has phases) |
-| Feature | Generated output has Implementation Plan with `- [ ]` | Yes (always has plan) |
-| Design | Generated output has implementation checklist with `- [ ]` | Only if checkboxes exist |
-| Design Overhaul | Migration checklist always has `- [ ]` | Yes (always offer) |
-
-Do NOT offer when:
-- Generated output has no implementation phases or checklists
-- User chose "Document existing project" mode without adding new features
-
-### AskUserQuestion Format
-
-```typescript
-{
-  question: "Would you like a session prompt for compound development? Creates a prompt.md you paste into new sessions to continue where you left off — each session updates the spec with progress and learnings.",
-  header: "Session Prompt",
-  options: [
-    {
-      label: "Yes, generate prompt.md (Recommended)",
-      description: "Short structured prompt: reads spec, finds next phase, plans, executes, updates progress"
-    },
-    {
-      label: "No, skip",
-      description: "Skip session prompt generation"
-    }
-  ]
-}
-```
-
-### Template
-
-Use `references/session-prompt-template.md` for the full template with parameterization rules and adaptation logic per spec type.
-
-| Parameter | Source |
-|-----------|--------|
-| `[Project Name]` | First `# ` heading in the generated spec |
-| `[Spec File]` | Path to the primary spec file |
-| `[Phase Section Name]` | Heading containing `- [ ]` checkboxes |
-| `[Supplement Line]` | List of SPEC/ supplement paths, if any |
-| `[CLAUDE.md Line]` | CLAUDE.md constraint update instruction, if CLAUDE.md exists |
-
-### Output
-
-- **File**: `prompt.md` at project root (same directory as SPEC.md)
-- **Format**: Numbered steps, one instruction per line, backtick paths
-- **Length**: Under 20 lines excluding the header
-
-### CLAUDE.md Update
-
-When `prompt.md` is generated, add to CLAUDE.md's Current Status section:
-
-```markdown
-→ Start new dev sessions with `prompt.md`
-```
+When `prompt.md` is generated, add to CLAUDE.md's Current Status: `→ Start new dev sessions with prompt.md`
