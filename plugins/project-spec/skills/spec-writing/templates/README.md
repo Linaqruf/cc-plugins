@@ -1,9 +1,9 @@
-# Templates
+# Per-Section Structural Templates
 
-Supplementary section templates for adapting individual SPEC.md sections. The primary reference for SPEC.md structure is `references/output-template.md` — these templates provide granular structural guidance when adapting specific sections to unusual project types.
+> Legacy from v2.0 — preserved for backward compatibility. These templates provide granular structural guidance when adapting specific sections to unusual project types.
 
 **Primary reference**: `references/output-template.md` (use this for generation)
-**These templates**: Optional lookup for adapting individual sections
+**These templates**: Optional lookup for adapting individual sections — not required for standard spec generation
 
 ## SPEC.md Section Templates
 
@@ -19,12 +19,6 @@ Supplementary section templates for adapting individual SPEC.md sections. The pr
 | `design-system.template.md` | Design System | Frontend projects |
 | `configuration.template.md` | Configuration | Apps with env vars or config files |
 | `cli-reference.template.md` | Commands | CLI tools |
-
-## SPEC/ Supplement Templates
-
-| Template | Output File | When to Create |
-|----------|------------|----------------|
-| `index.template.md` | `SPEC/index.md` | When user opts for SPEC/ supplements |
 
 ## Output Templates
 

@@ -1,4 +1,4 @@
-# SPEC/ Folder - Optional Supplements
+# SPEC/ Folder Template v4.0.0
 
 SPEC/ is an **optional** folder for reference material that would bloat SPEC.md. The core specification always lives in SPEC.md.
 

@@ -132,7 +132,7 @@ Present architecture options with tradeoffs. Reason through the recommendation b
 
 Present each tech choice with a recommended option first. Adapt recommendations based on project type and earlier answers. Skip categories that do not apply (e.g., no Frontend/Styling/Components for CLI/API/library).
 
-→ Full defaults and ecosystem-specific rules: `references/interview-questions.md` § Turns 5-10
+→ Full defaults and ecosystem-specific rules: `references/interview-questions.md` § Turn 5 through Turn 10
 
 ### Phase 5: Design & Security
 
@@ -403,7 +403,7 @@ All paths below are relative to `skills/spec-writing/`. Commands and agents use 
 ### Templates
 - `references/output-template.md` - Complete SPEC.md structure with all variations (primary reference)
 - `references/spec-folder-template.md` - Supplement structure guide
-- `templates/` - Supplementary section templates (optional lookup when adapting individual sections — `output-template.md` is the primary reference for generation)
+- `templates/` - Per-section structural templates (legacy from v2.0, optional lookup when adapting individual sections — `output-template.md` is the primary reference for generation)
 
 ### Spec Type Flows
 - `references/spec-type-flows.md` - Feature, design, and design overhaul workflows

@@ -1,4 +1,4 @@
-# Session Prompt Template
+# Session Prompt Template v4.0.0
 
 > Template for generating `prompt.md` — a compound engineering session bootstrapper placed at the project root. Each session builds on the last by feeding discoveries back into the spec.
 
