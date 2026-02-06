@@ -2,6 +2,39 @@
 
 All notable changes to project-spec will be documented in this file.
 
+## [4.1.0] - 2026-02-06
+
+### Added
+- **Smart Batching Rules** — 10-turn interview table with explicit skip conditions per turn
+- **Codebase-Aware Skipping** — Auto-detect answers from lockfiles, package.json, config files (8 signals with auto-fill behavior)
+- **Auto-Detect Project Type** — Infer CLI/web-app/API/library from codebase signals (7 detection rules)
+- **Security section** in output template — Auth flow diagram, input validation checklist, sensitive data protection table
+- **Error Handling Strategy section** — Structured error format, error code table, error boundary strategy, retry logic
+- **Monitoring & Observability section** — Error tracking, logging levels, health checks, performance monitoring
+- **State Diagrams** in System Maps — Entity lifecycle visualization for features with complex status flows
+- **Algorithm Specifications** — Explicit rules for non-obvious logic (type inference, search ranking, metadata extraction)
+- **Zod validation schemas** alongside TypeScript interfaces in Data Models section
+
+### Changed
+- **interview-questions.md** restructured from v3.0 to v4.0 — organized by interview turns with AskUserQuestion format throughout
+  - Added conditional follow-up questions (real-time, file storage, payments, email, background jobs)
+  - Added quick-start compressed flows for each project type (`/spec web-app`, `/spec cli`, `/spec api`, `/spec library`)
+  - Added feature planning and design system question sets
+  - Added context-aware adaptations per question
+- **output-template.md** enhanced to v4.0 — all new sections with concrete examples
+  - Tech Stack table now includes "Alternatives Considered" column with tradeoffs
+  - Development Phases include dependency chains between phases
+  - Open Questions upgraded to table format with options, impact analysis, and status
+  - Writing Guidelines updated with testability and alternatives examples
+- **All 5 example specs upgraded** to demonstrate v4.1 patterns:
+  - `web-app-spec.md` — Added security section, state diagram (task lifecycle), deep tech rationale with alternatives, testable acceptance criteria, monitoring section
+  - `api-spec.md` — Added SPEC/ supplement reference pattern, security section (API key management, SSRF protection, rate limiting), algorithm specs (metadata extraction, search ranking)
+  - `feature-spec.md` — Added codebase analysis evidence section, implementation dependency graph, specific edge case tables, validation schemas
+  - `cli-spec.md` — Added algorithm specs (type inference rules, validation pipeline), exit code table, security section, error handling strategy
+  - `library-spec.md` — Added bundle size strategy with CI enforcement, timezone implementation approach, algorithm specs (format token parsing), subpath export design
+- **SKILL.md** enhanced with smarter Context7 query templates per technology category
+- **Output quality guidelines** tightened: testable acceptance criteria, Zod validation alongside interfaces, state diagrams for entities with lifecycle
+
 ## [4.0.0] - 2026-02-06
 
 ### Changed

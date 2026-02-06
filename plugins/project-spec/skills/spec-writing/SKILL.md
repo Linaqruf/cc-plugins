@@ -1,10 +1,10 @@
 ---
 name: spec-writing
 description: Use when the user wants to create project specs, design systems, or feature plans. Triggers on "create spec", "plan project", "design system", "plan feature", or "write specification".
-version: 4.0.0
+version: 4.1.0
 ---
 
-# Spec Writing v4.0
+# Spec Writing v4.1
 
 Authoritative methodology for generating project specifications. All commands and agents reference this skill.
 
@@ -137,6 +137,54 @@ Ask only when relevant (has frontend or handles sensitive data):
 - Authentication approach (if project has users)
 - Compliance requirements (if project handles sensitive data)
 
+### Smart Batching Rules
+
+Group questions that share context into single AskUserQuestion turns. Skip turns when codebase analysis or prior answers already provide the answer.
+
+| Turn | Questions | Skip When |
+|------|-----------|-----------|
+| 1 | Problem + Target User + Success Criteria | Never skip |
+| 2 | MVP Features + Out of Scope | Never skip |
+| 3 | Primary User Flow | CLI or library project (no interactive user flow) |
+| 4 | Architecture Pattern | Project type is "library" |
+| 5 | Package Manager + Frontend Framework | Skip package manager if lockfile detected. Skip frontend if CLI/API/library |
+| 6 | Styling + Component Library | No frontend selected |
+| 7 | Backend Framework + API Style | User chose Next.js API Routes, or project is a library |
+| 8 | Database + ORM | User said "no database" |
+| 9 | Deployment + Auth Approach | Skip auth if project has no users |
+| 10 | Visual Style + Accessibility | No frontend selected |
+
+### Codebase-Aware Skipping
+
+When codebase analysis detects answers, pre-fill and confirm instead of asking:
+
+| Detected Signal | Auto-Fill | Confirmation |
+|----------------|-----------|-------------|
+| `bun.lockb` exists | Package manager: bun | "Detected bun. Continuing with that." |
+| `pnpm-lock.yaml` exists | Package manager: pnpm | "Detected pnpm. Continuing with that." |
+| `next` in package.json dependencies | Frontend: Next.js | "Detected Next.js in dependencies." |
+| `tailwindcss` in package.json | Styling: Tailwind CSS | Confirm silently |
+| `prisma/schema.prisma` exists | ORM: Prisma | "Found Prisma schema." |
+| `drizzle/` directory or `drizzle-orm` in deps | ORM: Drizzle | "Found Drizzle config." |
+| `.github/workflows/` exists | CI/CD: GitHub Actions | Note in spec, do not ask |
+| `Dockerfile` exists | Containerized deployment | Note in spec |
+
+### Auto-Detect Project Type
+
+When no project type argument is provided, infer from codebase signals:
+
+| Signal | Inferred Type |
+|--------|--------------|
+| `bin` field in package.json | CLI |
+| `src/app/` or `pages/` directory with frontend deps | Web App |
+| `src/api/` or `routes/` without frontend directories | API |
+| `exports` or `main` field + `types` field, no `src/app/` | Library |
+| `pyproject.toml` with `[tool.poetry.scripts]` | CLI (Python) |
+| `Cargo.toml` with `[[bin]]` | CLI (Rust) |
+| `cmd/` directory in Go project | CLI (Go) |
+
+If inferred, confirm with user: "This looks like a [type] project. Is that correct?"
+
 ### Supplement Prompts (Mid-Interview)
 
 When a topic generates substantial reference material (10+ API endpoints, complex SDK integration, detailed schemas), ask:
@@ -255,17 +303,27 @@ Entity definitions with TypeScript interfaces.
 ## API Endpoints
 Endpoint table: method, path, description, auth requirement.
 
+## Security
+(If project has users or handles data)
+Auth flow, input validation, sensitive data protection.
+
+## Error Handling Strategy
+Error format, error boundaries, retry logic.
+
 ## Design System
 (If frontend) Colors, typography, spacing, components, accessibility.
 
 ## File Structure
 Project directory layout.
 
+## Monitoring & Observability
+(If production app) Error tracking, logging, health checks.
+
 ## Development Phases
-Phased implementation with checkboxes.
+Phased implementation with checkboxes and task dependencies.
 
 ## Open Questions
-Decisions to resolve during development.
+Decisions to resolve, with proposed options and impact analysis.
 
 ---
 
@@ -334,16 +392,28 @@ Each SPEC/ file follows this format:
 
 ## Context7 Integration
 
-After tech choices are finalized, fetch documentation for each technology:
+After tech choices are finalized, fetch documentation for each technology. Fetch multiple technologies in parallel when possible.
 
-1. Call `resolve-library-id` for each chosen technology (e.g., "next.js", "drizzle-orm", "hono")
-2. Call `query-docs` with specific queries:
-   - Setup/installation: "How to set up [library] with TypeScript"
-   - Key patterns: "[library] recommended project structure"
-   - Integration: "How to use [library A] with [library B]"
-3. Include relevant patterns and configuration in SPEC.md or supplements
+**Step 1**: Call `resolve-library-id` for each chosen technology.
 
-If resolve-library-id returns no results, skip that technology and note it in the References section.
+**Step 2**: Call `query-docs` with targeted queries per technology category:
+
+| Category | Query Templates |
+|----------|----------------|
+| Frontend framework | "How to set up [framework] with TypeScript", "[framework] app router file structure" |
+| CSS framework | "[framework] configuration with custom theme", "[framework] dark mode setup" |
+| Component library | "[library] installation and setup", "[library] form components" |
+| Backend framework | "[framework] project structure with TypeScript", "[framework] middleware patterns" |
+| Database + ORM | "[ORM] schema definition with [database]", "[ORM] migration workflow" |
+| Auth | "[auth library] setup with [framework]", "[auth] JWT vs session comparison" |
+| Deployment | "[platform] deployment configuration for [framework]" |
+
+**Step 3**: Extract and include in SPEC.md:
+- Recommended project structure from docs
+- Configuration snippets (tsconfig, tailwind.config, etc.)
+- Key patterns the framework expects (file-based routing, middleware chains, etc.)
+
+If `resolve-library-id` returns no results, skip and note in References: "Documentation for [tech] to be added manually."
 
 ## Opinionated Recommendations
 
@@ -367,7 +437,12 @@ When presenting choices:
 - Be actionable: "Return errors as `{ code, message, details }` JSON" not "Implement error handling"
 - Include ASCII diagrams for architecture and data model relations
 - Include TypeScript interfaces for data models
+- Include Zod validation schemas alongside interfaces for input validation
 - Keep scope realistic for MVP
+- Include state diagrams for entities with lifecycle (e.g., task: pending → in_progress → completed → archived)
+- Include algorithm specs for non-obvious behavior (e.g., search ranking, type inference, retry logic)
+- Tech stack rationale must include: why chosen AND what was considered as alternative
+- Acceptance criteria must be testable: include quantities, thresholds, or exact behaviors
 
 ## Reference Files
 

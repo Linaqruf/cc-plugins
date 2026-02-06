@@ -164,7 +164,7 @@ Principles:
 - User can always override
 - YAGNI — ruthlessly simplify
 
-## Architecture (v4.0)
+## Architecture (v4.1)
 
 ```
 skills/spec-writing/SKILL.md    ← Single source of truth (methodology)
