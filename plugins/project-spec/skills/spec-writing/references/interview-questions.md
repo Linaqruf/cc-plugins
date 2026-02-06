@@ -385,7 +385,7 @@ Use these compressed flows when the user provides a project type argument:
 
 ## Feature Planning Questions
 
-Use these for `/feature` interviews:
+Use these for `/spec feature` interviews:
 
 ### Turn 1: Feature Definition
 1. What does this feature do? (one sentence)
@@ -427,7 +427,7 @@ Use these for `/feature` interviews:
 
 ## Design System Questions
 
-Use these for `/design` interviews:
+Use these for `/spec design` interviews:
 
 ### Turn 1: Aesthetic + Brand
 

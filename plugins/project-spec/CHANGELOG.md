@@ -2,6 +2,33 @@
 
 All notable changes to project-spec will be documented in this file.
 
+## [5.0.0] - 2026-02-06
+
+### Breaking Changes
+- **Consolidated to single `/spec` command** — All spec types accessible via arguments
+  - `/spec feature [name]` replaces `/feature`
+  - `/spec design [style]` replaces `/design`
+  - `/spec design:overhaul` replaces `/design:overhaul`
+  - `/sync` removed — use `/spec` to re-audit project against codebase
+
+### Added
+- **Spec type routing** in SKILL.md — Unified type detection and flow dispatch table
+- **Gap Analysis section** in SKILL.md — Core algorithm absorbed from deprecated `/feature` command
+- **Design Audit section** in SKILL.md — Audit workflow absorbed from deprecated `/design:overhaul` command
+- **`references/spec-type-flows.md`** — Detailed workflows for feature, design, and overhaul flows
+- **Intent detection** in spec-writer agent — Routes natural language to appropriate spec type
+
+### Changed
+- **`/spec` command expanded** to handle project, feature, design, and overhaul via argument parsing
+- **spec-writer agent updated** with intent detection table and expanded whenToUse examples
+- **SKILL.md restructured** — Added Spec Types, Gap Analysis, Design Audit sections; removed Related Commands
+
+### Removed
+- **`/feature` command** — Use `/spec feature` instead
+- **`/design` command** — Use `/spec design` instead
+- **`/design:overhaul` command** — Use `/spec design:overhaul` instead
+- **`/sync` command** — Deprecated; re-audit via `/spec` is more reliable than git-diff inference
+
 ## [4.1.0] - 2026-02-06
 
 ### Added

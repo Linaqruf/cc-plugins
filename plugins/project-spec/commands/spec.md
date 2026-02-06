@@ -1,8 +1,8 @@
 ---
 name: spec
-version: 4.1.0
-description: Generate project specifications with SPEC.md as core file and optional SPEC/ supplements
-argument-hint: "[project-type: web-app | cli | api | library]"
+version: 5.0.0
+description: Generate project, feature, or design specifications with SPEC.md as core file
+argument-hint: "[project-type | feature [name] | design [style] | design:overhaul]"
 allowed-tools:
   - AskUserQuestion
   - Write
@@ -15,11 +15,25 @@ allowed-tools:
   - mcp__plugin_context7_context7__query-docs
 ---
 
-# Project Specification Generator v4.1
+# Specification Generator v5.0
 
-Generate comprehensive project specifications. Follow the methodology in the spec-writing skill (`${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/SKILL.md`).
+Generate specifications for projects, features, and design systems. Follow the methodology in the spec-writing skill (`${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/SKILL.md`).
 
-## Workflow
+## Routing
+
+Parse the argument to determine spec type:
+
+| Argument | Spec Type | Entry Point |
+|----------|-----------|-------------|
+| (none) | Project | Check existing specs → detect codebase → interview |
+| `web-app`, `cli`, `api`, `library` | Project | Skip Phase 1, tailor to type |
+| `feature` | Feature | Gap analysis → feature interview |
+| `feature [name]` | Feature | Skip gap analysis → feature interview |
+| `design` | Design | Detect existing → design interview |
+| `design [style]` | Design | Use preset, skip aesthetic question |
+| `design:overhaul` | Design Overhaul | Audit → first-principles interview |
+
+## Project Spec Flow
 
 ### 1. Check for Existing Specs
 
@@ -78,8 +92,6 @@ If an existing codebase is detected:
 5. Generate SPEC.md documenting current state
 6. Ask if user wants to add new features (continue to interview) or stop
 
-**Both Mode:** Run document existing first, then continue with interview for new features.
-
 ### 3. Handle Project Type Argument
 
 If a project type argument is provided, skip Phase 1 of the interview and tailor subsequent phases:
@@ -91,15 +103,13 @@ If a project type argument is provided, skip Phase 1 of the interview and tailor
 
 ### 4. Conduct Interview
 
-Follow the interview methodology from the spec-writing skill. Use the question bank at `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/interview-questions.md` for detailed question options.
+Follow the interview methodology from the spec-writing skill. Use the question bank at `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/interview-questions.md`.
 
 ### 5. Fetch Tech Documentation
 
-After tech choices are finalized, use Context7 to fetch documentation for each chosen technology. Follow the Context7 Integration section in the spec-writing skill.
+After tech choices are finalized, use Context7 to fetch documentation. Follow the Context7 Integration section in the spec-writing skill.
 
 ### 6. Generate Output
-
-Generate files using the output structures defined in the spec-writing skill:
 
 1. **SPEC.md** — Complete specification (use template at `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/output-template.md`)
 2. **CLAUDE.md** — Agent-optimized pointer file
@@ -107,24 +117,46 @@ Generate files using the output structures defined in the spec-writing skill:
 
 ### 7. Finalize
 
-Present summary of created files and offer next steps:
+Present summary of created files and offer next steps.
 
-```
-I've created your project specification:
+## Feature Spec Flow
 
-- SPEC.md (complete specification)
-- CLAUDE.md (agent reference)
-[- SPEC/api-reference.md (if created)]
-[- SPEC/data-models.md (if created)]
+→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/spec-type-flows.md` § Feature Spec Flow
 
-Would you like me to:
-1. Walk through any section?
-2. Add more detail to specific areas?
-3. Start development?
-```
+1. Detect project structure (`SPEC/` folder, `SPEC.md`)
+2. If no explicit feature name: run gap analysis (see SKILL.md § Gap Analysis)
+3. Conduct 4-phase feature interview (see `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/interview-questions.md` § Feature Planning)
+4. Analyze existing codebase for patterns relevant to the feature
+5. Generate feature specification
+6. Offer next steps: review, use feature-dev agents, start implementation
+
+## Design Spec Flow
+
+→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/spec-type-flows.md` § Design Spec Flow
+
+1. Detect project structure and existing design specs (`DESIGN_SPEC.md`, `SPEC/DESIGN-SYSTEM.md`)
+2. If existing design found: ask update or start fresh
+3. Handle style argument (`modern`/`minimal`/`bold` → preset, skip aesthetic question)
+4. Conduct 3-phase design interview (see `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/interview-questions.md` § Design System)
+5. Fetch component library documentation via Context7
+6. Generate design specification
+7. Suggest next steps: review colors, run frontend-design skill, set up CSS config
+
+## Design Overhaul Flow
+
+→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/spec-type-flows.md` § Design Overhaul Flow
+
+1. Audit current design system (see SKILL.md § Design Audit)
+2. Present audit report to user
+3. Conduct first-principles design interview ("Forget the current design. What do you want?")
+4. Generate new design system with migration notes
+5. Generate migration checklist (Foundation → Components → Pages → Cleanup)
+6. Suggest next steps: review checklist, update Tailwind config first, migrate incrementally
 
 ## Error Handling
 
-- **User abandons interview**: Can resume with `/spec` again
+- **User abandons interview**: Resume with `/spec` again
 - **Context7 failures**: Continue without external docs, note in References section
 - **Write failures**: Check directory permissions, offer to output content directly
+- **No existing design (overhaul)**: Skip audit, run standard design flow
+- **Minimal codebase (overhaul)**: Note limited audit scope

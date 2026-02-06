@@ -1,12 +1,12 @@
 ---
 name: spec-writing
-description: This skill should be used when the user wants to create project specifications, design system documentation, or feature plans. Triggers on "create spec", "plan project", "design system", "plan feature", "write specification", "generate SPEC.md", "document my project", "scaffold a spec", "plan my app", "spec out a feature", "create a project plan", "create a CLAUDE.md", "document architecture", "set up my project", "bootstrap a new app", or "help me plan". Covers interview-based specification workflow with codebase analysis, tech stack recommendations, and optional SPEC/ supplements.
-version: 4.1.0
+description: This skill should be used when the user wants to create project specifications, feature specifications, design system documentation, or update existing specs. Triggers on "create spec", "plan project", "design system", "plan feature", "write specification", "generate SPEC.md", "document my project", "scaffold a spec", "plan my app", "spec out a feature", "create a project plan", "create a CLAUDE.md", "document architecture", "set up my project", "bootstrap a new app", "help me plan", "redesign my UI", or "audit my design". Covers interview-based specification workflow with codebase analysis, tech stack recommendations, gap analysis, design audit, and optional SPEC/ supplements.
+version: 5.0.0
 ---
 
-# Spec Writing v4.1.0
+# Spec Writing v5.0.0
 
-Authoritative methodology for generating project specifications. All commands and agents reference this skill.
+Authoritative methodology for generating specifications. The `/spec` command and spec-writer agent reference this skill.
 
 ## Prompt Principles
 
@@ -42,6 +42,19 @@ SPEC/                 # Optional, created only when user agrees
 
 - **SPEC.md** = Things you READ (narrative, decisions, requirements)
 - **SPEC/*.md** = Things you LOOK UP (schemas, SDK patterns, external API details)
+
+## Spec Types
+
+The `/spec` command handles four spec types. Detect or ask which type based on arguments and context.
+
+| Type | Trigger | Output | Interview |
+|------|---------|--------|-----------|
+| Project | No argument, or `web-app`/`cli`/`api`/`library` | SPEC.md + CLAUDE.md + optional SPEC/ | Full 5-phase |
+| Feature | `feature` argument, or user describes a feature | SPEC/FEATURE-[NAME].md or FEATURE_SPEC.md | 4-phase feature |
+| Design | `design` argument, or user wants design system | SPEC/DESIGN-SYSTEM.md or DESIGN_SPEC.md | 3-phase design |
+| Design Overhaul | `design:overhaul` argument | Same as Design + migration checklist | Audit-first + 3-phase design |
+
+→ Full workflows, interview phases, and output templates: `references/spec-type-flows.md`
 
 ## Constraints
 
@@ -208,6 +221,31 @@ When a topic generates substantial reference material (10+ API endpoints, comple
 }
 ```
 
+## Gap Analysis
+
+Perform when spec type is Feature AND SPEC.md exists AND no explicit feature name provided AND codebase has 5+ source files.
+
+1. **Extract specced features** from SPEC.md: "Core Features (MVP)", "Development Phases", "Future Scope"
+2. **Scan codebase** for implemented features using patterns in `references/codebase-analysis.md`
+3. **Categorize gaps**: specced-not-implemented, implemented-not-specced, pattern-based suggestions (e.g., "You have auth but no password reset")
+4. **Present findings** via AskUserQuestion with options populated from gap results — prioritize specced-but-not-implemented
+
+→ Full algorithm with scan patterns: `references/spec-type-flows.md` § Gap Analysis
+
+## Design Audit
+
+Perform when spec type is Design Overhaul. Runs before the design interview.
+
+1. **Scan**: `tailwind.config.*`, `globals.css`, `src/components/ui/`, `src/components/`, `package.json`
+2. **Document**: colors in use (hex values), typography, spacing, component inventory, animation patterns, inconsistencies, what works well
+3. **Present**: audit report to user before proceeding to first-principles design interview
+
+Output includes migration summary table (old → new → action) and phased migration checklist.
+
+→ Full audit workflow and migration output: `references/spec-type-flows.md` § Design Overhaul Flow
+
+If no existing design found: skip audit, run standard design flow. If minimal codebase: note limited audit scope.
+
 ## Codebase Analysis
 
 → Full detection patterns, framework mapping, and scanning tables: `references/codebase-analysis.md`
@@ -280,6 +318,12 @@ Decisions to resolve, with proposed options and impact analysis.
 ```
 
 Omit sections that do not apply (e.g., no Design System for CLI tools, no API Endpoints for libraries).
+
+### Feature Spec & Design Spec Output
+
+→ Templates and output location logic: `references/spec-type-flows.md`
+→ Feature example: `examples/feature-spec.md`
+→ Design example: `examples/design-spec.md`
 
 ### CLAUDE.md Structure
 
@@ -397,6 +441,9 @@ When presenting choices:
 - `references/spec-folder-template.md` - Supplement structure guide
 - `templates/` - Individual section templates (for granular reference when adapting specific sections)
 
+### Spec Type Flows
+- `references/spec-type-flows.md` - Feature, design, and design overhaul workflows
+
 ### Codebase Analysis
 - `references/codebase-analysis.md` - Detection patterns, framework mapping, scanning tables
 
@@ -410,14 +457,6 @@ When presenting choices:
 - `examples/library-spec.md` - Library example
 - `examples/design-spec.md` - Design system example
 - `examples/feature-spec.md` - Feature specification example
-
-## Related Commands
-
-- `/spec` - Generate project specification (uses this methodology)
-- `/feature` - Generate feature specification (uses interview phases from this skill)
-- `/design` - Generate design system specification
-- `/design:overhaul` - First-principles design redesign
-- `/sync` - Git-aware spec drift detection
 
 ## Integration with Other Skills
 
