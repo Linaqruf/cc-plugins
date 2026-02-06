@@ -1,12 +1,12 @@
 ---
 name: spec-writing
-description: This skill should be used when the user wants to create project specifications, feature specifications, design system documentation, or update existing specs. Triggers on "create spec", "plan project", "design system", "plan feature", "write specification", "generate SPEC.md", "document my project", "scaffold a spec", "plan my app", "spec out a feature", "create a project plan", "create a CLAUDE.md", "document architecture", "set up my project", "bootstrap a new app", "help me plan", "redesign my UI", or "audit my design". Covers interview-based specification workflow with codebase analysis, tech stack recommendations, gap analysis, design audit, and optional SPEC/ supplements.
+description: This skill should be used when the user wants to create project specifications, feature specifications, design system documentation, or update existing specs. Triggers on "create spec", "plan project", "design system", "plan feature", "write specification", "generate SPEC.md", "document my project", "scaffold a spec", "plan my app", "spec out a feature", "create a project plan", "create a CLAUDE.md", "document architecture", "set up my project", "bootstrap a new app", "help me plan", "redesign my UI", "audit my design", "update my spec", or "revise the spec". Covers interview-based specification workflow with codebase analysis, tech stack recommendations, gap analysis, design audit, and optional SPEC/ supplements.
 version: 4.0.0
 ---
 
 # Spec Writing v4.0.0
 
-Authoritative methodology for generating specifications. The `/spec` command and spec-writer agent reference this skill.
+Authoritative methodology for generating specifications. The `/spec-writing` command references this skill.
 
 ## Prompt Principles
 
@@ -23,7 +23,7 @@ When presenting choices to the user, include concrete rationale with tradeoffs �
 
 - Use imperative mood: "Ask", "Create", "Skip" — never "consider", "might want to", "you could"
 - Make conditions explicit: "If package.json lists react, vue, svelte, or angular as a dependency" — never "if applicable"
-- Every AskUserQuestion call presenting a *choice* must use the options parameter with 2-4 choices. Open-ended information-gathering questions (problem statement, feature lists, user flows) may use free-text format
+- Every AskUserQuestion call presenting a **choice** must use the options parameter with 2-4 choices. Open-ended information-gathering questions (problem statement, feature lists, user flows) may use free-text format
 - Follow the interview phases in order — do not skip phases without explicit user signal
 
 ## Core Principle
@@ -45,7 +45,7 @@ SPEC/                 # Optional, created only when user agrees
 
 ## Spec Types
 
-The `/spec` command handles four spec types. Detect or ask which type based on arguments and context.
+The `/spec-writing` command handles four spec types. Detect or ask which type based on arguments and context.
 
 | Type | Trigger | Output | Interview |
 |------|---------|--------|-----------|
@@ -177,7 +177,7 @@ When a topic generates substantial reference material (10+ API endpoints, comple
 Perform when spec type is Feature AND SPEC.md exists AND no explicit feature name provided AND codebase has 5+ source files.
 
 **If gap analysis is skipped**, notify the user which condition was not met:
-- No SPEC.md: "Gap analysis skipped: no SPEC.md found. Create a project spec first with `/spec` for full gap analysis."
+- No SPEC.md: "Gap analysis skipped: no SPEC.md found. Create a project spec first with `/spec-writing` for full gap analysis."
 - Fewer than 5 source files: "Gap analysis skipped: codebase has fewer than 5 source files."
 - Explicit feature name provided: skip silently (user already knows what they want).
 
@@ -398,7 +398,7 @@ When presenting choices:
 
 ## Reference Files
 
-All paths below are relative to `skills/spec-writing/`. Commands and agents use `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/` prefix for the same files.
+All paths below are relative to `skills/spec-writing/`. Commands use `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/` prefix for the same files.
 
 ### Templates
 - `references/output-template.md` - Complete SPEC.md structure with all variations (primary reference)

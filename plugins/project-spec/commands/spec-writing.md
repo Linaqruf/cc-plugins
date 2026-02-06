@@ -1,6 +1,4 @@
 ---
-name: spec
-version: 4.0.0
 description: Generate project, feature, or design specifications with SPEC.md as core file
 argument-hint: "[project-type | feature [name] | design [style] | design:overhaul]"
 allowed-tools:
@@ -107,7 +105,7 @@ If an existing codebase is detected:
     },
     {
       label: "Done for now",
-      description: "Generate CLAUDE.md and finish — you can run /spec feature later to add features"
+      description: "Generate CLAUDE.md and finish — you can run /spec-writing feature later to add features"
     }
   ]
 }
@@ -231,7 +229,7 @@ Present summary of created files (including `prompt.md` if generated) and offer 
 
 ## Error Handling
 
-- **User abandons interview**: Resume with `/spec` again
+- **User abandons interview**: Resume with `/spec-writing` again
 - **Context7 failures**: See Context7 Failure Handling table in SKILL.md
 - **Write failures**: Check directory permissions, offer to output content directly
 - **No existing design (overhaul)**: Do not silently degrade. Ask user:
