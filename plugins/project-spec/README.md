@@ -12,7 +12,7 @@ A Claude Code plugin that generates comprehensive specification documents throug
 - **Prevent scope creep** — Clear MVP vs future scope boundaries
 - **Save time** — Front-load decisions instead of discovering them mid-development
 - **Better AI assistance** — Claude Code can reference specs throughout development
-- **Single command** — One `/spec` command handles projects, features, and design systems
+- **Single command** — One `/spec-writing` command handles projects, features, and design systems
 - **Opus 4.6 optimized** — Prompts structured for adaptive thinking (deep reasoning on decisions, fast execution on procedures)
 
 ## Core Principle
@@ -24,30 +24,30 @@ A Claude Code plugin that generates comprehensive specification documents throug
 
 ## Command
 
-### `/project-spec:spec` — Specification Generator
+### `/project-spec:spec-writing` — Specification Generator
 
 Single command with argument-based routing for all spec types:
 
 ```bash
 # Project specification (full interview)
-/project-spec:spec
-/project-spec:spec web-app
-/project-spec:spec cli
-/project-spec:spec api
-/project-spec:spec library
+/project-spec:spec-writing
+/project-spec:spec-writing web-app
+/project-spec:spec-writing cli
+/project-spec:spec-writing api
+/project-spec:spec-writing library
 
 # Feature specification (gap analysis + feature interview)
-/project-spec:spec feature
-/project-spec:spec feature user-authentication
+/project-spec:spec-writing feature
+/project-spec:spec-writing feature user-authentication
 
 # Design system specification
-/project-spec:spec design
-/project-spec:spec design modern
-/project-spec:spec design minimal
-/project-spec:spec design bold
+/project-spec:spec-writing design
+/project-spec:spec-writing design modern
+/project-spec:spec-writing design minimal
+/project-spec:spec-writing design bold
 
 # Design system overhaul (audit + redesign)
-/project-spec:spec design:overhaul
+/project-spec:spec-writing design:overhaul
 ```
 
 ### Project Spec
@@ -129,21 +129,10 @@ Principles:
 ## Architecture (v4.0.0)
 
 ```
-skills/spec-writing/SKILL.md    <- Single source of truth (methodology + routing)
+skills/spec-writing/SKILL.md        <- Single source of truth (methodology)
     ↑ referenced by
-commands/spec.md                <- Unified command (routing + all flows)
-agents/spec-writer.md           <- Agent behavior (intent detection)
+commands/spec-writing.md            <- Command (routing + all flows)
 ```
-
-## spec-writer Agent
-
-Autonomous agent that triggers when you need planning help:
-
-- "Help me plan this project"
-- "I need to write a spec for my app"
-- "Create a design system"
-- "Plan this feature before I build it"
-- "Redesign the UI"
 
 ## Installation
 
@@ -189,15 +178,14 @@ Example specifications included:
 | Component | File | Purpose |
 |-----------|------|---------|
 | Skill | `skills/spec-writing/SKILL.md` | Authoritative methodology (single source of truth) |
-| Command | `commands/spec.md` | `/spec` command with argument-based routing |
-| Agent | `agents/spec-writer.md` | Autonomous planning agent with intent detection |
+| Command | `commands/spec-writing.md` | `/spec-writing` command with argument-based routing |
 
 ## Integration
 
 ### feature-dev Integration (if available)
 
-1. Run `/project-spec:spec` to define project requirements
-2. Run `/project-spec:spec feature` to plan a specific feature
+1. Run `/project-spec:spec-writing` to define project requirements
+2. Run `/project-spec:spec-writing feature` to plan a specific feature
 3. Use `code-explorer` to analyze existing patterns
 4. Use `code-architect` to design implementation
 5. Implement following the plan

@@ -1,6 +1,4 @@
 ---
-name: spec
-version: 4.0.0
 description: Generate project, feature, or design specifications with SPEC.md as core file
 argument-hint: "[project-type | feature [name] | design [style] | design:overhaul]"
 allowed-tools:

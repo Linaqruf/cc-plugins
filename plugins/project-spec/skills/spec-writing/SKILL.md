@@ -6,7 +6,7 @@ version: 4.0.0
 
 # Spec Writing v4.0.0
 
-Authoritative methodology for generating specifications. The `/spec` command and spec-writer agent reference this skill.
+Authoritative methodology for generating specifications. The `/spec-writing` command references this skill.
 
 ## Prompt Principles
 

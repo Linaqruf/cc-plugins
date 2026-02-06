@@ -20,14 +20,14 @@ Then install any plugin:
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| [project-spec](./plugins/project-spec) | Generate project, feature, and design specifications with a single `/spec` command | 4.0.0 |
+| [project-spec](./plugins/project-spec) | Generate project, feature, and design specifications with a single `/spec-writing` command | 4.0.0 |
 | [suno-composer](./plugins/suno-composer) | Compose Suno AI songs with adaptive preferences, dual-mode workflows, and narrative style prompts | 5.4.1 |
 
 ## Plugins
 
 ### project-spec
 
-Generate project, feature, and design specifications with a single `/spec` command. Optimized for Opus 4.6 adaptive thinking.
+Generate project, feature, and design specifications with a single `/spec-writing` command. Optimized for Opus 4.6 adaptive thinking.
 
 **Core Principle:** SPEC.md = things you READ, SPEC/ = things you LOOK UP
 
@@ -35,19 +35,18 @@ Generate project, feature, and design specifications with a single `/spec` comma
 
 | Command | Description | Output |
 |---------|-------------|--------|
-| `/project-spec:spec` | Project specification | `SPEC.md` + `CLAUDE.md` |
-| `/project-spec:spec feature [name]` | Feature specification | `FEATURE_SPEC.md` or `SPEC/FEATURE-*.md` |
-| `/project-spec:spec design [style]` | Design system specification | `DESIGN_SPEC.md` or `SPEC/DESIGN-SYSTEM.md` |
-| `/project-spec:spec design:overhaul` | Design audit + redesign | Same + migration checklist |
+| `/project-spec:spec-writing` | Project specification | `SPEC.md` + `CLAUDE.md` |
+| `/project-spec:spec-writing feature [name]` | Feature specification | `FEATURE_SPEC.md` or `SPEC/FEATURE-*.md` |
+| `/project-spec:spec-writing design [style]` | Design system specification | `DESIGN_SPEC.md` or `SPEC/DESIGN-SYSTEM.md` |
+| `/project-spec:spec-writing design:overhaul` | Design audit + redesign | Same + migration checklist |
 
 **Features:**
-- Single `/spec` command with argument-based routing for all spec types
+- Single `/spec-writing` command with argument-based routing for all spec types
 - Opinionated recommendations with user override
 - Codebase-aware interview — auto-detects answers from lockfiles, configs, and dependencies
 - Gap analysis compares SPEC.md against codebase implementation
 - Design audit for first-principles redesigns
 - System maps (architecture diagrams, data relations, user flows)
-- `spec-writer` agent for autonomous planning
 - Context7 integration for tech stack documentation
 
 **Install:**
@@ -58,17 +57,17 @@ Generate project, feature, and design specifications with a single `/spec` comma
 **Usage:**
 ```bash
 # Project specification
-/project-spec:spec              # Full interview
-/project-spec:spec web-app      # Quick-start for web apps
+/project-spec:spec-writing              # Full interview
+/project-spec:spec-writing web-app      # Quick-start for web apps
 
 # Feature planning
-/project-spec:spec feature comments  # Plan a feature
+/project-spec:spec-writing feature comments  # Plan a feature
 
 # Design system
-/project-spec:spec design modern     # Clean, subtle preset
+/project-spec:spec-writing design modern     # Clean, subtle preset
 
 # Design overhaul
-/project-spec:spec design:overhaul   # Audit + redesign
+/project-spec:spec-writing design:overhaul   # Audit + redesign
 ```
 
 See [plugin documentation](./plugins/project-spec/README.md) for details.
