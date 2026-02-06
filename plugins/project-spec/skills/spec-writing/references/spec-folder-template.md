@@ -4,10 +4,7 @@ SPEC/ is an **optional** folder for reference material that would bloat SPEC.md.
 
 ## Core Principle
 
-**SPEC.md is always complete. SPEC/ files are optional lookup references.**
-
-- **SPEC.md** = Things you READ (narrative, decisions, requirements)
-- **SPEC/*.md** = Things you LOOK UP (schemas, SDK patterns, external APIs)
+See SKILL.md § Core Principle for the authoritative statement. In short: SPEC.md is always complete; SPEC/ files are optional lookup references.
 
 ## When to Create Supplements
 

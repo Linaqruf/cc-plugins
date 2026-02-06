@@ -169,7 +169,7 @@ All notable changes to project-spec will be documented in this file.
 ### Fixed
 - Fix hooks.json format: use event-keyed object instead of array wrapper
 
-## [1.0.2] - 2025-01-09
+## [1.0.2] - 2026-01-09
 
 ### Added
 - `/design` command for design system specifications
@@ -198,7 +198,7 @@ All notable changes to project-spec will be documented in this file.
 - Regex escaping in hooks.json (`\s` → `\\s`)
 - Version sync between plugin.json and SKILL.md
 
-## [1.0.1] - 2025-01-08
+## [1.0.1] - 2026-01-08
 
 ### Added
 - Initial release with `/spec` command

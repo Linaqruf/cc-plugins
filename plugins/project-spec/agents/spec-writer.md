@@ -37,6 +37,7 @@ tools:
   - Grep
   - AskUserQuestion
   - TodoWrite
+  - Task
   - mcp__plugin_context7_context7__resolve-library-id
   - mcp__plugin_context7_context7__query-docs
 ---

@@ -2,7 +2,7 @@
 
 Use this template as the base structure for generating `SPEC.md`. Adapt sections based on project type — omit sections that do not apply.
 
-**Key Principle**: SPEC.md should be complete and self-sufficient. SPEC/ supplements are optional for reference material only.
+See SKILL.md § Core Principle. In short: SPEC.md is always complete and self-sufficient; SPEC/ supplements are optional for reference material only.
 
 ---
 

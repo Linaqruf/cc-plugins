@@ -108,7 +108,7 @@ If an existing codebase is detected:
 
 ### 3. Handle Project Type Argument
 
-If a project type argument is provided, pre-fill the project type (skip detection) but still ask Phase 1 vision questions (they are marked "Never skip"). Tailor subsequent phases:
+If a project type argument is provided, pre-fill the project type (skip detection) but still ask Phase 1 (Vision & Problem) questions (they are marked "Never skip"). Tailor subsequent phases:
 
 - `web-app`: Focus on frontend, backend, database, deployment
 - `cli`: Focus on commands, arguments, distribution, output formats

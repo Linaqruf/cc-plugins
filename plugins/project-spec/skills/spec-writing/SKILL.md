@@ -61,7 +61,7 @@ The `/spec` command handles four spec types. Detect or ask which type based on a
 These rules are non-negotiable:
 
 1. SPEC.md stands alone — never require SPEC/ files to understand the project
-2. Use AskUserQuestion with options for every choice — never ask open-ended questions
+2. Use AskUserQuestion with options for every choice — open-ended information-gathering questions may use free-text format
 3. Lead with recommended option first, include "(Recommended)" in label
 4. Create SPEC/ supplements only when: user agrees AND content is reference material (schemas, tables, SDK patterns)
 5. If Context7 fails, follow the Context7 Failure Handling table below
