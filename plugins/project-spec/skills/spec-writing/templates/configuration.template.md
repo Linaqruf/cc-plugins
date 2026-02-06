@@ -3,7 +3,7 @@
 > Environment and settings documentation. Create if project needs config docs.
 
 ```markdown
-# Configuration
+## Configuration
 
 > Environment configuration for [Project Name]
 

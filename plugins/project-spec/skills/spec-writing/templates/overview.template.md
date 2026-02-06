@@ -13,10 +13,8 @@
 
 ### Target Users
 
-| User Type | Description | Technical Level |
-|-----------|-------------|-----------------|
-| Primary | [Who] | [Developer / Technical / Non-technical] |
-| Secondary | [Who] | [Level] |
+- **Primary**: [Who] — [Developer / Technical / Non-technical]
+- **Secondary**: [Who] — [Level]
 
 ### Success Criteria
 - [ ] [Measurable outcome 1 — include quantity or threshold]

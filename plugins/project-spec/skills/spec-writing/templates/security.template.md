@@ -3,7 +3,7 @@
 > Security architecture. Create if project handles sensitive data.
 
 ```markdown
-# Security
+## Security
 
 > Security implementation for [Project Name]
 

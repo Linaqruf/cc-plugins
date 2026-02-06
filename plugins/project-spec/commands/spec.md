@@ -176,7 +176,7 @@ If a `.gitignore` file exists in the project root, ask whether to add the genera
 }
 ```
 
-If yes: Append the following block to `.gitignore` (only entries for files that were actually generated):
+If yes: Read `.gitignore` first and only append entries that do not already exist. Append the following block (only entries for files that were actually generated and not already in `.gitignore`):
 
 ```
 # Project spec (generated)

@@ -3,7 +3,7 @@
 > Server-side architecture. Create if project has backend/API.
 
 ```markdown
-# Backend
+## Backend
 
 > Server implementation for [Project Name]
 

@@ -3,7 +3,7 @@
 > Frontend architecture and implementation. Create if project has UI.
 
 ```markdown
-# Frontend
+## Frontend
 
 > UI implementation for [Project Name]
 

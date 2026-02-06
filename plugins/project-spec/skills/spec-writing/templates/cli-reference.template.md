@@ -3,7 +3,7 @@
 > Command-line interface documentation. Create if project is CLI tool.
 
 ```markdown
-# CLI Reference
+## CLI Reference
 
 > Command-line interface for [Project Name]
 

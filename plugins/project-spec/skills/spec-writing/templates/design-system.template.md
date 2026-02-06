@@ -3,7 +3,7 @@
 > Visual design tokens. Create if project has UI needing design consistency.
 
 ```markdown
-# Design System
+## Design System
 
 > Visual foundation for [Project Name]
 

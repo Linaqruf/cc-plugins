@@ -66,7 +66,8 @@ These rules are non-negotiable:
 4. Create SPEC/ supplements only when: user agrees AND content is reference material (schemas, tables, SDK patterns)
 5. If Context7 fails, continue without external docs (see § Context7 Integration for failure handling)
 6. If Write fails, check directory permissions and offer to output content directly
-7. Never invent requirements — only document what the user confirms
+7. If a reference file cannot be read, continue with built-in knowledge for that section. Inform user once: "Reference file [name] unavailable — using built-in defaults."
+8. Never invent requirements — only document what the user confirms
 
 ## Interview Methodology
 
@@ -131,7 +132,7 @@ Present architecture options with tradeoffs. Reason through the recommendation b
 
 Present each tech choice with a recommended option first. Adapt recommendations based on project type and earlier answers. Skip categories that do not apply (e.g., no Frontend/Styling/Components for CLI/API/library).
 
-→ Full defaults and ecosystem-specific rules: `references/interview-questions.md` Turns 5-9
+→ Full defaults and ecosystem-specific rules: `references/interview-questions.md` § Turns 5-10
 
 ### Phase 5: Design & Security
 
@@ -141,11 +142,13 @@ Ask only when relevant (has frontend or handles sensitive data):
 - Authentication approach (if project has users)
 - Compliance requirements (if project handles sensitive data)
 
+These 5 conceptual phases map to 10 interview turns via smart batching — see `references/interview-questions.md` § Smart Batching Summary for the full turn-by-turn table.
+
 ### Smart Batching, Detection, and Auto-Detect
 
 Group questions that share context into single AskUserQuestion turns. Skip turns when codebase analysis or prior answers already provide the answer. When codebase analysis detects answers (lockfiles, configs, dependencies), pre-fill and confirm instead of asking. When no project type argument is provided, infer from codebase signals and confirm with user.
 
-→ Full 10-turn batching table with skip conditions: `references/interview-questions.md`
+→ Full 10-turn batching table with skip conditions: `references/interview-questions.md` § Smart Batching Summary
 → Codebase signal detection and auto-fill rules: `references/codebase-analysis.md`
 
 ### Supplement Prompts (Mid-Interview)
@@ -394,6 +397,8 @@ When presenting choices:
 - Acceptance criteria must be testable: include quantities, thresholds, or exact behaviors
 
 ## Reference Files
+
+All paths below are relative to `skills/spec-writing/`. Commands and agents use `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/` prefix for the same files.
 
 ### Templates
 - `references/output-template.md` - Complete SPEC.md structure with all variations (primary reference)

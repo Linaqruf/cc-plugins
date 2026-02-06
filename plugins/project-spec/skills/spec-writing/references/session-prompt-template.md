@@ -25,9 +25,9 @@ Spec: `[Spec File]` | Status: `[Spec File]` § [Phase Section Name]
 
 | Parameter | How to Fill |
 |-----------|-------------|
-| `[Project Name]` | First `# ` heading in the generated spec |
+| `[Project Name]` | First `# ` heading in the generated spec. **Fallback**: use the project directory name if no `# ` heading found. |
 | `[Spec File]` | `SPEC.md` for project specs, `FEATURE_SPEC.md` or `SPEC/FEATURE-[NAME].md` for feature specs, `DESIGN_SPEC.md` or `SPEC/DESIGN-SYSTEM.md` for design specs |
-| `[Phase Section Name]` | Actual section heading containing `- [ ]` checkboxes: "Development Phases" (project), "Implementation Plan" (feature), "Migration Checklist" (design overhaul) |
+| `[Phase Section Name]` | Actual section heading containing `- [ ]` checkboxes: "Development Phases" (project), "Implementation Plan" (feature), "Migration Checklist" (design overhaul). **Fallback**: use "Development Phases" if no section with checkboxes found. |
 | `[Supplement Line]` | See Adaptation Rules below. Omit entirely if no supplements. |
 | `[CLAUDE.md Line]` | See Adaptation Rules below. Omit entirely if no CLAUDE.md. |
 

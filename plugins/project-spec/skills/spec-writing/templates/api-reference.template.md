@@ -3,7 +3,7 @@
 > Endpoint documentation. Create if project exposes API.
 
 ```markdown
-# API Reference
+## API Reference
 
 > API documentation for [Project Name]
 

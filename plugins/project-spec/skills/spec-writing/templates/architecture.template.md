@@ -3,7 +3,7 @@
 > System design, tech stack, and key decisions.
 
 ```markdown
-# Architecture
+## Architecture
 
 > System overview for [Project Name]
 

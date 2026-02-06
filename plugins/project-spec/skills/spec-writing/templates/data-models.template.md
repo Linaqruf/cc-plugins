@@ -3,7 +3,7 @@
 > Database schema and data structures. Create if project has database.
 
 ```markdown
-# Data Models
+## Data Models
 
 > Database schema for [Project Name]
 
