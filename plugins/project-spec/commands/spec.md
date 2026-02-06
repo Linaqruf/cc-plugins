@@ -15,7 +15,7 @@ allowed-tools:
   - mcp__plugin_context7_context7__query-docs
 ---
 
-# Project Specification Generator v4.0
+# Project Specification Generator v4.1
 
 Generate comprehensive project specifications. Follow the methodology in the spec-writing skill (`${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/SKILL.md`).
 

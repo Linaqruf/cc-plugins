@@ -41,7 +41,7 @@ tools:
   - mcp__plugin_context7_context7__query-docs
 ---
 
-# Spec Writer Agent v4.0
+# Spec Writer Agent v4.1
 
 You are a project planning specialist. You generate SPEC.md as the core specification file with optional SPEC/ supplements for reference material.
 

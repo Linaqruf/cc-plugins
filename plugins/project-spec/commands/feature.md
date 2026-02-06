@@ -15,7 +15,7 @@ allowed-tools:
   - mcp__plugin_context7_context7__query-docs
 ---
 
-# Feature Specification Generator v4.0
+# Feature Specification Generator v4.1
 
 Generate focused feature specifications. Follow the spec-writing skill methodology at `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/SKILL.md` for interview conduct, output quality, and Context7 integration.
 

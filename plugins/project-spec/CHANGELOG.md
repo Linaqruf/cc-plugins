@@ -54,13 +54,16 @@ All notable changes to project-spec will be documented in this file.
 - **Updated model IDs** in SDK examples and templates
 - **Fixed CLAUDE.md.template** — Removed stale Quick/SPEC/DEEP mode references from v2.0
 - `Task` tool added to `/spec` and `/feature` allowed-tools for deeper codebase analysis
-- All command versions bumped to v4.0.0 (design-overhaul and sync to v2.0.0)
+- All command versions bumped to v4.0.0 (design-overhaul and sync remained at v2.0.0, later unified to v4.1.0)
 
 ### Added
 - **Prompt Principles section** in SKILL.md — Documents adaptive thinking markers and literal interpretation rules
 - **Constraints section** in SKILL.md — Non-negotiable rules extracted and centralized
 - **Framework Detection table** — Maps package.json dependencies to framework identification
 - **Enhanced file-to-section mapping** in `/sync` — More patterns for categorizing changes
+
+### Removed
+- **Hooks** (`hooks/hooks.json`) — Auto-suggestion and feature planning hooks removed; skill description triggers are sufficient
 
 ### Breaking Changes
 - Commands no longer contain full interview methodology — they reference SKILL.md

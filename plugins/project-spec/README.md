@@ -257,12 +257,12 @@ claude --plugin-dir /path/to/cc-plugins/plugins/project-spec
 
 Example specifications included:
 
-- `examples/web-app-spec.md` — TaskFlow task manager
-- `examples/cli-spec.md` — envcheck CLI tool
-- `examples/api-spec.md` — BookmarkAPI service
-- `examples/library-spec.md` — timeparse library
-- `examples/design-spec.md` — TaskFlow design system
-- `examples/feature-spec.md` — Task comments feature
+- `skills/spec-writing/examples/web-app-spec.md` — TaskFlow task manager
+- `skills/spec-writing/examples/cli-spec.md` — envcheck CLI tool
+- `skills/spec-writing/examples/api-spec.md` — BookmarkAPI service
+- `skills/spec-writing/examples/library-spec.md` — timeparse library
+- `skills/spec-writing/examples/design-spec.md` — TaskFlow design system
+- `skills/spec-writing/examples/feature-spec.md` — Task comments feature
 
 ## Components
 

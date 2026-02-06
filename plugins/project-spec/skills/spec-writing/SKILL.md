@@ -1,6 +1,6 @@
 ---
 name: spec-writing
-description: This skill should be used when the user wants to create project specifications, design system documentation, or feature plans. Triggers on "create spec", "plan project", "design system", "plan feature", "write specification", "generate SPEC.md", "document my project", "scaffold a spec", "plan my app", "spec out a feature", "create a project plan", "create a CLAUDE.md", or "document architecture". Covers interview-based specification workflow with codebase analysis, tech stack recommendations, and optional SPEC/ supplements.
+description: This skill should be used when the user wants to create project specifications, design system documentation, or feature plans. Triggers on "create spec", "plan project", "design system", "plan feature", "write specification", "generate SPEC.md", "document my project", "scaffold a spec", "plan my app", "spec out a feature", "create a project plan", "create a CLAUDE.md", "document architecture", "set up my project", "bootstrap a new app", or "help me plan". Covers interview-based specification workflow with codebase analysis, tech stack recommendations, and optional SPEC/ supplements.
 version: 4.1.0
 ---
 
@@ -23,7 +23,7 @@ When presenting choices to the user, include concrete rationale with tradeoffs �
 
 - Use imperative mood: "Ask", "Create", "Skip" — never "consider", "might want to", "you could"
 - Make conditions explicit: "If package.json lists react, vue, svelte, or angular as a dependency" — never "if applicable"
-- Every AskUserQuestion call must use the options parameter with 2-4 choices
+- Every AskUserQuestion call presenting a *choice* must use the options parameter with 2-4 choices. Open-ended information-gathering questions (problem statement, feature lists, user flows) may use free-text format
 - Follow the interview phases in order — do not skip phases without explicit user signal
 
 ## Core Principle
@@ -116,7 +116,9 @@ Present architecture options with tradeoffs. Reason through the recommendation b
 
 ### Phase 4: Tech Stack
 
-Present each tech choice with a recommended option. Adapt recommendations based on project type and earlier answers:
+Present each tech choice with a recommended option. Adapt recommendations based on project type and earlier answers.
+
+**Note:** The defaults below apply to JavaScript/TypeScript projects. For Python, Rust, Go, or other ecosystems, adapt recommendations using context-aware rules in `references/interview-questions.md`.
 
 - **Package manager**: bun (recommended), pnpm, npm
 - **Frontend**: Next.js (recommended for web apps), Vite + React, SvelteKit, None
@@ -127,7 +129,7 @@ Present each tech choice with a recommended option. Adapt recommendations based 
 - **ORM**: Drizzle (recommended), Prisma, Raw SQL
 - **Deployment**: Vercel (recommended for Next.js), Cloudflare Pages, Railway/Fly.io, Self-hosted
 
-Skip categories that do not apply. If the user chose "No frontend" in Phase 3, skip Frontend/Styling/Components.
+Skip categories that do not apply. If the project type is CLI, API, or library, skip Frontend/Styling/Components.
 
 ### Phase 5: Design & Security
 
@@ -149,7 +151,7 @@ Group questions that share context into single AskUserQuestion turns. Skip turns
 | 4 | Architecture Pattern | Project type is "library" |
 | 5 | Package Manager + Frontend Framework | Skip package manager if lockfile detected. Skip frontend if CLI/API/library |
 | 6 | Styling + Component Library | No frontend selected |
-| 7 | Backend Framework + API Style | User chose Next.js API Routes, or project is a library |
+| 7 | Backend Framework + API Style | Skip API Style if user chose Next.js API Routes. Skip entire turn if project is a library |
 | 8 | Database + ORM | User said "no database" |
 | 9 | Deployment + Auth Approach | Skip auth if project has no users |
 | 10 | Visual Style + Accessibility | No frontend selected |
@@ -391,9 +393,9 @@ When presenting choices:
 ## Reference Files
 
 ### Templates
-- `references/output-template.md` - SPEC.md structure with all variations
+- `references/output-template.md` - Complete SPEC.md structure with all variations (primary reference)
 - `references/spec-folder-template.md` - Supplement structure guide
-- `templates/` - Individual section templates
+- `templates/` - Individual section templates (for granular reference when adapting specific sections)
 
 ### Codebase Analysis
 - `references/codebase-analysis.md` - Detection patterns, framework mapping, scanning tables
