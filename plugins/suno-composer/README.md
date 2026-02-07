@@ -8,7 +8,7 @@ A Claude Code plugin for composing Suno AI songs with a guided workflow. Generat
 
 ## Features
 
-- **Reference-Based**: Compose using artist profiles (`/suno like YOASOBI`) with 29 built-in artists
+- **Reference-Based**: Compose using artist profiles (`/suno like YOASOBI`) with built-in artist profiles
 - **Guided Composition**: Interactive workflow that asks key questions about mood, theme, and style
 - **Preference-Based**: Stores your taste profile for consistent results across sessions
 - **Complete Output**: Generates title, style prompt, lyrics with metatags, and detailed specifications
@@ -69,7 +69,7 @@ Start composition with a theme already in mind.
 /suno Eve-style energetic
 ```
 
-Compose using an artist's characteristics as the base style. The plugin includes profiles for 29 artists spanning J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres.
+Compose using an artist's characteristics as the base style. The plugin includes artist profiles spanning J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres.
 
 ### With J-pop Tier Preset
 

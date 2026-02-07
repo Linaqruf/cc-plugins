@@ -85,7 +85,7 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 |---------|-------------|
 | `/suno` | Guided composition workflow |
 | `/suno [theme]` | Start with a theme |
-| `/suno like <artist>` | Compose using artist profile (29 artists) |
+| `/suno like <artist>` | Compose using artist profile |
 | `/suno <tier>` | Use J-pop tier preset (anisong, surface, mainstream, doujin, legacy) |
 | `/suno album about [concept]` | Album mode (auto-detected from intent) |
 | `/suno acoustic version of [song]` | Variation mode (auto-detected from intent) |
@@ -95,7 +95,7 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 - **Dual-mode workflow** - Vision-first (Claude proposes) or guided (step-by-step wizard)
 - **Adaptive preferences** - First-run wizard + session reflection learns your taste
 - **Narrative style prompts** - Arrangement descriptions that Suno v5 interprets as instructions
-- **Reference-based composition** - 29 artist profiles (YOASOBI, Ado, Aimer, etc.)
+- **Reference-based composition** - Artist profiles (YOASOBI, Ado, Aimer, etc.)
 - **J-pop tier presets** - anisong, surface, mainstream, doujin, legacy
 - Preview-first workflow (confirm concepts before full generation)
 - Sparse tagging for proper dynamics (3-4 technique tags at inflection points)
