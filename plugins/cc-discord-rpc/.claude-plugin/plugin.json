@@ -1,0 +1,11 @@
+{
+  "name": "cc-discord-rpc",
+  "version": "0.3.1",
+  "description": "Display Claude Code activity as Discord Rich Presence. Shows project name, current tool activity, model, token usage, cost, and git branch with multi-session daemon support.",
+  "author": {
+    "name": "Linaqruf"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/Linaqruf/cc-plugins",
+  "keywords": ["discord", "rich-presence", "activity", "status", "daemon", "hooks", "tokens", "cost", "multi-session"]
+}

@@ -1,0 +1,19 @@
+# cc-discord-rpc configuration
+# Documentation: https://github.com/Linaqruf/cc-discord-rpc
+
+# Custom Discord Application ID (optional)
+# Create your own at https://discord.com/developers/applications
+# Leave as null to use the default application
+discord_app_id: null  # Default: 1330919293709324449
+
+# Display settings - control what appears in your Discord status
+display:
+  show_tokens: true    # Show token count (22.9k tokens)
+  show_cost: true      # Show API cost ($0.18)
+  show_model: true     # Show model name (Opus 4.5)
+  show_branch: true    # Show git branch (main)
+  show_file: false     # Show filename when editing (disabled by default)
+
+# Idle timeout in seconds - show "Idling" after this duration of inactivity
+# Default: 300 (5 minutes)
+idle_timeout: 300

@@ -22,6 +22,7 @@ Then install any plugin:
 |--------|-------------|---------|
 | [project-spec](./plugins/project-spec) | Generate project, feature, and design specifications with a single `/spec-writing` command | 4.0.0 |
 | [suno-composer](./plugins/suno-composer) | Compose Suno AI songs with adaptive preferences, dual-mode workflows, and narrative style prompts | 5.4.1 |
+| [cc-discord-rpc](./plugins/cc-discord-rpc) | Display Claude Code activity as Discord Rich Presence with multi-session daemon | 0.3.1 |
 
 ## Plugins
 
@@ -131,6 +132,39 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 ```
 
 See [plugin documentation](./plugins/suno-composer/README.md) for details.
+
+### cc-discord-rpc
+
+Display Claude Code activity as Discord Rich Presence. Shows project name, current tool activity, model, token usage, cost, and git branch.
+
+**Hooks** (automatic, no commands needed):
+
+| Hook | Trigger | Action |
+|------|---------|--------|
+| SessionStart | Claude Code opens | Start daemon, register session |
+| PreToolUse | Before Edit/Bash/etc | Update Discord activity |
+| SessionEnd | Claude Code exits | Stop daemon if last session |
+
+**Features:**
+- Activity display (Editing, Running, Searching, etc.) based on active tool
+- Project name from git remote + branch display
+- Model name, token count, and API cost (via statusline integration)
+- Multi-session support — multiple terminals share one daemon
+- Idle detection after configurable timeout (default 5 min)
+- MCP tool support
+- YAML configuration with hot-reload
+
+**Prerequisites:**
+- Python 3.10+, Discord desktop app, `pip install pypresence pyyaml`
+
+**Install:**
+```bash
+/plugin install cc-discord-rpc@cc-plugins
+```
+
+See [plugin documentation](./plugins/cc-discord-rpc/README.md) for details.
+
+---
 
 ## License
 
