@@ -21,7 +21,7 @@ Then install any plugin:
 | Plugin | Description | Version |
 |--------|-------------|---------|
 | [project-spec](./plugins/project-spec) | Generate project, feature, and design specifications with a single `/spec-writing` command | 4.0.0 |
-| [suno-composer](./plugins/suno-composer) | Compose Suno AI songs with adaptive preferences, dual-mode workflows, and narrative style prompts | 5.4.1 |
+| [suno-composer](./plugins/suno-composer) | Compose Suno AI songs with adaptive preferences, dual-mode workflows, and narrative style prompts | 5.5.0 |
 | [kana-code-rpc](./plugins/kana-code-rpc) | Display Claude Code activity as Discord Rich Presence with multi-session daemon | 0.3.2 |
 
 ## Plugins
@@ -85,17 +85,17 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 |---------|-------------|
 | `/suno` | Guided composition workflow |
 | `/suno [theme]` | Start with a theme |
-| `/suno like <artist>` | Compose using artist profile (29 artists) |
+| `/suno like <artist>` | Compose using artist profile |
 | `/suno <tier>` | Use J-pop tier preset (anisong, surface, mainstream, doujin, legacy) |
-| `/suno:album [concept]` | Create thematically coherent albums/EPs |
-| `/suno:variation` | Generate acoustic, remix, stripped versions |
-| `/suno:extend` | Create song continuations (sequel, prequel, response) |
+| `/suno album about [concept]` | Album mode (auto-detected from intent) |
+| `/suno acoustic version of [song]` | Variation mode (auto-detected from intent) |
+| `/suno sequel to [song]` | Extend mode (auto-detected from intent) |
 
 **Features:**
 - **Dual-mode workflow** - Vision-first (Claude proposes) or guided (step-by-step wizard)
 - **Adaptive preferences** - First-run wizard + session reflection learns your taste
 - **Narrative style prompts** - Arrangement descriptions that Suno v5 interprets as instructions
-- **Reference-based composition** - 29 artist profiles (YOASOBI, Ado, Aimer, etc.)
+- **Reference-based composition** - Artist profiles (YOASOBI, Ado, Aimer, etc.)
 - **J-pop tier presets** - anisong, surface, mainstream, doujin, legacy
 - Preview-first workflow (confirm concepts before full generation)
 - Sparse tagging for proper dynamics (3-4 technique tags at inflection points)
@@ -103,7 +103,7 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 - Album mode with journey arc patterns
 - Variation mode (acoustic, remix, stripped, extended, cinematic)
 - Extend mode (sequel, prequel, response, alternate POV, epilogue)
-- Chrome integration for auto-filling Suno forms
+- Conversational intent detection (album, variation, extend modes auto-detected)
 
 **Install:**
 ```bash
@@ -125,10 +125,10 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 /suno anisong about never giving up
 
 # Album mode
-/suno:album summer memories
+/suno album about summer memories
 
 # Variations
-/suno:variation
+/suno make an acoustic version
 ```
 
 See [plugin documentation](./plugins/suno-composer/README.md) for details.

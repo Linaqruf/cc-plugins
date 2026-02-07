@@ -1,6 +1,6 @@
 # Suno Composer
 
-**Version 5.4.1**
+**Version 5.5.0**
 
 A Claude Code plugin for composing Suno AI songs with a guided workflow. Generates complete song specifications including lyrics, style tags, tempo, vocal arrangements, and more - all based on your musical preferences.
 
@@ -8,12 +8,11 @@ A Claude Code plugin for composing Suno AI songs with a guided workflow. Generat
 
 ## Features
 
-- **Reference-Based**: Compose using artist profiles (`/suno like YOASOBI`) with 29 built-in artists
+- **Reference-Based**: Compose using artist profiles (`/suno like YOASOBI`) with built-in artist profiles
 - **Guided Composition**: Interactive workflow that asks key questions about mood, theme, and style
 - **Preference-Based**: Stores your taste profile for consistent results across sessions
 - **Complete Output**: Generates title, style prompt, lyrics with metatags, and detailed specifications
 - **File Output**: Save compositions to markdown files for easy organization
-- **Chrome Integration**: Auto-fill Suno forms with real-time iteration (optional)
 - **Preset Moods**: Quick-select from common moods (upbeat, melancholic, energetic, dreamy, intense, chill)
 - **Batch Generation**: Create multiple song variations in one session
 - **Album Mode**: Create thematically coherent multi-track albums and EPs
@@ -62,7 +61,7 @@ This starts the guided composition workflow which will ask about:
 
 Start composition with a theme already in mind.
 
-### With Artist Reference (v4.4+)
+### With Artist Reference
 
 ```
 /suno like YOASOBI about finding hope
@@ -70,9 +69,9 @@ Start composition with a theme already in mind.
 /suno Eve-style energetic
 ```
 
-Compose using an artist's characteristics as the base style. The plugin includes profiles for 29 artists spanning J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres.
+Compose using an artist's characteristics as the base style. The plugin includes artist profiles spanning J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres.
 
-### With J-pop Tier Preset (v4.5+)
+### With J-pop Tier Preset
 
 ```
 /suno anisong about never giving up
@@ -96,7 +95,8 @@ Combine tier + artist for blended results: `/suno anisong like Aimer about farew
 ### Album Mode
 
 ```
-/suno:album summer memories
+/suno album about summer memories
+/suno 5-track EP exploring city nights
 ```
 
 Create thematically coherent multi-track albums or EPs with:
@@ -107,7 +107,8 @@ Create thematically coherent multi-track albums or EPs with:
 ### Variation Mode
 
 ```
-/suno:variation
+/suno make an acoustic version of that last song
+/suno remix of Midnight Train
 ```
 
 Generate transformed versions of an existing song:
@@ -120,7 +121,8 @@ Generate transformed versions of an existing song:
 ### Extend Mode
 
 ```
-/suno:extend
+/suno sequel to Midnight Train
+/suno what happens next in the story
 ```
 
 Create narratively connected songs:
@@ -129,26 +131,6 @@ Create narratively connected songs:
 - **Response** - Answer from different perspective
 - **Alternate POV** - Same events, different narrator
 - **Epilogue** - Reflection from distance
-
-### Chrome Integration (New in v4.0)
-
-> **Prerequisite:** This command requires Chrome integration. Start Claude Code with `claude --chrome` first.
-
-```
-/suno:chrome
-```
-
-Interactive browser session that:
-- Opens Suno's creation page in Chrome
-- Composes songs and auto-fills the form
-- Lets you iterate in real-time before generating
-- Supports modifications and tweaks on the fly
-
-To use this feature:
-```bash
-claude --chrome
-```
-Then run `/suno:chrome` in the session.
 
 ## File Output
 
@@ -186,11 +168,10 @@ Suno Composer learns your preferences over time for personalized compositions.
 
 ### First-Run Wizard
 
-When you first run `/suno` without any preferences, a quick wizard (3-5 questions) helps set up your defaults:
-- Favorite genres
-- Preferred vocal style
+When you first run `/suno` without any preferences, a quick wizard (2-3 questions) helps set up your defaults:
+- Favorite genres + vocal style
 - Default language
-- Favorite artists (optional)
+- Save location (global vs project)
 
 Choose to save globally (`~/.claude/suno-composer.local.md`) or per-project (`.claude/suno-composer.local.md`).
 
@@ -262,12 +243,11 @@ Create a preferences file at `.claude/suno-composer.local.md` in your project or
 | `/suno` | Main composition workflow with file output | None |
 | `/suno like <artist>` | Compose using artist profile | None |
 | `/suno <tier>` | Compose using J-pop tier preset (anisong, surface, mainstream, doujin, legacy) | None |
-| `/suno:album` | Create thematically coherent albums/EPs | None |
-| `/suno:variation` | Generate song variations | None |
-| `/suno:extend` | Create song continuations | None |
-| `/suno:chrome` | Interactive browser workflow | `claude --chrome` |
+| `/suno album about [concept]` | Album mode (auto-detected from intent) | None |
+| `/suno acoustic version of [song]` | Variation mode (auto-detected from intent) | None |
+| `/suno sequel to [song]` | Extend mode (auto-detected from intent) | None |
 
-- **Skill**: `song-composition` - Knowledge about Suno v5, genres, and song structures
+- **Skill**: `suno` - Knowledge about Suno v5, genres, and song structures
 
 ## Output Format
 
@@ -323,6 +303,20 @@ climax, polished production
 
 **Note:** Lyrics use **sparse tagging** - most sections have only the section marker. Technique tags (`[stripped]`, `[key change up]`) appear only at 3-4 inflection points. Emotion arc goes in the style prompt.
 
+## What's New in v5.5.0
+
+- **Opus 4.6 Optimization**: Prompts restructured for Claude's improved creative reasoning
+  - Trust-based guidance replaces defensive guardrails
+  - Shared workflow pattern across all modes reduces redundancy
+  - Conversational guidance replaces mechanical wizards and algorithms
+- **Conversational Intent Detection**: Album, variation, and extend modes now auto-detected from natural language — no explicit flags needed
+- **Simplified First-Run Wizard**: Reduced from 4-5 questions to 2-3 essentials (genres + vocal style, language, save location)
+- **Removed Chrome Integration**: Simplified plugin surface — copy-paste workflow is sufficient
+- **Leaner SKILL.md**: ~22% reduction through removing redundant sections (Creative Confidence, Style Prompt Best Practices, When NOT to Tag, Working with Commands)
+- **Leaner suno.md**: ~54% reduction through shared workflow extraction and mode-delta pattern
+- **Reference Deduplication**: Consolidated overlapping content between metatags and techniques files
+- **Fixed**: Added missing `version` field to SKILL.md frontmatter
+
 ## What's New in v5.4.1
 
 - **Vision-First Walkthrough**: Complete annotated example showing the full composition workflow
@@ -360,7 +354,7 @@ climax, polished production
 
 ## What's New in v5.3
 
-- **First-Run Wizard**: Quick 3-5 question setup when no preferences exist
+- **First-Run Wizard**: Quick 4-5 question setup when no preferences exist
   - Choose favorite genres, vocal style, language, and optional artists
   - Save globally or per-project
   - Skip option with "don't ask again" dismissal
