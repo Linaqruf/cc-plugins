@@ -289,7 +289,7 @@ def touch_session(session_id: str):
     """Update timestamp for an active session to keep it alive.
 
     Called by statusline.py on each update to signal the session is still active.
-    The daemon uses timestamp staleness to detect stale sessions.
+    The daemon uses timestamp staleness combined with PID liveness to detect dead sessions.
     """
     if not session_id:
         return
@@ -308,7 +308,6 @@ def touch_session(session_id: str):
                 else:
                     # Old format (bare int) — upgrade to new format
                     sessions[session_id] = {"ts": int(time.time()), "pid": 0}
-                    entry = sessions[session_id]
                 content = json.dumps(sessions)
                 DATA_DIR.mkdir(parents=True, exist_ok=True)
                 fd, tmp_path = tempfile.mkstemp(dir=DATA_DIR, suffix='.tmp')

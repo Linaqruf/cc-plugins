@@ -289,7 +289,7 @@ def truncate_filename(filename: str, max_length: int = 25) -> str:
 
 
 def _is_pid_alive(pid: int) -> bool:
-    """Check if a process with given PID is still running (for daemon PID only)."""
+    """Check if a process with given PID is still running."""
     if sys.platform == "win32":
         # Use tasklist to check if PID exists (simpler than ctypes for daemon-only use)
         try:
@@ -415,7 +415,7 @@ def get_git_branch(project_path: str) -> str:
 
 
 def read_sessions() -> dict:
-    """Read active sessions {session_id: timestamp} with locking. For external callers."""
+    """Read active sessions {session_id: {"ts": int, "pid": int}} with locking. For external callers."""
     try:
         with StateLock(lock_file=SESSIONS_LOCK_FILE):
             return _read_sessions_unlocked()
@@ -425,7 +425,7 @@ def read_sessions() -> dict:
 
 
 def _read_sessions_unlocked() -> dict:
-    """Read active sessions {session_id: timestamp} without locking. Use inside StateLock(lock_file=SESSIONS_LOCK_FILE)."""
+    """Read active sessions {session_id: {"ts": int, "pid": int}} without locking. Use inside StateLock(lock_file=SESSIONS_LOCK_FILE)."""
     try:
         return json.loads(SESSIONS_FILE.read_text(encoding="utf-8"))
     except FileNotFoundError:
@@ -872,7 +872,9 @@ def cmd_start():
         log("Warning: No session_id in hook input, using fallback")
         session_id = f"fallback-{os.getpid()}-{int(time.time())}"
 
-    session_count = add_session(session_id, pid=os.getpid())
+    # Use parent PID (Claude Code) — this hook runs as a child subprocess
+    # that exits immediately, so os.getpid() would always appear dead
+    session_count = add_session(session_id, pid=os.getppid())
 
     if session_count == -1:
         log(f"ERROR: Could not register session {session_id}, aborting start")
