@@ -201,7 +201,7 @@ Location: `%APPDATA%/kana-code-rpc/` (Windows) or `~/.local/share/kana-code-rpc/
 - **Session start jitter fix**: Discord elapsed timer no longer jumps between statusline updates.
 - **Git branch consistency**: Statusline now uses `git rev-parse` (matches daemon, handles worktrees).
 - **Graceful stop without session_id**: `cmd_stop` now checks session count directly when session_id is unavailable.
-- **Input buffer fix**: Hook input reading now handles payloads larger than 64KB.
+- **Input buffer fix**: Hook input buffer increased from 64KB to 256KB.
 
 ## What's New in v0.4.0
 

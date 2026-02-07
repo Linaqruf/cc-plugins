@@ -22,7 +22,7 @@ from pathlib import Path
 import time as _time  # used for statusline_update timestamp
 
 # Shared state management (provides process-safe file locking and utilities)
-from state import StateLock, read_state_unlocked, write_state_unlocked, format_tokens, touch_session
+from state import StateLock, read_state_unlocked, write_state_unlocked, format_tokens
 
 # Fix Windows console encoding for Unicode characters
 if sys.platform == "win32":
@@ -121,13 +121,7 @@ def main():
         if sys.stdin is None:
             print("")
             return
-        chunks = []
-        while True:
-            chunk = os.read(sys.stdin.fileno(), 65536)
-            if not chunk:
-                break
-            chunks.append(chunk)
-        raw = b"".join(chunks)
+        raw = os.read(sys.stdin.fileno(), 262144)
         if not raw:
             print("")
             return
@@ -194,9 +188,6 @@ def main():
     except (OSError, TimeoutError) as e:
         # Don't fail statusline display if state update fails
         print(f"[statusline] Warning: Could not update state: {e}", file=sys.stderr)
-
-    # Keep session alive by touching its timestamp in sessions.json
-    touch_session(session_id)
 
     # ─────────────────────────────────────────────────────────────
     # Build Apple Finder Path Bar Statusline
