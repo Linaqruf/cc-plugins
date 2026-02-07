@@ -1,5 +1,5 @@
 {
-  "name": "cc-plugins",
+  "name": "kana-code-plugins",
   "owner": {
     "name": "Linaqruf"
   },
@@ -7,7 +7,7 @@
     "description": "Claude Code plugins by Linaqruf",
     "version": "1.0.0",
     "pluginRoot": "./plugins",
-    "repository": "https://github.com/Linaqruf/cc-plugins"
+    "repository": "https://github.com/Linaqruf/kana-code-plugins"
   },
   "plugins": [
     {
@@ -33,6 +33,18 @@
       "license": "MIT",
       "keywords": ["suno", "music", "composition", "lyrics", "ai-music", "j-pop", "vocaloid", "city-pop", "song-generation", "album", "remix", "chrome", "browser-automation", "artist-reference", "anisong", "doujin", "vision-first", "dual-mode", "preferences", "adaptive-learning", "narrative-prompts"],
       "category": "creative"
+    },
+    {
+      "name": "kana-code-rpc",
+      "source": "./plugins/kana-code-rpc",
+      "description": "Display Claude Code activity as Discord Rich Presence. Shows project name, current tool activity, model, token usage, cost, and git branch. Features multi-session daemon, idle detection, MCP tool support, and YAML configuration with hot-reload.",
+      "version": "0.3.2",
+      "author": {
+        "name": "Linaqruf"
+      },
+      "license": "MIT",
+      "keywords": ["discord", "rich-presence", "activity", "status", "daemon", "hooks", "tokens", "cost", "multi-session"],
+      "category": "integration"
     }
   ]
 }

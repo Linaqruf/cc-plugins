@@ -1,4 +1,4 @@
-# cc-plugins
+# kana-code-plugins
 
 A collection of Claude Code plugins
 
@@ -7,13 +7,13 @@ A collection of Claude Code plugins
 Add this marketplace to Claude Code:
 
 ```bash
-/plugin marketplace add Linaqruf/cc-plugins
+/plugin marketplace add Linaqruf/kana-code-plugins
 ```
 
 Then install any plugin:
 
 ```bash
-/plugin install <plugin-name>@cc-plugins
+/plugin install <plugin-name>@kana-code-plugins
 ```
 
 ## Available Plugins
@@ -22,6 +22,7 @@ Then install any plugin:
 |--------|-------------|---------|
 | [project-spec](./plugins/project-spec) | Generate project, feature, and design specifications with a single `/spec-writing` command | 4.0.0 |
 | [suno-composer](./plugins/suno-composer) | Compose Suno AI songs with adaptive preferences, dual-mode workflows, and narrative style prompts | 5.4.1 |
+| [kana-code-rpc](./plugins/kana-code-rpc) | Display Claude Code activity as Discord Rich Presence with multi-session daemon | 0.3.2 |
 
 ## Plugins
 
@@ -51,7 +52,7 @@ Generate project, feature, and design specifications with a single `/spec-writin
 
 **Install:**
 ```bash
-/plugin install project-spec@cc-plugins
+/plugin install project-spec@kana-code-plugins
 ```
 
 **Usage:**
@@ -106,7 +107,7 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 
 **Install:**
 ```bash
-/plugin install suno-composer@cc-plugins
+/plugin install suno-composer@kana-code-plugins
 ```
 
 **Usage:**
@@ -131,6 +132,39 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 ```
 
 See [plugin documentation](./plugins/suno-composer/README.md) for details.
+
+### kana-code-rpc
+
+Display Claude Code activity as Discord Rich Presence. Shows project name, current tool activity, model, token usage, cost, and git branch.
+
+**Hooks** (automatic, no commands needed):
+
+| Hook | Trigger | Action |
+|------|---------|--------|
+| SessionStart | Claude Code opens | Start daemon, register session |
+| PreToolUse | Before Edit/Bash/etc | Update Discord activity |
+| SessionEnd | Claude Code exits | Stop daemon if last session |
+
+**Features:**
+- Activity display (Editing, Running, Searching, etc.) based on active tool
+- Project name from git remote + branch display
+- Model name, token count, and API cost (via statusline integration)
+- Multi-session support — multiple terminals share one daemon
+- Idle detection after configurable timeout (default 5 min)
+- MCP tool support
+- YAML configuration with hot-reload
+
+**Prerequisites:**
+- Python 3.10+, Discord desktop app, `pip install pypresence` (pyyaml optional for config)
+
+**Install:**
+```bash
+/plugin install kana-code-rpc@kana-code-plugins
+```
+
+See [plugin documentation](./plugins/kana-code-rpc/README.md) for details.
+
+---
 
 ## License
 
