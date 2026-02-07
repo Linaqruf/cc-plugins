@@ -62,7 +62,7 @@ This starts the guided composition workflow which will ask about:
 
 Start composition with a theme already in mind.
 
-### With Artist Reference (v4.4+)
+### With Artist Reference
 
 ```
 /suno like YOASOBI about finding hope
@@ -72,7 +72,7 @@ Start composition with a theme already in mind.
 
 Compose using an artist's characteristics as the base style. The plugin includes profiles for 29 artists spanning J-pop, J-rock, Vocaloid, city pop, doujin, and anime soundtrack genres.
 
-### With J-pop Tier Preset (v4.5+)
+### With J-pop Tier Preset
 
 ```
 /suno anisong about never giving up
@@ -130,7 +130,7 @@ Create narratively connected songs:
 - **Alternate POV** - Same events, different narrator
 - **Epilogue** - Reflection from distance
 
-### Chrome Integration (New in v4.0)
+### Chrome Integration
 
 > **Prerequisite:** This command requires Chrome integration. Start Claude Code with `claude --chrome` first.
 
@@ -186,7 +186,7 @@ Suno Composer learns your preferences over time for personalized compositions.
 
 ### First-Run Wizard
 
-When you first run `/suno` without any preferences, a quick wizard (3-5 questions) helps set up your defaults:
+When you first run `/suno` without any preferences, a quick wizard (4-5 questions) helps set up your defaults:
 - Favorite genres
 - Preferred vocal style
 - Default language

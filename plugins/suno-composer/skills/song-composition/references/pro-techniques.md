@@ -201,7 +201,7 @@ When writing lyrics for Suno, include specific details:
 
 ## Rhythmic Variation
 
-**Principle:** Subtle rhythmic changes increase memorability by 52% (Toronto Songwriters' Collective, 2025).
+**Principle:** Subtle rhythmic changes increase memorability.
 
 ### Types of Rhythmic Variation
 

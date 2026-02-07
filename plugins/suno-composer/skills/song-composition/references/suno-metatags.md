@@ -148,7 +148,7 @@ The `[Intro]` tag can be inconsistent in Suno v5. Alternatives if it's not worki
 
 ## Genre-Specific Tag Combinations
 
-> Basic examples in SKILL.md. Additional combinations below.
+> See the Genre Conventions table in SKILL.md. Additional combinations below.
 
 ### EDM Drop
 ```
