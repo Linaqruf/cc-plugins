@@ -77,8 +77,8 @@ User encounters problem
 
 | File | Location | Purpose |
 |------|----------|---------|
-| `walkthroughs.md` | `skills/song-composition/references/` | Complete workflow examples |
-| `troubleshooting.md` | `skills/song-composition/references/` | Error recovery guide |
+| `walkthroughs.md` | `skills/suno/references/` | Complete workflow examples |
+| `troubleshooting.md` | `skills/suno/references/` | Error recovery guide |
 
 ### Walkthrough Structure
 
@@ -191,7 +191,7 @@ User encounters problem
 
 | File | Changes |
 |------|---------|
-| `skills/song-composition/SKILL.md` | Add reference pointers to new files |
+| `skills/suno/SKILL.md` | Add reference pointers to new files |
 | `README.md` | Add "Troubleshooting" section with link |
 | `.claude-plugin/plugin.json` | Bump version to 5.4.1 |
 
@@ -199,8 +199,8 @@ User encounters problem
 
 | File | Content |
 |------|---------|
-| `skills/song-composition/references/walkthroughs.md` | Vision-first workflow example |
-| `skills/song-composition/references/troubleshooting.md` | Error recovery guide |
+| `skills/suno/references/walkthroughs.md` | Vision-first workflow example |
+| `skills/suno/references/troubleshooting.md` | Error recovery guide |
 
 ---
 
@@ -252,7 +252,7 @@ User encounters problem
 
 ## References
 
-- Current skill: `skills/song-composition/SKILL.md`
-- Output formats: `skills/song-composition/references/output-formats.md`
-- User preferences: `skills/song-composition/references/user-preferences.md`
-- Workflow modes: `skills/song-composition/references/workflow-modes.md`
+- Current skill: `skills/suno/SKILL.md`
+- Output formats: `skills/suno/references/output-formats.md`
+- User preferences: `skills/suno/references/user-preferences.md`
+- Workflow modes: `skills/suno/references/workflow-modes.md`
