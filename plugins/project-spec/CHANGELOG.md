@@ -2,16 +2,21 @@
 
 All notable changes to project-spec will be documented in this file.
 
+## [4.0.1] - 2026-02-07
+
+### Changed
+- **Command renamed** from `/spec-writing` back to `/spec` — shorter, cleaner (`/project-spec:spec`)
+- **Skill directory renamed** from `skills/spec-writing/` to `skills/spec/`
+
 ## [4.0.0] - 2026-02-06
 
 ### Breaking Changes
-- **Consolidated to single `/spec-writing` command** — All spec types accessible via arguments
-  - `/spec-writing feature [name]` replaces `/feature`
-  - `/spec-writing design [style]` replaces `/design`
-  - `/spec-writing design:overhaul` replaces `/design:overhaul`
-  - `/sync` removed — use `/spec-writing` to re-audit project against codebase
+- **Consolidated to single `/spec` command** — All spec types accessible via arguments
+  - `/spec feature [name]` replaces `/feature`
+  - `/spec design [style]` replaces `/design`
+  - `/spec design:overhaul` replaces `/design:overhaul`
+  - `/sync` removed — use `/spec` to re-audit project against codebase
 - **SKILL.md is the authoritative source** for all shared methodology — commands reference it instead of duplicating
-- **Command file renamed** from `spec.md` to `spec-writing.md` — aligns with skill directory name and official plugin conventions
 - **`name` and `version` removed from command frontmatter** — follows official plugin conventions (derived from filename)
 
 ### Added

@@ -15,7 +15,7 @@ allowed-tools:
 
 # Specification Generator v4.0.0
 
-Generate specifications for projects, features, and design systems. Follow the methodology in the spec-writing skill (`${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/SKILL.md`).
+Generate specifications for projects, features, and design systems. Follow the methodology in the spec skill (`${CLAUDE_PLUGIN_ROOT}/skills/spec/SKILL.md`).
 
 ## Routing
 
@@ -59,7 +59,7 @@ Check for `SPEC.md`, `SPEC/` folder, or `PROJECT_SPEC.md` (legacy). If any exist
 
 ### 2. Detect Existing Codebase
 
-Scan for project indicators using the patterns in the spec-writing skill's "Codebase Analysis" section.
+Scan for project indicators using the patterns in the spec skill's "Codebase Analysis" section.
 
 If an existing codebase is detected:
 
@@ -87,7 +87,7 @@ If an existing codebase is detected:
 **Document Existing Mode:**
 
 1. Read project config files (package.json, Cargo.toml, pyproject.toml, etc.)
-2. Detect framework using the dependency table in the spec-writing skill
+2. Detect framework using the dependency table in the spec skill
 3. Scan directory structure using the deep scanning patterns
 4. Extract: tech stack, data models, API endpoints, file structure
 5. If extraction yields fewer than 3 meaningful data points (tech stack, data models, endpoints, file structure), inform the user: "Automated analysis found limited information. Switching to interview-based planning for better results." Then proceed to interview Phase 1 instead.
@@ -105,7 +105,7 @@ If an existing codebase is detected:
     },
     {
       label: "Done for now",
-      description: "Generate CLAUDE.md and finish — you can run /spec-writing feature later to add features"
+      description: "Generate CLAUDE.md and finish — you can run /spec feature later to add features"
     }
   ]
 }
@@ -133,15 +133,15 @@ If a project type argument is provided, pre-fill the project type (skip detectio
 
 ### 4. Conduct Interview
 
-Follow the interview methodology from the spec-writing skill. Use the question bank at `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/interview-questions.md`.
+Follow the interview methodology from the spec skill. Use the question bank at `${CLAUDE_PLUGIN_ROOT}/skills/spec/references/interview-questions.md`.
 
 ### 5. Fetch Tech Documentation
 
-After tech choices are finalized, use Context7 to fetch documentation. Follow the Context7 Integration section in the spec-writing skill.
+After tech choices are finalized, use Context7 to fetch documentation. Follow the Context7 Integration section in the spec skill.
 
 ### 6. Generate Output
 
-1. **SPEC.md** — Complete specification (use template at `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/output-template.md`)
+1. **SPEC.md** — Complete specification (use template at `${CLAUDE_PLUGIN_ROOT}/skills/spec/references/output-template.md`)
 2. **CLAUDE.md** — Agent-optimized pointer file
 3. **SPEC/*.md** — Supplements, only if user agreed during interview
 
@@ -149,7 +149,7 @@ After tech choices are finalized, use Context7 to fetch documentation. Follow th
 
 If the generated SPEC.md contains a Development Phases section with `- [ ]` checkboxes (it always does for project specs), offer a compound engineering session prompt. See SKILL.md § Session Prompt (Compound Engineering) for the AskUserQuestion format.
 
-If user accepts: Generate `prompt.md` at the project root using the template at `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/session-prompt-template.md`. Also add `→ Start new dev sessions with prompt.md` to CLAUDE.md's Current Status section.
+If user accepts: Generate `prompt.md` at the project root using the template at `${CLAUDE_PLUGIN_ROOT}/skills/spec/references/session-prompt-template.md`. Also add `→ Start new dev sessions with prompt.md` to CLAUDE.md's Current Status section.
 
 If `prompt.md` already exists: ask whether to replace or keep existing (see template for the AskUserQuestion format).
 
@@ -192,11 +192,11 @@ Present summary of created files (including `prompt.md` if generated) and offer 
 
 ## Feature Spec Flow
 
-→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/spec-type-flows.md` § Feature Spec Flow
+→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec/references/spec-type-flows.md` § Feature Spec Flow
 
 1. Detect project structure (`SPEC/` folder, `SPEC.md`)
 2. If no explicit feature name: run gap analysis (see SKILL.md § Gap Analysis). If gap analysis conditions are not met, notify the user which condition was not met before proceeding.
-3. Conduct 4-phase feature interview (see `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/interview-questions.md` § Feature Planning Questions)
+3. Conduct 4-phase feature interview (see `${CLAUDE_PLUGIN_ROOT}/skills/spec/references/interview-questions.md` § Feature Planning Questions)
 4. Analyze existing codebase for patterns relevant to the feature
 5. Generate feature specification
 6. Offer session prompt — feature specs always have an Implementation Plan with `- [ ]` checkboxes (see SKILL.md § Session Prompt). Parameterize with feature spec path. If `SPEC.md` exists, the template adds "Also read SPEC.md" to the prompt.
@@ -204,12 +204,12 @@ Present summary of created files (including `prompt.md` if generated) and offer 
 
 ## Design Spec Flow
 
-→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/spec-type-flows.md` § Design Spec Flow
+→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec/references/spec-type-flows.md` § Design Spec Flow
 
 1. Detect project structure and existing design specs (`DESIGN_SPEC.md`, `SPEC/DESIGN-SYSTEM.md`)
 2. If existing design found: ask update or start fresh
 3. Handle style argument (`modern`/`minimal`/`bold` → preset, skip aesthetic question)
-4. Conduct 3-phase design interview (see `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/interview-questions.md` § Design System Questions)
+4. Conduct 3-phase design interview (see `${CLAUDE_PLUGIN_ROOT}/skills/spec/references/interview-questions.md` § Design System Questions)
 5. Fetch component library documentation via Context7
 6. Generate design specification
 7. If design spec has an implementation checklist with `- [ ]` checkboxes: offer session prompt (see SKILL.md § Session Prompt). Skip only if the generated design spec has no checkboxes (e.g., design-only spec without implementation plan).
@@ -217,7 +217,7 @@ Present summary of created files (including `prompt.md` if generated) and offer 
 
 ## Design Overhaul Flow
 
-→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec-writing/references/spec-type-flows.md` § Design Overhaul Flow
+→ Full workflow: `${CLAUDE_PLUGIN_ROOT}/skills/spec/references/spec-type-flows.md` § Design Overhaul Flow
 
 1. Audit current design system (see SKILL.md § Design Audit)
 2. Present audit report to user
@@ -229,7 +229,7 @@ Present summary of created files (including `prompt.md` if generated) and offer 
 
 ## Error Handling
 
-- **User abandons interview**: Resume with `/spec-writing` again
+- **User abandons interview**: Resume with `/spec` again
 - **Context7 failures**: See Context7 Failure Handling table in SKILL.md
 - **Write failures**: Check directory permissions, offer to output content directly
 - **No existing design (overhaul)**: Do not silently degrade. Ask user:
