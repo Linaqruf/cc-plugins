@@ -164,7 +164,7 @@ If a `.gitignore` file exists in the project root, ask whether to add the genera
   options: [
     {
       label: "Yes, add to .gitignore (Recommended)",
-      description: "Add SPEC.md, SPEC/, prompt.md, and CLAUDE.md to .gitignore — keep specs local to your machine"
+      description: "Add SPEC.md, SPEC/, and prompt.md to .gitignore — keep specs local to your machine"
     },
     {
       label: "No, keep them tracked",
@@ -180,7 +180,6 @@ If yes: Read `.gitignore` first and only append entries that do not already exis
 # Project spec (generated)
 SPEC.md
 SPEC/
-CLAUDE.md
 prompt.md
 ```
 
