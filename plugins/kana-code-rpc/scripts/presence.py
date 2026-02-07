@@ -703,14 +703,8 @@ def run_daemon():
             current_file = state.get("file", "") if show_file else ""
             agent_name = state.get("agent_name", "")
 
-            # Get duration from statusline API (milliseconds)
-            duration_ms = state.get("duration_ms", 0)
-
-            # Calculate session start from duration for Discord elapsed timer
-            if duration_ms > 0:
-                session_start = int(time.time()) - (duration_ms // 1000)
-            else:
-                session_start = state.get("session_start", int(time.time()))
+            # Use session_start timestamp set by cmd_start() for Discord elapsed timer
+            session_start = state.get("session_start", int(time.time()))
 
             # Get token data (only if needed for display)
             tokens = state.get("tokens", {})
