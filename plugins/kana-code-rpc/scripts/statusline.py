@@ -181,8 +181,14 @@ def main():
                 state["context_pct"] = used_percent or 0
                 state["context_size"] = context_size
                 state["agent_name"] = agent_name
-                if project_dir and git_branch:
-                    state["git_branch"] = git_branch
+                if project_dir:
+                    # Only update project name when active project changes (multi-session switch).
+                    # Preserves git remote name from cmd_start for single session.
+                    if state.get("project_path") != project_dir:
+                        state["project"] = Path(project_dir).name
+                        state["project_path"] = project_dir
+                    if git_branch:
+                        state["git_branch"] = git_branch
                 state["statusline_update"] = int(_time.time())
                 write_state_unlocked(state)
     except (OSError, TimeoutError) as e:
