@@ -19,7 +19,7 @@ import json
 import sys
 import os
 from pathlib import Path
-from datetime import datetime
+import time as _time  # used for statusline_update timestamp
 
 # Shared state management (provides process-safe file locking and utilities)
 from state import StateLock, read_state_unlocked, write_state_unlocked, format_tokens, touch_session
@@ -181,7 +181,7 @@ def main():
                 state["agent_name"] = agent_name
                 if project_dir and git_branch:
                     state["git_branch"] = git_branch
-                state["statusline_update"] = int(datetime.now().timestamp())
+                state["statusline_update"] = int(_time.time())
                 write_state_unlocked(state)
     except (OSError, TimeoutError) as e:
         # Don't fail statusline display if state update fails

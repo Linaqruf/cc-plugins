@@ -297,8 +297,15 @@ def _is_pid_alive(pid: int) -> bool:
                 ["tasklist", "/FI", f"PID eq {pid}", "/NH"],
                 capture_output=True, text=True, timeout=5
             )
-            # tasklist /FI filters by exact PID, but verify with column-aligned match
-            return result.returncode == 0 and str(pid) in result.stdout
+            # tasklist /FI filters by exact PID — verify with word boundary match
+            # to avoid substring false positives (e.g., PID 123 matching 1234)
+            if result.returncode != 0:
+                return False
+            for line in result.stdout.splitlines():
+                columns = line.split()
+                if str(pid) in columns:
+                    return True
+            return False
         except (OSError, subprocess.TimeoutExpired):
             return True  # Assume alive if we can't check — prevents duplicate daemon
     else:

@@ -100,7 +100,7 @@ display:
   show_cost: true      # API cost ($0.18)
   show_model: true     # Model name (Opus 4.6)
   show_branch: true    # Git branch (main)
-  show_file: false     # Filename when editing (off by default)
+  show_file: true      # Filename when editing (on by default)
   show_lines: true     # Lines changed (+156 -23)
   show_context_warning: true  # Context % warning at >80%
 
