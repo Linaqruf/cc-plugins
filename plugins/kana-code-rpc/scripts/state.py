@@ -306,8 +306,8 @@ def touch_session(session_id: str):
                 if isinstance(entry, dict):
                     entry["ts"] = int(time.time())
                 else:
-                    # Old format (bare int) — upgrade to new format
-                    sessions[session_id] = {"ts": int(time.time()), "pid": 0}
+                    # Old format (bare int) — upgrade with parent PID (Claude Code)
+                    sessions[session_id] = {"ts": int(time.time()), "pid": os.getppid()}
                 content = json.dumps(sessions)
                 DATA_DIR.mkdir(parents=True, exist_ok=True)
                 fd, tmp_path = tempfile.mkstemp(dir=DATA_DIR, suffix='.tmp')

@@ -290,6 +290,8 @@ def truncate_filename(filename: str, max_length: int = 25) -> str:
 
 def _is_pid_alive(pid: int) -> bool:
     """Check if a process with given PID is still running."""
+    if pid <= 0:
+        return False  # Invalid/sentinel PID
     if sys.platform == "win32":
         # Use tasklist to check if PID exists (simpler than ctypes for daemon-only use)
         try:
@@ -474,7 +476,8 @@ def _parse_session_entry(value) -> dict:
         return {"ts": value, "pid": 0}
     if isinstance(value, dict):
         return value
-    return {"ts": int(time.time()), "pid": 0}
+    log(f"Warning: Unexpected session entry type {type(value).__name__}, treating as stale")
+    return {"ts": 0, "pid": 0}
 
 
 def add_session(session_id: str, pid: int = 0):
@@ -1070,14 +1073,14 @@ def cmd_status():
         for sid, entry in sessions.items():
             info = _parse_session_entry(entry)
             age = now - info.get("ts", 0)
-            pid = info.get("pid", 0)
-            alive = _is_pid_alive(pid) if pid else False
+            session_pid = info.get("pid", 0)
+            alive = _is_pid_alive(session_pid) if session_pid else False
             if age < stale_threshold:
                 status = "active"
             elif alive:
-                status = f"idle ({age}s, PID {pid} alive)"
+                status = f"idle ({age}s, PID {session_pid} alive)"
             else:
-                status = f"stale ({age}s, PID {pid} dead)"
+                status = f"stale ({age}s, PID {session_pid} dead)"
             print(f"  - {sid[:16]}...: {status}")
 
     if state is None:
