@@ -1,7 +1,7 @@
 ---
 description: Compose Suno AI songs with creative or guided workflow, adaptive preferences, and session reflection
 argument-hint: "[theme, artist, mood, or album/variation/extend intent]"
-allowed-tools: Read, Glob, AskUserQuestion, Write, Skill
+allowed-tools: [Read, Glob, AskUserQuestion, Write, Skill]
 ---
 
 # Suno Song Composition
