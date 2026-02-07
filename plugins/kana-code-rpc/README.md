@@ -1,6 +1,6 @@
 # kana-code-rpc
 
-**Version 0.4.0**
+**Version 0.5.0**
 
 Claude Code plugin that displays your coding activity as Discord Rich Presence.
 
@@ -100,7 +100,7 @@ display:
   show_cost: true      # API cost ($0.18)
   show_model: true     # Model name (Opus 4.6)
   show_branch: true    # Git branch (main)
-  show_file: false     # Filename when editing (off by default)
+  show_file: true      # Filename when editing (on by default)
   show_lines: true     # Lines changed (+156 -23)
   show_context_warning: true  # Context % warning at >80%
 
@@ -190,6 +190,18 @@ Location: `%APPDATA%/kana-code-rpc/` (Windows) or `~/.local/share/kana-code-rpc/
 | `sessions.lock` | Lock file for sessions access |
 | `daemon.pid` | Background daemon process ID |
 | `daemon.log` | Debug log |
+
+## What's New in v0.5.0
+
+- **PID file race fix**: Daemon PID cleanup now guarded against race conditions during rapid stop/start sequences.
+- **Multi-session clobbering fix**: New sessions no longer overwrite existing session's project/branch state.
+- **More tracked tools**: Added Skill, EnterPlanMode, ExitPlanMode, TaskCreate, TaskUpdate, TaskList, TaskGet, TaskStop, TaskOutput.
+- **Log rotation**: Daemon log auto-rotates at 1MB to prevent unbounded growth.
+- **Unix daemon hardening**: File descriptors redirected to /dev/null instead of closed (prevents fd reuse bugs).
+- **Session start jitter fix**: Discord elapsed timer no longer jumps between statusline updates.
+- **Git branch consistency**: Statusline now uses `git rev-parse` (matches daemon, handles worktrees).
+- **Graceful stop without session_id**: `cmd_stop` now checks session count directly when session_id is unavailable.
+- **Input buffer fix**: Hook input reading now handles payloads larger than 64KB.
 
 ## What's New in v0.4.0
 
