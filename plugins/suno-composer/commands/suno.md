@@ -2,7 +2,7 @@
 name: suno
 version: 5.5.0
 description: Compose Suno AI songs with creative or guided workflow, adaptive preferences, and session reflection
-argument-hint: [creative direction] or :guided/:creative/:album/:variation/:extend
+argument-hint: "[theme, artist, mood, or album/variation/extend intent]"
 allowed-tools: Read, Glob, AskUserQuestion, Write, Skill
 ---
 
@@ -22,17 +22,18 @@ Compose songs optimized for Suno AI v5.
 
 **Trigger:** No preference file at either location.
 
-1. Offer setup: "No preferences found. Quick setup? (~30 seconds)"
-   - Options: "Yes" / "Skip for now" / "Don't ask again"
-   - If "Don't ask again": write marker file with `<!-- preferences-wizard: dismissed -->`
-2. If yes, ask 4-5 questions via AskUserQuestion: favorite genres (multiSelect), vocal style, default language, optional artist references, save location (global vs project)
+1. Offer setup: "No preferences found. Quick setup? (~20 seconds)"
+   - Options: "Yes" / "Skip"
+2. If yes, ask 2-3 questions via AskUserQuestion:
+   - Favorite genres + vocal style (single multiSelect)
+   - Default language
+   - Save location (global vs project)
 3. Write preferences to chosen location:
    ```markdown
    # Suno Composer Preferences
    ## Favorite Genres
    ## Preferred Vocal Styles
    ## Default Languages
-   ## Favorite Artists/Influences
    ```
 
 ### Load Skill
@@ -41,14 +42,16 @@ Invoke the `song-composition` skill via the Skill tool.
 
 ### Detect Intent
 
-| Signal | Mode |
-|--------|------|
-| `:guided` / `:creative` / `:album` / `:variation` / `:extend` | As flagged |
-| Artist reference ("like X", "in the style of X") | Read `references/artist-profiles.md`, proceed Vision-First |
-| Tier keyword (anisong, surface, mainstream, doujin, legacy) | Read `references/jpop-tiers.md`, proceed Vision-First |
-| Rich creative direction (theme + genre/mood/artist) | Vision-First |
-| Sparse or empty input | Guided |
-| Ambiguous | Offer choice via AskUserQuestion |
+| Signal | Mode | Context Load |
+|--------|------|-------------|
+| Album/EP/multi-track intent ("album about...", "5-track EP", "collection of...") | Album | `references/album-composition.md` |
+| Variation intent ("acoustic version", "remix of", "stripped down") | Variation | `references/variation-patterns.md` |
+| Continuation intent ("sequel to", "what happens next", "prequel", "response song") | Extend | `references/continuation-patterns.md` |
+| Artist reference ("like X", "in the style of X") | Vision-First | `references/artist-profiles.md` |
+| Tier keyword (anisong, surface, mainstream, doujin, legacy) | Vision-First | `references/jpop-tiers.md` |
+| Rich creative direction (theme + genre/mood) | Vision-First | — |
+| Sparse or empty input | Guided | — |
+| Ambiguous | Ask via AskUserQuestion | — |
 
 If both tier and artist detected: tier provides base sound, artist provides specific refinements. Artist takes precedence for conflicts.
 
@@ -76,7 +79,7 @@ All modes follow this core pattern after gathering parameters:
 
 ## Vision-First Mode
 
-Default for rich input or `:creative` flag.
+Default for rich input.
 
 ### Interpret & Propose
 
@@ -106,7 +109,7 @@ Handle natural reactions: "darker", "fewer tracks", "make it Korean", "not quite
 
 ## Guided Mode
 
-Triggered by `:guided` flag, empty input, or sparse input.
+Triggered by empty or sparse input.
 
 ### Gather Parameters
 
@@ -116,7 +119,7 @@ Ask via AskUserQuestion, combining where possible:
 3. **Language** — Japanese, English, Korean, Mixed
 4. **Vocals** — Female, Male, Duet, Composer's Choice
 
-Smart defaults: if user provided partial info (e.g., `/suno:guided japanese ballad`), pre-fill known values and skip those questions.
+Smart defaults: if user provided partial info (e.g., "japanese ballad"), pre-fill known values and skip those questions.
 
 ### Preview & Confirm
 
@@ -126,7 +129,7 @@ Generate metadata previews per song (title, direction, genre, tempo, vocal, arc,
 
 ## Album Mode
 
-Activated by `/suno:album [concept]`. Also read `references/album-composition.md`.
+Activated when user describes an album, EP, or multi-track collection.
 
 ### Gather Parameters
 
@@ -154,7 +157,7 @@ Then proceed to Shared Workflow. Write to album structure: `[timestamp]-[album-n
 
 ## Variation Mode
 
-Activated by `/suno:variation`. Also read `references/variation-patterns.md`.
+Activated when user requests a transformed version of an existing song.
 
 ### Gather Source & Types
 
@@ -171,7 +174,7 @@ Then proceed to Shared Workflow. Write to: `[timestamp]-[source]-variations/` wi
 
 ## Extend Mode
 
-Activated by `/suno:extend`. Also read `references/continuation-patterns.md`.
+Activated when user wants a narrative continuation of an existing song.
 
 ### Gather Source & Direction
 

@@ -96,7 +96,8 @@ Combine tier + artist for blended results: `/suno anisong like Aimer about farew
 ### Album Mode
 
 ```
-/suno:album summer memories
+/suno album about summer memories
+/suno 5-track EP exploring city nights
 ```
 
 Create thematically coherent multi-track albums or EPs with:
@@ -107,7 +108,8 @@ Create thematically coherent multi-track albums or EPs with:
 ### Variation Mode
 
 ```
-/suno:variation
+/suno make an acoustic version of that last song
+/suno remix of Midnight Train
 ```
 
 Generate transformed versions of an existing song:
@@ -120,7 +122,8 @@ Generate transformed versions of an existing song:
 ### Extend Mode
 
 ```
-/suno:extend
+/suno sequel to Midnight Train
+/suno what happens next in the story
 ```
 
 Create narratively connected songs:
@@ -186,11 +189,10 @@ Suno Composer learns your preferences over time for personalized compositions.
 
 ### First-Run Wizard
 
-When you first run `/suno` without any preferences, a quick wizard (4-5 questions) helps set up your defaults:
-- Favorite genres
-- Preferred vocal style
+When you first run `/suno` without any preferences, a quick wizard (2-3 questions) helps set up your defaults:
+- Favorite genres + vocal style
 - Default language
-- Favorite artists (optional)
+- Save location (global vs project)
 
 Choose to save globally (`~/.claude/suno-composer.local.md`) or per-project (`.claude/suno-composer.local.md`).
 
@@ -262,9 +264,9 @@ Create a preferences file at `.claude/suno-composer.local.md` in your project or
 | `/suno` | Main composition workflow with file output | None |
 | `/suno like <artist>` | Compose using artist profile | None |
 | `/suno <tier>` | Compose using J-pop tier preset (anisong, surface, mainstream, doujin, legacy) | None |
-| `/suno:album` | Create thematically coherent albums/EPs | None |
-| `/suno:variation` | Generate song variations | None |
-| `/suno:extend` | Create song continuations | None |
+| `/suno album about [concept]` | Album mode (auto-detected from intent) | None |
+| `/suno acoustic version of [song]` | Variation mode (auto-detected from intent) | None |
+| `/suno sequel to [song]` | Extend mode (auto-detected from intent) | None |
 | `/suno:chrome` | Interactive browser workflow | `claude --chrome` |
 
 - **Skill**: `song-composition` - Knowledge about Suno v5, genres, and song structures
@@ -329,6 +331,8 @@ climax, polished production
   - Trust-based guidance replaces defensive guardrails
   - Shared workflow pattern across all modes reduces redundancy
   - Conversational guidance replaces mechanical wizards and algorithms
+- **Conversational Intent Detection**: Album, variation, and extend modes now auto-detected from natural language — no explicit flags needed
+- **Simplified First-Run Wizard**: Reduced from 4-5 questions to 2-3 essentials (genres + vocal style, language, save location)
 - **Leaner SKILL.md**: ~22% reduction through removing redundant sections (Creative Confidence, Style Prompt Best Practices, When NOT to Tag, Working with Commands)
 - **Leaner suno.md**: ~54% reduction through shared workflow extraction and mode-delta pattern
 - **Reference Deduplication**: Consolidated overlapping content between metatags and techniques files

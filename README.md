@@ -87,9 +87,9 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 | `/suno [theme]` | Start with a theme |
 | `/suno like <artist>` | Compose using artist profile (29 artists) |
 | `/suno <tier>` | Use J-pop tier preset (anisong, surface, mainstream, doujin, legacy) |
-| `/suno:album [concept]` | Create thematically coherent albums/EPs |
-| `/suno:variation` | Generate acoustic, remix, stripped versions |
-| `/suno:extend` | Create song continuations (sequel, prequel, response) |
+| `/suno album about [concept]` | Album mode (auto-detected from intent) |
+| `/suno acoustic version of [song]` | Variation mode (auto-detected from intent) |
+| `/suno sequel to [song]` | Extend mode (auto-detected from intent) |
 
 **Features:**
 - **Dual-mode workflow** - Vision-first (Claude proposes) or guided (step-by-step wizard)
@@ -125,10 +125,10 @@ A guided workflow for composing Suno AI songs with professional songwriter techn
 /suno anisong about never giving up
 
 # Album mode
-/suno:album summer memories
+/suno album about summer memories
 
 # Variations
-/suno:variation
+/suno make an acoustic version
 ```
 
 See [plugin documentation](./plugins/suno-composer/README.md) for details.

@@ -21,7 +21,7 @@ Default single or batch song generation.
 
 Generate thematically coherent multi-track albums.
 
-**Triggered by:** `/suno:album [concept]`
+**Triggered by:** Album/EP/multi-track intent (e.g., "album about summer memories", "5-track EP")
 
 **Reference:** `references/album-composition.md` for detailed patterns.
 
@@ -52,7 +52,7 @@ Generate thematically coherent multi-track albums.
 
 Generate transformed versions of a source song.
 
-**Triggered by:** `/suno:variation [source]`
+**Triggered by:** Variation intent (e.g., "acoustic version of", "remix of", "stripped down")
 
 **Reference:** `references/variation-patterns.md` for transformation matrices.
 
@@ -77,7 +77,7 @@ Generate transformed versions of a source song.
 
 Generate narratively connected songs (sequels, prequels, responses).
 
-**Triggered by:** `/suno:extend [direction]`
+**Triggered by:** Continuation intent (e.g., "sequel to", "what happens next", "prequel")
 
 **Reference:** `references/continuation-patterns.md` for callback techniques.
 
@@ -109,7 +109,7 @@ The `/suno` command supports two interaction modes:
 - Iterates through natural conversation
 - User role: React and refine ("darker", "fewer tracks")
 
-### Guided Mode (`:guided` or Sparse Input)
+### Guided Mode (Sparse Input)
 
 - Step-by-step wizard with streamlined questions
 - Claude as helpful guide through options
@@ -121,7 +121,7 @@ The `/suno` command supports two interaction modes:
 |------------|----------|------|
 | Rich (3+ descriptive words) | `doujin gothic waltz`, `like YOASOBI about hope` | Vision-First |
 | Sparse (0-2 generic words) | (empty), `upbeat`, `sad song` | Guided |
-| Explicit flag | `:creative`, `:guided` | As specified |
+| Album/variation/extend intent | `album about summer`, `acoustic version`, `sequel to` | Auto-detected |
 
 **Regardless of mode:**
 - Use sparse tagging (3-4 inflection points)
