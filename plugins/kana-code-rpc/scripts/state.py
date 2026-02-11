@@ -107,8 +107,11 @@ class StateLock:
                 if self._lock_fd is not None:
                     try:
                         os.close(self._lock_fd)
-                    except OSError:
-                        pass
+                    except OSError as close_err:
+                        try:
+                            print(f"[state] Warning: FD close failed during lock retry: {close_err}", file=sys.stderr)
+                        except (ValueError, OSError, TypeError):
+                            pass
                     self._lock_fd = None
 
                 if time.time() - start > self.timeout:
@@ -140,8 +143,11 @@ class StateLock:
             finally:
                 try:
                     os.close(self._lock_fd)
-                except OSError:
-                    pass
+                except OSError as close_err:
+                    try:
+                        print(f"[state] Warning: FD close failed during unlock: {close_err}", file=sys.stderr)
+                    except (ValueError, OSError, TypeError):
+                        pass
                 self._lock_fd = None
         return False
 

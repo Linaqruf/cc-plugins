@@ -527,6 +527,8 @@ def get_claude_ancestor_pid() -> int | None:
         # Build a map of pid -> (parent_pid, exe_name)
         snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
         if snapshot == INVALID_HANDLE_VALUE:
+            error = ctypes.get_last_error()
+            log(f"Warning: CreateToolhelp32Snapshot failed (error {error}), cannot find Claude ancestor")
             return None
 
         process_map = {}

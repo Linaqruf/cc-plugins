@@ -23,7 +23,7 @@ Three self-contained plugins extending Claude Code via its plugin system: slash 
 |--------|---------|------|-------------|
 | `project-spec` | 4.0.0 | Commands + Skills | `/spec-writing` |
 | `suno-composer` | 5.5.0 | Commands + Skills | `/suno` |
-| `kana-code-rpc` | 0.4.0 | Hooks only | SessionStart / PreToolUse / SessionEnd |
+| `kana-code-rpc` | 0.5.0 | Hooks only | SessionStart / PreToolUse / SessionEnd |
 
 ---
 
@@ -186,10 +186,10 @@ Each song includes:
 
 ---
 
-## Plugin: kana-code-rpc (v0.4.0)
+## Plugin: kana-code-rpc (v0.5.0)
 
 ### Purpose
-Display Claude Code activity as Discord Rich Presence. Shows project name, current tool activity, model, token usage, cost, git branch, lines changed, agent name, and context warnings. Features session_id tracking, multi-session daemon, idle detection, and YAML configuration with hot-reload.
+Display Claude Code activity as Discord Rich Presence. Shows project name, current tool activity, model, token usage, cost, git branch, lines changed, agent name, and context warnings. Features PID-based session tracking, multi-session daemon, idle detection, and YAML configuration with hot-reload.
 
 ### Core Principle
 **Statusline as primary data source.** The statusline API feeds token, cost, duration, lines, agent, and context data; hooks handle session lifecycle and tool updates.
@@ -208,11 +208,10 @@ Claude Code Session                    Terminal
 
 | Source | Data | Target |
 |--------|------|--------|
-| SessionStart hook | session_id, project, branch | state.json + sessions.json |
+| SessionStart hook | PID, project, branch | state.json + sessions.json |
 | PreToolUse hook | tool name, filename | state.json |
 | Statusline API | model, tokens, cost, duration, lines, agent, context % | state.json (via statusline.py) |
-| Statusline API | session_id | sessions.json (touch timestamp) |
-| SessionEnd hook | session_id | sessions.json (remove) |
+| SessionEnd hook | PID | sessions.json (remove) |
 | Daemon (1s poll) | state.json → Discord RPC | Discord IPC |
 
 ### Hook Configuration
@@ -245,9 +244,9 @@ Claude Code Session                    Terminal
 
 ### Session Management
 
-- Sessions tracked by `session_id` (Claude Code UUID), not PID
-- Session liveness via timestamp staleness (statusline touches on each run)
-- Orphan cleanup: sessions older than 2× idle_timeout auto-removed (checked every 30s)
+- Sessions tracked by PID (Claude Code's ancestor process ID found via parent chain walking)
+- Session liveness via PID alive checks (ctypes `OpenProcess`/`GetExitCodeProcess` on Windows, `os.kill` on Unix)
+- Orphan cleanup: dead PIDs auto-removed (checked every 30s)
 - Single daemon shared across all sessions (PID file prevents duplicates)
 
 ### Configuration (`config.yaml`, hot-reloaded every 30s)
@@ -269,13 +268,13 @@ Claude Code Session                    Terminal
 ```
 plugins/kana-code-rpc/
 ├── .claude-plugin/
-│   ├── plugin.json              # Plugin manifest (v0.4.0)
+│   ├── plugin.json              # Plugin manifest (v0.5.0)
 │   └── config.yaml              # User configuration (hot-reloaded)
 ├── hooks/
 │   └── hooks.json               # SessionStart, PreToolUse, SessionEnd
 ├── scripts/
-│   ├── presence.py              # Main entry: start/update/stop/status/daemon (~1,130 lines)
-│   ├── state.py                 # File-locked state + session management (~320 lines)
+│   ├── presence.py              # Main entry + session management (~1,300 lines)
+│   ├── state.py                 # File-locked state (~290 lines)
 │   └── statusline.py            # Terminal display + state feed (~235 lines)
 ├── README.md
 ├── SPEC.md
@@ -429,10 +428,10 @@ tools:
 - Tag lists buried the genre under production descriptors
 - Narrative flow naturally incorporates temporal progression
 
-### Why session_id over PID (kana-code-rpc v0.4.0+)
-- Claude Code provides session_id via statusline API — no need for platform-specific process walking
-- Eliminated ~130 lines of Windows ctypes (CreateToolhelp32Snapshot) and Unix /proc parsing
-- Timestamp-based staleness is simpler and more reliable than cross-platform PID alive checks
+### Why PID over session_id (kana-code-rpc v0.5.0+)
+- PID-based tracking is deterministic — no dependency on statusline API delivering session_id
+- Hooks run in subprocess context where parent chain walking reliably identifies the Claude Code process
+- PID alive checks (ctypes on Windows, os.kill on Unix) are instantaneous vs timestamp staleness requiring periodic touching
 
 ### Why Statusline as Primary Data Source
 - Statusline runs every ~300ms with all session data (model, tokens, cost, duration, lines, agent, context)
@@ -467,12 +466,12 @@ tools:
 - [x] 15 reference files
 - [x] Walkthroughs and troubleshooting guides (v5.4.1+)
 
-### kana-code-rpc v0.4.0
+### kana-code-rpc v0.5.0
 - [x] Discord Rich Presence with multi-session daemon
 - [x] Session lifecycle hooks (SessionStart, PreToolUse, SessionEnd)
 - [x] Terminal statusline display (Apple Finder breadcrumb style)
 - [x] Token/cost tracking with cache-aware cycling display
-- [x] session_id tracking (replaced PID-based management)
+- [x] PID-based session tracking (ctypes on Windows, os.kill on Unix)
 - [x] Statusline API integration (duration, lines, agent, context)
 - [x] Agent awareness ("Delegating to {agent_name}")
 - [x] Lines changed display (+N -N)
@@ -480,6 +479,7 @@ tools:
 - [x] YAML config with hot-reload and validation
 - [x] Cross-platform support (Windows + Unix)
 - [x] Connection retry, circuit breaker, atomic writes
+- [x] PID file race protection, log rotation, multi-session clobbering fix
 
 ---
 
