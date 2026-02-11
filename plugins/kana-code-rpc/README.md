@@ -1,6 +1,6 @@
 # kana-code-rpc
 
-**Version 0.4.0**
+**Version 0.5.0**
 
 Claude Code plugin that displays your coding activity as Discord Rich Presence.
 
@@ -15,7 +15,7 @@ Claude Code plugin that displays your coding activity as Discord Rich Presence.
 - **Cost tracking**: Real-time API cost based on model pricing
 - **Lines changed**: Shows `+156 -23` for code modifications
 - **Context warning**: Shows warning when context usage exceeds 80%
-- **Multi-session**: Supports multiple Claude Code terminals via session_id
+- **Multi-session**: Supports multiple Claude Code terminals via PID tracking
 - **Idle state**: Shows "Idling" after configurable timeout (default 5 min)
 - **Elapsed time**: Session duration from Claude Code's statusline API
 - **Configurable**: YAML config for custom app ID and display preferences
@@ -100,7 +100,7 @@ display:
   show_cost: true      # API cost ($0.18)
   show_model: true     # Model name (Opus 4.6)
   show_branch: true    # Git branch (main)
-  show_file: false     # Filename when editing (off by default)
+  show_file: true      # Filename when editing (on by default)
   show_lines: true     # Lines changed (+156 -23)
   show_context_warning: true  # Context % warning at >80%
 
@@ -143,18 +143,18 @@ To use your own Discord application (for custom branding):
 
 | Component | Trigger | Data |
 |-----------|---------|------|
-| SessionStart hook | Claude Code opens | Register session_id, set project/branch |
+| SessionStart hook | Claude Code opens | Register session PID, set project/branch |
 | PreToolUse hook | Before any tool use | Update current activity/tool |
 | Statusline | Every ~300ms | Model, tokens, cost, duration, lines, agent, context % |
-| SessionEnd hook | Claude Code exits | Unregister session, stop daemon if last |
+| SessionEnd hook | Claude Code exits | Unregister session PID, stop daemon if last |
 
 ### Session Management
 
-Sessions are tracked by `session_id` (from Claude Code's statusline API), not PID. The statusline updates the session timestamp on each run, and the daemon detects dead sessions by timestamp staleness (2x idle timeout).
+Sessions are tracked by PID (Claude Code's ancestor process ID, found by walking the parent process chain). The daemon checks PID liveness every 30 seconds via `is_process_alive()` (ctypes on Windows, `os.kill` on Unix) and automatically cleans up dead sessions.
 
 ### Tracked Tools
 
-Edit, Write, Read, Bash, Glob, Grep, LS, Task, WebFetch, WebSearch, NotebookEdit, NotebookRead, AskUserQuestion, TodoRead, TodoWrite, and MCP tools (`mcp__.*`).
+Edit, Write, Read, Bash, Glob, Grep, LS, Task, WebFetch, WebSearch, NotebookEdit, NotebookRead, AskUserQuestion, TodoRead, TodoWrite, Skill, EnterPlanMode, ExitPlanMode, TaskCreate, TaskUpdate, TaskList, TaskGet, TaskStop, TaskOutput, and MCP tools (`mcp__.*`).
 
 ## Manual Control
 
@@ -186,20 +186,32 @@ Location: `%APPDATA%/kana-code-rpc/` (Windows) or `~/.local/share/kana-code-rpc/
 |------|---------|
 | `state.json` | Current session state (file-locked) |
 | `state.lock` | Lock file for state access |
-| `sessions.json` | Active sessions by session_id (file-locked) |
+| `sessions.json` | Active sessions by PID (file-locked) |
 | `sessions.lock` | Lock file for sessions access |
 | `daemon.pid` | Background daemon process ID |
 | `daemon.log` | Debug log |
 
+## What's New in v0.5.0
+
+- **PID file race fix**: Daemon PID cleanup now guarded against race conditions during rapid stop/start sequences.
+- **Multi-session clobbering fix**: New sessions no longer overwrite existing session's project/branch state.
+- **More tracked tools**: Added Skill, EnterPlanMode, ExitPlanMode, TaskCreate, TaskUpdate, TaskList, TaskGet, TaskStop, TaskOutput.
+- **Log rotation**: Daemon log auto-rotates at 1MB to prevent unbounded growth.
+- **Unix daemon hardening**: File descriptors redirected to /dev/null instead of closed (prevents fd reuse bugs).
+- **Session start jitter fix**: Discord elapsed timer no longer jumps between statusline updates.
+- **Git branch consistency**: Statusline now uses `git rev-parse` (matches daemon, handles worktrees).
+- **Graceful stop without session_id**: `cmd_stop` now checks session count directly when session_id is unavailable.
+- **Input buffer fix**: Hook input buffer increased from 64KB to 256KB.
+
 ## What's New in v0.4.0
 
-- **Session ID tracking**: Replaced PID-based session management with Claude Code's `session_id`. Eliminates ~130 lines of platform-specific process walking (Windows ctypes, Unix /proc).
+- **Session tracking**: Introduced session tracking for multi-terminal support.
 - **Statusline API integration**: Statusline now feeds duration, lines changed, agent name, and context percentage into Discord display.
 - **Agent awareness**: Shows "Delegating to {agent_name}" when subagents are active.
 - **Lines changed**: Displays `+156 -23` on Discord (configurable via `show_lines`).
 - **Context warning**: Shows `⚠ 85% ctx` at >80% and `🔴 97% ctx` at >95% (configurable via `show_context_warning`).
 - **Duration from API**: Uses `cost.total_duration_ms` instead of manual timestamp tracking.
-- **Session liveness**: Statusline keeps sessions alive by touching timestamps. Dead sessions detected by staleness (2x idle timeout).
+- **Session liveness**: Dead sessions detected by PID liveness checks (every 30s).
 
 ## Troubleshooting
 

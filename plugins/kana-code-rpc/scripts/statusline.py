@@ -19,10 +19,10 @@ import json
 import sys
 import os
 from pathlib import Path
-from datetime import datetime
+import time as _time  # used for statusline_update timestamp
 
 # Shared state management (provides process-safe file locking and utilities)
-from state import StateLock, read_state_unlocked, write_state_unlocked, format_tokens, touch_session
+from state import StateLock, read_state_unlocked, write_state_unlocked, format_tokens
 
 # Fix Windows console encoding for Unicode characters
 if sys.platform == "win32":
@@ -86,15 +86,17 @@ def create_progress_bar(percent: float, width: int = 10) -> str:
 
 
 def get_git_branch(cwd: str) -> str | None:
-    """Get current git branch from .git/HEAD"""
+    """Get current git branch via git rev-parse (handles worktrees and detached HEAD)."""
     try:
-        git_head = Path(cwd) / '.git' / 'HEAD'
-        if git_head.exists():
-            head = git_head.read_text().strip()
-            if head.startswith('ref: refs/heads/'):
-                return head.replace('ref: refs/heads/', '')
-    except (OSError, UnicodeDecodeError):
-        # Git branch detection is optional, fail silently
+        import subprocess
+        result = subprocess.run(
+            ["git", "-C", cwd, "rev-parse", "--abbrev-ref", "HEAD"],
+            capture_output=True, text=True, timeout=2
+        )
+        if result.returncode == 0:
+            branch = result.stdout.strip()
+            return branch if branch != "HEAD" else None  # Detached HEAD
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
         pass
     return None
 
@@ -119,7 +121,7 @@ def main():
         if sys.stdin is None:
             print("")
             return
-        raw = os.read(sys.stdin.fileno(), 65536)
+        raw = os.read(sys.stdin.fileno(), 262144)
         if not raw:
             print("")
             return
@@ -155,7 +157,6 @@ def main():
     project_dir = workspace.get("project_dir", "")
     git_branch = get_git_branch(cwd)
 
-    session_id = data.get("session_id", "")
     agent_info = data.get("agent", {}) or {}
     agent_name = agent_info.get("name", "")
 
@@ -179,16 +180,19 @@ def main():
                 state["context_pct"] = used_percent or 0
                 state["context_size"] = context_size
                 state["agent_name"] = agent_name
-                if project_dir and git_branch:
-                    state["git_branch"] = git_branch
-                state["statusline_update"] = int(datetime.now().timestamp())
+                if project_dir:
+                    # Only update project name when active project changes (multi-session switch).
+                    # Preserves git remote name from cmd_start for single session.
+                    if state.get("project_path") != project_dir:
+                        state["project"] = Path(project_dir).name
+                        state["project_path"] = project_dir
+                    if git_branch:
+                        state["git_branch"] = git_branch
+                state["statusline_update"] = int(_time.time())
                 write_state_unlocked(state)
     except (OSError, TimeoutError) as e:
         # Don't fail statusline display if state update fails
         print(f"[statusline] Warning: Could not update state: {e}", file=sys.stderr)
-
-    # Keep session alive by touching its timestamp in sessions.json
-    touch_session(session_id)
 
     # ─────────────────────────────────────────────────────────────
     # Build Apple Finder Path Bar Statusline

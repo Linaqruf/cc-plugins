@@ -1,5 +1,5 @@
 """
-Shared state and session management for Discord Rich Presence.
+Shared state management for Discord Rich Presence.
 Provides process-safe state file operations with cross-platform file locking.
 """
 
@@ -31,8 +31,6 @@ else:
 
 STATE_FILE = DATA_DIR / "state.json"
 LOCK_FILE = DATA_DIR / "state.lock"
-SESSIONS_FILE = DATA_DIR / "sessions.json"
-SESSIONS_LOCK_FILE = DATA_DIR / "sessions.lock"
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -109,8 +107,11 @@ class StateLock:
                 if self._lock_fd is not None:
                     try:
                         os.close(self._lock_fd)
-                    except OSError:
-                        pass
+                    except OSError as close_err:
+                        try:
+                            print(f"[state] Warning: FD close failed during lock retry: {close_err}", file=sys.stderr)
+                        except (ValueError, OSError, TypeError):
+                            pass
                     self._lock_fd = None
 
                 if time.time() - start > self.timeout:
@@ -142,8 +143,11 @@ class StateLock:
             finally:
                 try:
                     os.close(self._lock_fd)
-                except OSError:
-                    pass
+                except OSError as close_err:
+                    try:
+                        print(f"[state] Warning: FD close failed during unlock: {close_err}", file=sys.stderr)
+                    except (ValueError, OSError, TypeError):
+                        pass
                 self._lock_fd = None
         return False
 
@@ -175,6 +179,35 @@ def read_state_unlocked() -> dict:
     return {}
 
 
+def atomic_write_json(target: Path, data: dict, indent: int | None = None):
+    """Write JSON data to file atomically using temp file + os.replace.
+
+    Shared by write_state_unlocked and presence.py's _write_sessions_unlocked.
+    Raises OSError on write failure. Logs orphaned temp files to stderr.
+    """
+    try:
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+    except OSError as e:
+        raise OSError(f"Cannot create data directory {DATA_DIR}: {e}") from e
+    content = json.dumps(data, indent=indent)
+
+    fd, tmp_path = tempfile.mkstemp(dir=DATA_DIR, suffix='.tmp')
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as f:
+            f.write(content)
+        # os.replace is atomic on both Unix and Windows (handles existing target)
+        os.replace(tmp_path, target)
+    except (OSError, IOError) as write_err:
+        try:
+            os.unlink(tmp_path)
+        except OSError as cleanup_err:
+            try:
+                print(f"[state] Warning: Orphaned temp file {tmp_path}: {cleanup_err}", file=sys.stderr)
+            except (ValueError, OSError, TypeError):
+                pass
+        raise
+
+
 def write_state_unlocked(state: dict):
     """
     Write state to state file using atomic write pattern (no locking).
@@ -182,24 +215,7 @@ def write_state_unlocked(state: dict):
 
     Raises OSError if data directory cannot be created or write fails.
     """
-    try:
-        DATA_DIR.mkdir(parents=True, exist_ok=True)
-    except OSError as e:
-        raise OSError(f"Cannot create data directory {DATA_DIR}: {e}") from e
-    content = json.dumps(state, indent=2)
-
-    fd, tmp_path = tempfile.mkstemp(dir=DATA_DIR, suffix='.tmp')
-    try:
-        with os.fdopen(fd, 'w', encoding='utf-8') as f:
-            f.write(content)
-        # os.replace is atomic on both Unix and Windows (handles existing target)
-        os.replace(tmp_path, STATE_FILE)
-    except (OSError, IOError):
-        try:
-            os.unlink(tmp_path)
-        except OSError:
-            pass  # Best-effort cleanup; state.py has no log() — callers handle the re-raised error
-        raise
+    atomic_write_json(STATE_FILE, state, indent=2)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -285,35 +301,3 @@ def clear_state(logger=None):
             logger(f"Warning: Could not clear state: {e}")
 
 
-def touch_session(session_id: str):
-    """Update timestamp for an active session to keep it alive.
-
-    Called by statusline.py on each update to signal the session is still active.
-    The daemon uses timestamp staleness to detect stale sessions.
-    """
-    if not session_id:
-        return
-    try:
-        with StateLock(lock_file=SESSIONS_LOCK_FILE, timeout=1.0):
-            try:
-                sessions = json.loads(SESSIONS_FILE.read_text(encoding="utf-8"))
-            except FileNotFoundError:
-                return  # No sessions file yet — nothing to touch
-            except (json.JSONDecodeError, OSError):
-                return  # Corrupt or unreadable — will self-heal on next write
-            if session_id in sessions:
-                sessions[session_id] = int(time.time())
-                content = json.dumps(sessions)
-                DATA_DIR.mkdir(parents=True, exist_ok=True)
-                fd, tmp_path = tempfile.mkstemp(dir=DATA_DIR, suffix='.tmp')
-                try:
-                    with os.fdopen(fd, 'w', encoding='utf-8') as f:
-                        f.write(content)
-                    os.replace(tmp_path, SESSIONS_FILE)
-                except (OSError, IOError):
-                    try:
-                        os.unlink(tmp_path)
-                    except OSError:
-                        pass
-    except (OSError, TimeoutError):
-        pass  # Non-critical — session stays alive from previous timestamp

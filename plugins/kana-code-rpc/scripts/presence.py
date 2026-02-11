@@ -16,16 +16,15 @@ import signal
 from pathlib import Path
 from datetime import datetime
 
-# Shared state management (provides process-safe file locking)
+# Shared state management (provides process-safe file locking and utilities)
 from state import (
     DATA_DIR,
-    SESSIONS_FILE,
-    SESSIONS_LOCK_FILE,
     StateLock,
     read_state,
     clear_state,
     read_state_unlocked,
     write_state_unlocked,
+    atomic_write_json,
     format_tokens,
 )
 
@@ -45,7 +44,8 @@ DISCORD_APP_ID = "1330919293709324449"
 # Data files (DATA_DIR imported from state module)
 PID_FILE = DATA_DIR / "daemon.pid"
 LOG_FILE = DATA_DIR / "daemon.log"
-# SESSIONS_FILE and SESSIONS_LOCK_FILE imported from state module
+SESSIONS_FILE = DATA_DIR / "sessions.json"
+SESSIONS_LOCK_FILE = DATA_DIR / "sessions.lock"
 
 # Orphan check interval (seconds) - how often daemon checks for stale sessions
 ORPHAN_CHECK_INTERVAL = 30
@@ -73,6 +73,17 @@ TOOL_DISPLAY = {
     "AskUserQuestion": "Asking",
     "TodoRead": "Reviewing",
     "TodoWrite": "Planning",
+    # Skills & planning
+    "Skill": "Running",
+    "EnterPlanMode": "Planning",
+    "ExitPlanMode": "Planning",
+    # Task management
+    "TaskCreate": "Planning",
+    "TaskUpdate": "Planning",
+    "TaskList": "Reviewing",
+    "TaskGet": "Reviewing",
+    "TaskStop": "Managing",
+    "TaskOutput": "Reviewing",
 }
 
 # Default idle timeout - used as fallback when config cannot be loaded
@@ -97,6 +108,9 @@ CONFIG_RELOAD_INTERVAL = 30  # Reload config every 30 seconds
 
 # Discord connection retry limit (12 retries * 5 seconds = 1 minute before giving up)
 DISCORD_CONNECT_MAX_RETRIES = 12
+
+# Log rotation threshold
+LOG_MAX_SIZE = 1_048_576  # 1 MB
 
 # Tools that operate on files (for filename display)
 FILE_TOOLS = {"Edit", "Write", "Read", "NotebookEdit", "NotebookRead"}
@@ -129,6 +143,22 @@ def log(message: str):
         pass  # Last resort - don't crash if stderr is closed or invalid
 
 
+def _rotate_log():
+    """Rotate log file if it exceeds LOG_MAX_SIZE. Keeps the last half."""
+    try:
+        if LOG_FILE.exists() and LOG_FILE.stat().st_size > LOG_MAX_SIZE:
+            content = LOG_FILE.read_bytes()
+            # Find a newline boundary near the midpoint to avoid splitting a line
+            midpoint = len(content) - LOG_MAX_SIZE // 2
+            newline_pos = content.find(b"\n", midpoint)
+            if newline_pos != -1:
+                midpoint = newline_pos + 1
+            LOG_FILE.write_bytes(content[midpoint:])
+            log("Log file rotated (exceeded 1MB)")
+    except OSError:
+        pass  # Non-critical — log will just keep growing
+
+
 def get_plugin_root() -> Path | None:
     """Get plugin root directory from CLAUDE_PLUGIN_ROOT environment variable."""
     plugin_root = os.environ.get("CLAUDE_PLUGIN_ROOT")
@@ -136,6 +166,7 @@ def get_plugin_root() -> Path | None:
         path = Path(plugin_root)
         if path.exists():
             return path
+        log(f"Warning: CLAUDE_PLUGIN_ROOT '{plugin_root}' does not exist, config.yaml will not be loaded")
     return None
 
 
@@ -148,8 +179,7 @@ def load_config() -> dict:
     """
     global _yaml_warning_logged
 
-    config = DEFAULT_CONFIG.copy()
-    config["display"] = DEFAULT_CONFIG["display"].copy()
+    config = copy.deepcopy(DEFAULT_CONFIG)
 
     plugin_root = get_plugin_root()
 
@@ -283,32 +313,10 @@ def truncate_filename(filename: str, max_length: int = 25) -> str:
         # Very long extension, just truncate from end
         return filename[:max_length - 3] + "..."
 
-    # Keep start and end of stem
-    half = available // 2
-    return stem[:half] + "..." + stem[-half:] + suffix
-
-
-def _is_pid_alive(pid: int) -> bool:
-    """Check if a process with given PID is still running (for daemon PID only)."""
-    if sys.platform == "win32":
-        # Use tasklist to check if PID exists (simpler than ctypes for daemon-only use)
-        try:
-            result = subprocess.run(
-                ["tasklist", "/FI", f"PID eq {pid}", "/NH"],
-                capture_output=True, text=True, timeout=5
-            )
-            # tasklist /FI filters by exact PID, but verify with column-aligned match
-            return result.returncode == 0 and str(pid) in result.stdout
-        except (OSError, subprocess.TimeoutExpired):
-            return True  # Assume alive if we can't check — prevents duplicate daemon
-    else:
-        try:
-            os.kill(pid, 0)
-            return True
-        except ProcessLookupError:
-            return False
-        except PermissionError:
-            return True
+    # Keep start and end of stem (front gets extra char on odd split)
+    front = (available + 1) // 2
+    back = available - front
+    return stem[:front] + "..." + stem[-back:] + suffix
 
 
 def get_daemon_pid() -> int | None:
@@ -318,7 +326,7 @@ def get_daemon_pid() -> int | None:
     try:
         pid_content = PID_FILE.read_text().strip()
         pid = int(pid_content)
-        if _is_pid_alive(pid):
+        if is_process_alive(pid):
             return pid
         log(f"Stale PID file found (PID {pid} not running), cleaning up")
         try:
@@ -414,8 +422,165 @@ def get_git_branch(project_path: str) -> str:
     return ""
 
 
+_kernel32_cache = None
+
+
+def _get_kernel32():
+    """Lazy-initialize kernel32 WinDLL with typed function declarations.
+
+    Caches the result to avoid repeated ctypes setup. Declares return/arg types
+    to prevent 64-bit handle truncation (ctypes defaults to c_int).
+    """
+    global _kernel32_cache
+    if _kernel32_cache is not None:
+        return _kernel32_cache
+
+    import ctypes
+    from ctypes import wintypes
+
+    kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
+    kernel32.OpenProcess.restype = wintypes.HANDLE
+    kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+    kernel32.GetExitCodeProcess.restype = wintypes.BOOL
+    kernel32.GetExitCodeProcess.argtypes = [wintypes.HANDLE, ctypes.POINTER(wintypes.DWORD)]
+    kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+    kernel32.CloseHandle.restype = wintypes.BOOL
+    kernel32.CreateToolhelp32Snapshot.restype = wintypes.HANDLE
+    kernel32.CreateToolhelp32Snapshot.argtypes = [wintypes.DWORD, wintypes.DWORD]
+
+    _kernel32_cache = kernel32
+    return kernel32
+
+
+def is_process_alive(pid: int) -> bool:
+    """Check if a process with given PID is still running."""
+    if sys.platform == "win32":
+        import ctypes
+        from ctypes import wintypes
+        kernel32 = _get_kernel32()
+        # PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        handle = kernel32.OpenProcess(0x1000, False, pid)
+        if not handle:
+            error = ctypes.get_last_error()
+            # ERROR_ACCESS_DENIED (5) means process exists but we can't access it
+            return error == 5
+        try:
+            # Check if process has actually exited (handles can outlive processes)
+            exit_code = wintypes.DWORD()
+            if kernel32.GetExitCodeProcess(handle, ctypes.byref(exit_code)):
+                return exit_code.value == 259  # STILL_ACTIVE
+            return False
+        finally:
+            kernel32.CloseHandle(handle)
+    else:
+        try:
+            os.kill(pid, 0)  # Doesn't kill, just checks
+            return True
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            return True  # Process exists but we lack permission
+
+
+def get_claude_ancestor_pid() -> int | None:
+    """Find the Claude Code process (node or claude executable) by walking from current process up through parent chain."""
+    if sys.platform == "win32":
+        import ctypes
+        from ctypes import wintypes
+
+        kernel32 = _get_kernel32()
+
+        CreateToolhelp32Snapshot = kernel32.CreateToolhelp32Snapshot
+        Process32First = kernel32.Process32First
+        Process32Next = kernel32.Process32Next
+        CloseHandle = kernel32.CloseHandle
+
+        TH32CS_SNAPPROCESS = 0x00000002
+        INVALID_HANDLE_VALUE = wintypes.HANDLE(-1).value
+
+        class PROCESSENTRY32(ctypes.Structure):
+            _fields_ = [
+                ("dwSize", wintypes.DWORD),
+                ("cntUsage", wintypes.DWORD),
+                ("th32ProcessID", wintypes.DWORD),
+                ("th32DefaultHeapID", ctypes.c_void_p),  # ULONG_PTR
+                ("th32ModuleID", wintypes.DWORD),
+                ("cntThreads", wintypes.DWORD),
+                ("th32ParentProcessID", wintypes.DWORD),
+                ("pcPriClassBase", ctypes.c_long),
+                ("dwFlags", wintypes.DWORD),
+                ("szExeFile", ctypes.c_char * 260),
+            ]
+
+        # Build a map of pid -> (parent_pid, exe_name)
+        snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
+        if snapshot == INVALID_HANDLE_VALUE:
+            error = ctypes.get_last_error()
+            log(f"Warning: CreateToolhelp32Snapshot failed (error {error}), cannot find Claude ancestor")
+            return None
+
+        process_map = {}
+        try:
+            pe32 = PROCESSENTRY32()
+            pe32.dwSize = ctypes.sizeof(PROCESSENTRY32)
+
+            if Process32First(snapshot, ctypes.byref(pe32)):
+                while True:
+                    pid = pe32.th32ProcessID
+                    ppid = pe32.th32ParentProcessID
+                    exe = pe32.szExeFile.decode("utf-8", errors="ignore").lower()
+                    process_map[pid] = (ppid, exe)
+                    if not Process32Next(snapshot, ctypes.byref(pe32)):
+                        break
+        finally:
+            CloseHandle(snapshot)
+
+        # Walk up the tree from current process looking for node.exe or claude.exe
+        current_pid = os.getpid()
+        visited = set()
+        while current_pid in process_map and current_pid not in visited:
+            visited.add(current_pid)
+            ppid, exe = process_map[current_pid]
+            if "node" in exe or "claude" in exe:
+                return current_pid
+            current_pid = ppid
+
+        return None
+    else:
+        # Unix: walk up using /proc
+        current_pid = os.getpid()
+        visited = set()
+        while current_pid > 1 and current_pid not in visited:
+            visited.add(current_pid)
+            try:
+                with open(f"/proc/{current_pid}/comm", "r") as f:
+                    comm = f.read().strip().lower()
+                if "node" in comm or "claude" in comm:
+                    return current_pid
+                with open(f"/proc/{current_pid}/stat", "r") as f:
+                    stat = f.read()
+                    ppid = int(stat.split()[3])
+                    current_pid = ppid
+            except OSError:
+                break  # Process exited between reads, expected
+            except (ValueError, IndexError) as e:
+                log(f"Warning: Failed to parse /proc/{current_pid}/stat: {e}")
+                break
+        return None
+
+
+def get_session_pid() -> int:
+    """Get Claude ancestor PID, falling back to parent PID."""
+    pid = get_claude_ancestor_pid()
+    if pid:
+        return pid
+    fallback = os.getppid()
+    log(f"Warning: Could not find Claude ancestor, using parent PID {fallback}")
+    return fallback
+
+
 def read_sessions() -> dict:
-    """Read active sessions {session_id: timestamp} with locking. For external callers."""
+    """Read active sessions {pid: timestamp} with locking. For external callers."""
     try:
         with StateLock(lock_file=SESSIONS_LOCK_FILE):
             return _read_sessions_unlocked()
@@ -425,7 +590,7 @@ def read_sessions() -> dict:
 
 
 def _read_sessions_unlocked() -> dict:
-    """Read active sessions {session_id: timestamp} without locking. Use inside StateLock(lock_file=SESSIONS_LOCK_FILE)."""
+    """Read active sessions {pid: timestamp} without locking. Use inside StateLock(lock_file=SESSIONS_LOCK_FILE)."""
     try:
         return json.loads(SESSIONS_FILE.read_text(encoding="utf-8"))
     except FileNotFoundError:
@@ -440,88 +605,56 @@ def _write_sessions_unlocked(sessions: dict):
 
     Raises OSError on write failure so callers can detect and handle it.
     """
-    import tempfile
-
-    try:
-        DATA_DIR.mkdir(parents=True, exist_ok=True)
-    except OSError as e:
-        raise OSError(f"Cannot create data directory for sessions: {e}") from e
-
-    if not sessions:
-        try:
-            SESSIONS_FILE.unlink()
-        except FileNotFoundError:
-            pass  # Already gone, no problem
-        return
-
-    content = json.dumps(sessions)
-    fd, tmp_path = tempfile.mkstemp(dir=DATA_DIR, suffix='.tmp')
-    try:
-        with os.fdopen(fd, 'w', encoding='utf-8') as f:
-            f.write(content)
-        os.replace(tmp_path, SESSIONS_FILE)
-    except (OSError, IOError):
-        try:
-            os.unlink(tmp_path)
-        except OSError as cleanup_err:
-            log(f"Warning: Could not clean up temp file {tmp_path}: {cleanup_err}")
-        raise
+    atomic_write_json(SESSIONS_FILE, sessions)
 
 
-def add_session(session_id: str):
-    """Register a new session by its session_id (locked + atomic write)."""
+def add_session(pid: int):
+    """Register a new session by its parent PID (locked + atomic write)."""
     try:
         with StateLock(lock_file=SESSIONS_LOCK_FILE):
             sessions = _read_sessions_unlocked()
-            sessions[session_id] = int(time.time())
+            sessions[str(pid)] = int(time.time())
             _write_sessions_unlocked(sessions)
             return len(sessions)
     except (OSError, TimeoutError) as e:
-        log(f"Warning: Could not register session {session_id}: {e}")
+        log(f"Warning: Could not register session PID {pid}: {e}")
         return -1
 
 
-def remove_session(session_id: str):
-    """Unregister a session by its session_id (locked + atomic write)."""
+def remove_session(pid: int):
+    """Unregister a session by its parent PID (locked + atomic write)."""
     try:
         with StateLock(lock_file=SESSIONS_LOCK_FILE):
             sessions = _read_sessions_unlocked()
-            if session_id not in sessions:
-                log(f"Warning: Session {session_id} not found in sessions file")
-            sessions.pop(session_id, None)
+            if str(pid) not in sessions:
+                log(f"Warning: Session PID {pid} not found in sessions file")
+            sessions.pop(str(pid), None)
             _write_sessions_unlocked(sessions)
             return len(sessions)
     except (OSError, TimeoutError) as e:
-        log(f"Warning: Could not unregister session {session_id}: {e}")
+        log(f"Warning: Could not unregister session PID {pid}: {e}")
         return -1
 
 
-def cleanup_stale_sessions(stale_threshold: int = 600) -> int:
-    """Remove sessions whose timestamps are older than stale_threshold seconds.
-
-    Uses timestamp staleness instead of PID checking — if statusline stops
-    updating a session's timestamp, it's considered dead.
-
-    Args:
-        stale_threshold: Seconds after which a session is considered dead.
-                         Default 600 (10 min = 2x idle timeout).
-
-    Returns remaining count, or -1 on error.
-    """
+def cleanup_dead_sessions() -> int:
+    """Remove sessions whose parent PIDs are no longer alive. Returns remaining count."""
     try:
         with StateLock(lock_file=SESSIONS_LOCK_FILE):
             sessions = _read_sessions_unlocked()
             if not sessions:
                 return 0
 
-            now = int(time.time())
             alive_sessions = {}
-            for sid, timestamp in sessions.items():
-                age = now - timestamp
-                if age <= stale_threshold:
-                    alive_sessions[sid] = timestamp
+            for pid_str, timestamp in sessions.items():
+                try:
+                    pid = int(pid_str)
+                except ValueError:
+                    log(f"Invalid PID in sessions file: {pid_str}, removing")
+                    continue
+                if is_process_alive(pid):
+                    alive_sessions[pid_str] = timestamp
                 else:
-                    log(f"Session {sid} is stale ({age}s old), removing")
+                    log(f"Session PID {pid} is dead, removing")
 
             if len(alive_sessions) != len(sessions):
                 _write_sessions_unlocked(alive_sessions)
@@ -543,7 +676,7 @@ def read_hook_input() -> dict:
     try:
         if sys.stdin is None or sys.stdin.isatty():
             return {}
-        raw = os.read(sys.stdin.fileno(), 65536)
+        raw = os.read(sys.stdin.fileno(), 262144)
         if raw:
             return json.loads(raw.decode("utf-8", errors="replace"))
     except (json.JSONDecodeError, OSError, UnicodeDecodeError, ValueError) as e:
@@ -572,6 +705,9 @@ def run_daemon():
     app_id = config.get("discord_app_id") or DISCORD_APP_ID
     log(f"Using Discord App ID: {app_id}")
 
+    # Rotate log if oversized
+    _rotate_log()
+
     # Handle graceful shutdown
     def shutdown(signum, frame):
         log("Received shutdown signal")
@@ -591,6 +727,8 @@ def run_daemon():
     consecutive_errors = 0  # Track consecutive loop errors for circuit breaker
     consecutive_update_errors = 0  # Track consecutive RPC update failures
     MAX_CONSECUTIVE_ERRORS = 10  # Exit after this many consecutive failures
+    last_duration_ms = 0  # Track duration changes for jitter-free session_start
+    cached_session_start = int(time.time())  # Cached session_start timestamp
 
     while True:
         try:
@@ -611,13 +749,11 @@ def run_daemon():
                 rpc = None
                 current_app_id = new_app_id
 
-            # Periodically check for stale sessions (orphan cleanup)
+            # Periodically check for dead sessions (orphan cleanup)
             now = time.time()
             if now - last_orphan_check > ORPHAN_CHECK_INTERVAL:
                 last_orphan_check = now
-                idle_timeout = config.get("idle_timeout", IDLE_TIMEOUT)
-                stale_threshold = idle_timeout * 2  # 2x idle timeout = considered dead
-                active_count = cleanup_stale_sessions(stale_threshold)
+                active_count = cleanup_dead_sessions()
                 if active_count == 0:
                     log("No active sessions remaining, daemon exiting")
                     break
@@ -685,10 +821,14 @@ def run_daemon():
             duration_ms = state.get("duration_ms", 0)
 
             # Calculate session start from duration for Discord elapsed timer
-            if duration_ms > 0:
-                session_start = int(time.time()) - (duration_ms // 1000)
-            else:
-                session_start = state.get("session_start", int(time.time()))
+            # Only recalculate when duration_ms changes to prevent jitter
+            if duration_ms != last_duration_ms:
+                last_duration_ms = duration_ms
+                if duration_ms > 0:
+                    cached_session_start = int(time.time()) - (duration_ms // 1000)
+                else:
+                    cached_session_start = state.get("session_start", int(time.time()))
+            session_start = cached_session_start
 
             # Get token data (only if needed for display)
             tokens = state.get("tokens", {})
@@ -714,7 +854,8 @@ def run_daemon():
                 activity = "Using MCP"
             else:
                 activity = "Working"
-                log(f"Unmapped tool '{tool}', showing generic activity")
+                if tool:  # Don't log for empty tool (normal between tool uses)
+                    log(f"Unmapped tool '{tool}', showing generic activity")
 
             # Only show file for non-idle file operations
             display_file = current_file if not is_idle and tool in FILE_TOOLS else ""
@@ -775,8 +916,9 @@ def run_daemon():
 
             state_line = " \u2022 ".join(parts) if parts else "Claude Code"
 
-            # Only update if something changed (check every cycle)
-            current = {"details": details, "state_line": state_line}
+            # Only update if something changed (include view type to avoid
+            # redundant updates within the same token cycling phase)
+            current = {"details": details, "state_line": state_line, "view": show_simple}
             if current != last_sent:
                 log(f"Sending to Discord: {details} | {state_line}")
                 try:
@@ -849,17 +991,13 @@ def cmd_start():
     hook_input = read_hook_input()
     project = hook_input.get("cwd", os.environ.get("CLAUDE_PROJECT_DIR", ""))
     project_name = get_project_name(project) if project else get_project_name()
-    session_id = hook_input.get("session_id", "")
 
-    # Register this session by session_id
-    if not session_id:
-        log("Warning: No session_id in hook input, using fallback")
-        session_id = f"fallback-{os.getpid()}-{int(time.time())}"
-
-    session_count = add_session(session_id)
+    # Register this session by Claude Code's PID
+    claude_pid = get_session_pid()
+    session_count = add_session(claude_pid)
 
     if session_count == -1:
-        log(f"ERROR: Could not register session {session_id}, aborting start")
+        log(f"ERROR: Could not register session PID {claude_pid}, aborting start")
         print(f"[presence] ERROR: Could not register session, daemon will not start", file=sys.stderr)
         return
 
@@ -869,18 +1007,26 @@ def cmd_start():
 
     try:
         with StateLock():
-            state = read_state_unlocked()
-
-            # Reset session_start if this is the first/only session (timer starts fresh)
+            # First session: fresh state (clears stale file/model/tokens from previous session).
+            # Multi-session: preserve existing state from the active session.
             if session_count == 1:
-                state["session_start"] = now
+                state = {
+                    "session_start": now,
+                    "project": project_name,
+                    "project_path": project,
+                    "git_branch": git_branch,
+                    "tool": "",
+                }
+            else:
+                state = read_state_unlocked()
+                # Multi-session: only fill in missing project info
+                if not state.get("project"):
+                    state["project"] = project_name
+                    state["project_path"] = project
+                    state["git_branch"] = git_branch
 
-            state["project"] = project_name
-            state["project_path"] = project
-            state["git_branch"] = git_branch
             state["last_update"] = now
-            state["tool"] = ""
-            state["session_id"] = session_id
+            state["session_id"] = hook_input.get("session_id", "")
             # Note: model, tokens, duration, lines, agent are populated by statusline.py
 
             write_state_unlocked(state)
@@ -889,7 +1035,7 @@ def cmd_start():
         print(f"[presence] ERROR: Could not write session state, daemon will not start: {e}", file=sys.stderr)
         return
 
-    log(f"Session started: {session_id} (active sessions: {session_count})")
+    log(f"Session started for PID {claude_pid} (active sessions: {session_count})")
 
     # Check if daemon is running
     if get_daemon_pid():
@@ -928,14 +1074,13 @@ def cmd_start():
             log(f"Failed to fork daemon: {e}")
             return
         if pid == 0:
-            # Child process
+            # Child process — detach and redirect stdio to /dev/null
             os.setsid()
-            try:
-                sys.stdin.close()
-                sys.stdout.close()
-                sys.stderr.close()
-            except (OSError, ValueError):
-                pass
+            devnull = os.open(os.devnull, os.O_RDWR)
+            for fd in (0, 1, 2):
+                os.dup2(devnull, fd)
+            if devnull > 2:
+                os.close(devnull)
             run_daemon()
             sys.exit(0)
 
@@ -980,20 +1125,17 @@ def cmd_update():
 
 def cmd_stop():
     """Handle 'stop' command - clear presence and stop daemon."""
-    hook_input = read_hook_input()
-    session_id = hook_input.get("session_id", "")
+    read_hook_input()  # Consume stdin to prevent pipe errors
 
-    if not session_id:
-        log("Warning: No session_id in stop hook input — session will be cleaned up by stale detection")
-
-    remaining = remove_session(session_id) if session_id else -1
+    claude_pid = get_session_pid()
+    remaining = remove_session(claude_pid)
 
     if remaining > 0:
-        log(f"Session ended: {session_id} (active sessions: {remaining})")
+        log(f"Session ended: PID {claude_pid} (active sessions: {remaining})")
         return  # Don't stop daemon, other sessions still active
 
     if remaining == -1:
-        log(f"Warning: Could not determine remaining sessions for {session_id}, leaving daemon running")
+        log(f"Warning: Could not determine remaining sessions for PID {claude_pid}, leaving daemon running")
         return
 
     log("Last session ended, stopping daemon")
@@ -1016,7 +1158,7 @@ def cmd_stop():
                 os.kill(pid, signal.SIGTERM)
                 # Wait briefly for graceful shutdown
                 for _ in range(10):
-                    if not _is_pid_alive(pid):
+                    if not is_process_alive(pid):
                         log(f"Stopped daemon (PID {pid})")
                         break
                     time.sleep(0.1)
@@ -1025,13 +1167,15 @@ def cmd_stop():
         except (OSError, subprocess.SubprocessError) as e:
             log(f"Failed to stop daemon: {e}")
 
-    # Clean up PID file
+    # Clean up PID file (only if it belongs to the daemon we just killed)
     try:
-        PID_FILE.unlink()
+        stored = int(PID_FILE.read_text().strip())
+        if stored == pid:
+            PID_FILE.unlink()
     except FileNotFoundError:
-        pass
-    except OSError as e:
-        log(f"Warning: Could not remove PID file after daemon stop: {e}")
+        pass  # Already gone
+    except (ValueError, OSError) as e:
+        log(f"Warning: PID file cleanup failed after daemon stop: {e}")
 
 
 def cmd_status():
@@ -1045,14 +1189,16 @@ def cmd_status():
     else:
         print("Daemon not running")
 
-    now = int(time.time())
     print(f"Active sessions: {len(sessions)}")
     if sessions:
-        for sid, ts in sessions.items():
-            age = now - ts
-            stale_threshold = load_config().get("idle_timeout", 300) * 2
-            status = "active" if age < stale_threshold else f"stale ({age}s)"
-            print(f"  - {sid[:16]}...: {status}")
+        for pid_str, ts in sessions.items():
+            try:
+                session_pid = int(pid_str)
+                alive = is_process_alive(session_pid)
+                status = "alive" if alive else "dead"
+            except (TypeError, ValueError):
+                status = "corrupt"
+            print(f"  - PID {pid_str}: {status}")
 
     if state is None:
         print("Could not read state (lock timeout or read error)")
