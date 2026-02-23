@@ -4,6 +4,8 @@
 
 This guide documents the exact commands for installing each dependency in the chain. All installations require user confirmation via `AskUserQuestion` before proceeding.
 
+**Timeouts:** Use 300s for all installation commands (they download from the internet and can be slow). If an install command times out, check if the tool was partially installed before retrying — for scoop packages, run `scoop uninstall <pkg>` before re-running `scoop install <pkg>`.
+
 ## 1. uv (Python Package Manager)
 
 ### Check
@@ -30,7 +32,12 @@ If PowerShell security module is broken (`Microsoft.PowerShell.Security` error),
 uv --version
 ```
 
-May need terminal restart for PATH to update.
+If not found on PATH, check the expected install location directly:
+```bash
+~/.local/bin/uv --version
+```
+
+If the binary exists but is not on PATH, inform the user to restart their terminal.
 
 ## 2. anipy-cli
 
@@ -51,7 +58,12 @@ This installs anipy-cli globally with all Python dependencies isolated. The bina
 anipy-cli --version
 ```
 
-Expected output includes version like `3.8.3`.
+If not found on PATH, check the expected install location directly:
+```bash
+~/.local/bin/anipy-cli --version
+```
+
+Expected output includes version like `3.8.3`. If the binary exists but is not on PATH, inform the user to restart their terminal or add `~/.local/bin` to their PATH.
 
 ### Upgrade
 ```bash
@@ -173,21 +185,6 @@ providers:
 ### Update player_path
 
 Read the config, find the `player_path` line after the comment block (not the example lines), and update it using the Edit tool. Be careful: there may be multiple occurrences of `player_path` in comments — only change the actual config value.
-
-## Complete Bootstrap Sequence
-
-The full self-healing check, in order:
-
-```
-1. Check uv → install if missing (ask user)
-2. Check anipy-cli → install via uv tool if missing (ask user)
-3. Check video player (mpv, vlc) → install preferred if missing (ask user)
-4. Check config player_path → update if pointing to wrong/missing player
-5. Test: anipy-cli -v → should print version
-6. Ready to use
-```
-
-Each step uses `AskUserQuestion` before any installation. No silent installs.
 
 ## Updating Dependencies
 

@@ -75,9 +75,9 @@ A fatal error of type [PlayerError] has occurred with message "Executable mpv wa
 - Antivirus blocking mpv/vlc network access
 - Provider returning dead links
 
-**Debug:** Run with `-V` (verbose) to see extracted URLs:
+**Debug:** Run with `-VVV` (full verbose) to see extracted URLs and debug info. Note: `-V` alone only shows fatal-level messages, `-VVV` gives full info output:
 ```bash
-PYTHONIOENCODING=utf-8 anipy-cli -V -s "test:1:sub"
+PYTHONIOENCODING=utf-8 anipy-cli -VVV -s "test:1:sub" 2>&1
 ```
 
 ## Installation Issues
@@ -156,11 +156,15 @@ player_path: mpv    # <-- THIS is the actual config line
 
 Use enough surrounding context in the Edit tool to uniquely identify the correct line.
 
-### Config regenerated on first run
+### Config not generated yet
 
-After `uv tool install`, the first run of anipy-cli generates a default config. If updating config before first run, the file may not exist yet.
+After `uv tool install`, the config file does not exist until anipy-cli's first actual run. `anipy-cli --config-path` only prints the expected path — it does NOT generate the config.
 
-**Fix:** Run `anipy-cli --config-path` first — this ensures config is generated.
+**Fix:** Run any anipy-cli command to trigger config generation:
+```bash
+PYTHONIOENCODING=utf-8 anipy-cli --version 2>&1
+```
+Then verify the config file exists before attempting to edit it. If the file still doesn't exist at the expected path, the user may need to run a search command (e.g., `anipy-cli -s "test:1:sub"`) to trigger full initialization.
 
 ## Provider Issues
 

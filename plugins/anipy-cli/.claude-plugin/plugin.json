@@ -6,5 +6,6 @@
     "name": "Linaqruf"
   },
   "license": "MIT",
+  "repository": "https://github.com/Linaqruf/kana-code-plugins",
   "keywords": ["anipy-cli", "anime", "streaming", "windows"]
 }

@@ -16,10 +16,10 @@ When a command fails due to a missing dependency, diagnose and repair using this
 
 **Repair order:**
 
-1. **uv** — `uv --version` → if missing, install (see `references/setup-guide.md` section 1)
+1. **uv** — `uv --version` → if missing, install (see `references/setup-guide.md` section 1). If both `pwsh.exe` and `powershell.exe` install methods fail, **STOP** and tell the user to install PowerShell 7 from the Microsoft Store, then restart their terminal.
 2. **anipy-cli** — `anipy-cli --version` → if missing, `uv tool install anipy-cli`
 3. **Video player** — check mpv (`where.exe mpv`), then vlc (`where.exe vlc` + common paths) → if neither found, ask user which to install (see `references/setup-guide.md` sections 3-5)
-4. **Config player_path** — `anipy-cli --config-path` → verify `player_path` matches an installed player, update if needed
+4. **Config player_path** — run `anipy-cli --config-path` to get the path, then verify the config file exists (if not, run `anipy-cli --version` to trigger generation). Then verify `player_path` matches an installed player, update if needed
 
 **Important**: After installing scoop or any tool, the current shell session may not have updated PATH. Use full paths or `pwsh.exe` to invoke scoop commands. For exact install commands, see `references/setup-guide.md`.
 
@@ -58,7 +58,7 @@ Examples:
 
 | Flag | Purpose |
 |------|---------|
-| `-p mpv\|vlc` | Override player |
+| `-p mpv\|vlc\|syncplay\|mpvnet\|mpv-controlled` | Override player |
 | `-q best\|worst\|720\|1080` | Set quality |
 | `-v` | Show version |
 | `-h` | Show help |
@@ -92,6 +92,10 @@ Priority order for player detection and configuration:
 1. **mpv** (preferred) — better subtitle rendering, hardware decoding, scriptable
 2. **vlc** — widely installed, good fallback
 3. **mpvnet** — mpv fork with GUI, Windows-native
+4. **mpv-controlled** — reuses existing mpv windows
+5. **syncplay** — synchronized playback with others
+
+Note: `iina` is also supported but macOS-only (not relevant for Windows).
 
 When updating config.yaml `player_path`:
 - If player is on PATH: use just the name (`mpv`, `vlc`)
@@ -105,7 +109,7 @@ Always discover the config path dynamically via `anipy-cli --config-path` (typic
 Key fields:
 - `player_path` — video player executable or path
 - `download_folder_path` — download directory
-- `preferred_type` — `sub` or `dub` (null = always ask)
+- `preferred_type` — `sub` or `dub`. **Warning:** if set to `null`, anipy-cli will prompt interactively for sub/dub choice, which hangs in Claude Code. Always specify `:sub` or `:dub` in the `-s` search string, or set this config value to `sub` or `dub`
 - `providers` — anime source providers per mode (default: allanime)
 - `mpv_commandline_options` — extra mpv flags
 - `vlc_commandline_options` — extra vlc flags

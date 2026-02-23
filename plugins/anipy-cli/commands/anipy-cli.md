@@ -1,5 +1,4 @@
 ---
-name: anipy-cli
 description: Search, play, download, or manage anime via anipy-cli
 argument-hint: [action and query, e.g. "play frieren ep 1 sub"]
 allowed-tools:
@@ -20,6 +19,7 @@ Use the anipy-cli skill for all operational knowledge — CLI flags, setup proce
 Do NOT check dependencies upfront. Run the anipy-cli command directly first. Only if it fails (e.g., "command not found", "PlayerError", "not found"), then diagnose and fix:
 
 1. If `anipy-cli` not found → check `uv`, install if needed, then `uv tool install anipy-cli`
+   - If uv installation fails (both `pwsh.exe` and `powershell.exe` methods fail), **STOP**. Tell the user: "uv could not be installed because PowerShell is not working correctly. Install PowerShell 7 from the Microsoft Store, restart your terminal, and try again."
 2. If PlayerError → check mpv/vlc, install if needed, update config `player_path`
 3. For each missing dependency, use `AskUserQuestion` to confirm before installing — never install silently
 4. After fixing, retry the original command
@@ -28,38 +28,46 @@ Do NOT check dependencies upfront. Run the anipy-cli command directly first. Onl
 
 Interpret the user's natural language request and map to the appropriate anipy-cli command.
 
-**Always prefix commands with:** `PYTHONIOENCODING=utf-8`
+**Always prefix commands with:** `PYTHONIOENCODING=utf-8` and **suffix with** `2>&1` to capture stderr.
 
 **Timeouts:** Use 60s for search/play commands, 120s for downloads.
 
 **Always use `-s` flag** for non-interactive search: `anipy-cli -s "query:episode:sub/dub"`
 
 **Mapping examples:**
-- "play frieren ep 1" → `PYTHONIOENCODING=utf-8 anipy-cli -s "frieren:1:sub"`
-- "play steins gate episode 3 dubbed" → `PYTHONIOENCODING=utf-8 anipy-cli -s "steins gate:3:dub"`
-- "download one piece 1-10" → `PYTHONIOENCODING=utf-8 anipy-cli -D -s "one piece:1-10:sub"`
-- "binge spy x family 1-5 dub" → `PYTHONIOENCODING=utf-8 anipy-cli -B -s "spy x family:1-5:dub"`
+- "play frieren ep 1" → `PYTHONIOENCODING=utf-8 anipy-cli -s "frieren:1:sub" 2>&1`
+- "play steins gate episode 3 dubbed" → `PYTHONIOENCODING=utf-8 anipy-cli -s "steins gate:3:dub" 2>&1`
+- "download one piece 1-10" → `PYTHONIOENCODING=utf-8 anipy-cli -D -s "one piece:1-10:sub" 2>&1`
+- "binge spy x family 1-5 dub" → `PYTHONIOENCODING=utf-8 anipy-cli -B -s "spy x family:1-5:dub" 2>&1`
 - "show history" → read `history.json` from anipy-cli's `user_files_path` (do NOT use `-H`, it is interactive and will hang)
-- "what version" → `anipy-cli --version`
+- "what version" → `anipy-cli --version 2>&1`
 - "change player to vlc" → read and edit config.yaml player_path
-- "set quality to 720p" → `PYTHONIOENCODING=utf-8 anipy-cli -q 720 -s "..."`
+- "set quality to 720p" → add `-q 720` to the next play/download command (e.g., `PYTHONIOENCODING=utf-8 anipy-cli -q 720 -s "frieren:1:sub" 2>&1`)
 
 **Defaults when not specified:**
 - sub/dub: `sub`
 - quality: `best`
 - player: whatever is in config
 
+**After search/play commands:** Check the output for the anime title that was matched. The `-s` flag auto-selects the first search result. If the matched title looks significantly different from what the user requested, inform the user which anime was found and ask if it is correct.
+
 ## Error Recovery
 
-If a command fails:
-1. Read the error message
+A command has failed if **any** of these are true:
+- Non-zero exit code
+- Output contains error keywords ("command not found", "PlayerError", "fatal error", "not found")
+- Output is unexpectedly empty (search/play produced no stream URL or meaningful content)
+- For downloads: file was not created or is zero bytes
+
+When a failure is detected (max 2 retries before giving up):
+1. Read the error message from combined stdout+stderr
 2. Consult the anipy-cli skill's troubleshooting section
 3. Attempt to fix (e.g., update config, install missing dep)
 4. Retry the original command
-5. If still failing, explain the issue clearly to the user
+5. If still failing after retries, explain the full error chain to the user
 
 **Ignore these non-fatal messages:**
 - `UserWarning: color, on_color and attrs are not supported` — yaspin TTY warning
 - `SyntaxWarning: 'return' in a 'finally' block` — upstream code issue
-- `EOFError: EOF when reading a line` — expected, playback still works
+- `EOFError: EOF when reading a line` — only non-fatal if output also contains a stream URL or "Playing" indication. If EOFError is the only output or appears before any stream/play activity, treat it as a real failure (command likely ran in interactive mode without `-s`)
 - Raw ANSI codes like `[34m`, `[0m` — display artifacts

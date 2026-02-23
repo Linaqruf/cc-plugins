@@ -8,7 +8,7 @@
 Claude Code lacks domain-specific workflows for project planning, creative composition, and activity visibility. Users need structured interview-based spec generation, Suno AI-optimized song composition, and real-time Discord status showing their coding activity.
 
 ### Solution
-Three self-contained plugins extending Claude Code via its plugin system: slash commands for specification and song workflows, hooks for Discord Rich Presence integration. Distributed as a single marketplace for easy installation.
+Four self-contained plugins extending Claude Code via its plugin system: slash commands for specification, song composition, and anime streaming workflows, hooks for Discord Rich Presence integration. Distributed as a single marketplace for easy installation.
 
 ### Target Users
 - **Primary**: Claude Code power users who want structured workflows and activity visibility
