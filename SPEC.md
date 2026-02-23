@@ -24,6 +24,7 @@ Three self-contained plugins extending Claude Code via its plugin system: slash 
 | `project-spec` | 4.0.0 | Commands + Skills | `/spec-writing` |
 | `suno-composer` | 5.5.0 | Commands + Skills | `/suno` |
 | `kana-code-rpc` | 0.5.0 | Hooks only | SessionStart / PreToolUse / SessionEnd |
+| `anipy-cli` | 0.1.0 | Commands + Skills | `/anipy-cli` |
 
 ---
 
@@ -298,6 +299,54 @@ plugins/kana-code-rpc/
 
 ---
 
+## Plugin: anipy-cli (v0.1.0)
+
+### Purpose
+Use Claude Code as a natural language interface for anipy-cli on Windows. Search, play, download, and manage anime from the terminal with self-healing dependency management and automatic player routing.
+
+### Core Principle
+**Execution first, fix on failure.** Run the command directly — only diagnose and install missing deps when something breaks. Always ask before installing.
+
+### Command
+
+| Command | Description |
+|---------|-------------|
+| `/anipy-cli [query]` | Natural language anime operations |
+
+### Key Features
+- **Self-healing deps**: uv → anipy-cli → mpv/vlc chain, installed on failure only
+- **Player routing**: mpv (preferred) > vlc > fallback, auto-configured in config.yaml
+- **Non-interactive mode**: Uses `-s` flag for Claude Code compatibility
+- **Natural language trigger**: Skill activates on "play anime", "watch anime", etc.
+- **Windows-specific**: PowerShell 7 fallback, encoding fixes, PATH handling
+
+### Components
+
+```
+plugins/anipy-cli/
+├── .claude-plugin/
+│   └── plugin.json              # Plugin manifest (v0.1.0)
+├── commands/
+│   └── anipy-cli.md             # /anipy-cli command
+├── skills/
+│   └── anipy-cli/
+│       ├── SKILL.md             # CLI usage, player routing, config
+│       └── references/
+│           ├── setup-guide.md   # Step-by-step dep installation
+│           └── troubleshooting.md # Windows error catalog
+```
+
+### Allowed Tools
+- Bash(*), Read, Edit, Grep, Glob, AskUserQuestion
+
+### Dependencies
+- **uv**: Python package manager (auto-installed)
+- **anipy-cli**: Anime CLI tool (auto-installed via uv tool)
+- **mpv or vlc**: Video player (auto-installed via scoop or detected)
+- **scoop**: Windows package manager (auto-installed if mpv needed)
+
+---
+
 ## Technical Architecture
 
 ### Repository Structure
@@ -311,7 +360,8 @@ kana-code-plugins/
 ├── plugins/
 │   ├── project-spec/            # Specification generator plugin
 │   ├── suno-composer/           # Song composition plugin
-│   └── kana-code-rpc/           # Discord Rich Presence plugin
+│   ├── kana-code-rpc/           # Discord Rich Presence plugin
+│   └── anipy-cli/              # Anime streaming interface plugin
 ├── .gitignore
 ├── LICENSE                      # MIT
 ├── README.md                    # Marketplace documentation
@@ -480,6 +530,20 @@ tools:
 - [x] Cross-platform support (Windows + Unix)
 - [x] Connection retry, circuit breaker, atomic writes
 - [x] PID file race protection, log rotation, multi-session clobbering fix
+
+---
+
+### anipy-cli v0.1.0
+- [x] Single `/anipy-cli` command with natural language parsing
+- [x] Self-healing dependency chain (uv, anipy-cli, scoop, mpv/vlc)
+- [x] Execution-first approach (fix on failure, not upfront checks)
+- [x] Player routing (mpv > vlc > fallback)
+- [x] Non-interactive mode via `-s` flag
+- [x] Skill with setup guide and troubleshooting references
+- [x] Windows-specific: PowerShell 7 fallback, encoding fixes, PATH handling
+- [ ] Cross-platform support (Linux/macOS)
+- [ ] AniList/MAL integration via config
+- [ ] History viewing without interactive mode
 
 ---
 

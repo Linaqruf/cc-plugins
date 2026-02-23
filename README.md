@@ -23,6 +23,7 @@ Then install any plugin:
 | [project-spec](./plugins/project-spec) | Generate project, feature, and design specifications with a single `/spec-writing` command | 4.0.0 |
 | [suno-composer](./plugins/suno-composer) | Compose Suno AI songs with adaptive preferences, dual-mode workflows, and narrative style prompts | 5.5.0 |
 | [kana-code-rpc](./plugins/kana-code-rpc) | Display Claude Code activity as Discord Rich Presence with multi-session daemon | 0.4.0 |
+| [anipy-cli](./plugins/anipy-cli) | Use Claude Code as an interface for anipy-cli — search, play, download anime from the terminal | 0.1.0 |
 
 ## Plugins
 
@@ -167,6 +168,48 @@ Display Claude Code activity as Discord Rich Presence. Shows project name, curre
 ```
 
 See [plugin documentation](./plugins/kana-code-rpc/README.md) for details.
+
+---
+
+### anipy-cli
+
+Use Claude Code as a natural language interface for anipy-cli — search, play, download, and manage anime from the terminal on Windows.
+
+**Command:**
+
+| Command | Description |
+|---------|-------------|
+| `/anipy-cli [query]` | Play, download, or manage anime |
+
+**Features:**
+- Natural language to CLI mapping ("play frieren ep 1 sub")
+- Self-healing dependency chain (uv, anipy-cli, mpv/vlc) — installs on failure, not upfront
+- Player routing (mpv > vlc > fallback) with auto-config
+- Non-interactive mode via `-s` flag for Claude Code compatibility
+- Download and binge modes
+- Windows-specific troubleshooting (encoding, PATH, PowerShell)
+
+**Prerequisites:**
+- Windows with Git Bash
+- uv (auto-installed if missing)
+- mpv or VLC (auto-installed if missing)
+
+**Install:**
+```bash
+/plugin install anipy-cli@kana-code-plugins
+```
+
+**Usage:**
+```bash
+/anipy-cli play frieren ep 1 sub
+/anipy-cli download one piece 1-10 dub
+/anipy-cli show history
+/anipy-cli change player to vlc
+```
+
+Or trigger via natural language: "play anime steins gate episode 5"
+
+See [plugin documentation](./plugins/anipy-cli/README.md) for details.
 
 ---
 
