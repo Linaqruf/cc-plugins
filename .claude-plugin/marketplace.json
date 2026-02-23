@@ -45,6 +45,18 @@
       "license": "MIT",
       "keywords": ["discord", "rich-presence", "activity", "status", "daemon", "hooks", "tokens", "cost", "multi-session"],
       "category": "integration"
+    },
+    {
+      "name": "anipy-cli",
+      "source": "./plugins/anipy-cli",
+      "description": "Use Claude Code as a natural language interface for anipy-cli. Search, play, download, and manage anime from the terminal on Windows. Self-healing dependency chain with uv, scoop, mpv/vlc player routing.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Linaqruf"
+      },
+      "license": "MIT",
+      "keywords": ["anime", "anipy-cli", "streaming", "mpv", "vlc", "windows", "media"],
+      "category": "integration"
     }
   ]
 }
