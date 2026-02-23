@@ -1,6 +1,6 @@
 ---
 name: anipy-cli
-description: This skill should be used when the user asks to play, watch, stream, search, download, or binge anime; continue watching or check anime history; install, setup, configure, update, or fix anipy-cli; change video player or set anime quality; or mentions anipy-cli by name. Covers anime streaming and downloading from the terminal on Windows.
+description: This skill should be used when the user asks to play, watch, stream, search, download, or binge anime; continue watching or check anime history; install, setup, configure, update, or fix anipy-cli; change video player or set anime quality; troubleshoot anime playback issues; or mentions anipy-cli by name. Triggers on "play anime", "watch frieren", "stream one piece dubbed", "download anime episodes", "binge naruto 1-10", "show anime history", "next episode", "continue watching", "change player to mpv", "set quality to 1080", "anipy-cli not working", "player not found", "anipy-cli", "anime from terminal".
 version: 0.1.0
 ---
 
@@ -19,7 +19,7 @@ When a command fails due to a missing dependency, diagnose and repair using this
 1. **uv** — `uv --version` → if missing, install (see `references/setup-guide.md` section 1). If both `pwsh.exe` and `powershell.exe` install methods fail, **STOP** and tell the user to install PowerShell 7 from the Microsoft Store, then restart their terminal.
 2. **anipy-cli** — `anipy-cli --version` → if missing, `uv tool install anipy-cli`
 3. **Video player** — check mpv (`where.exe mpv`), then vlc (`where.exe vlc` + common paths) → if neither found, ask user which to install (see `references/setup-guide.md` sections 3-5)
-4. **Config player_path** — run `anipy-cli --config-path` to get the path, then verify the config file exists (if not, run `anipy-cli --version` to trigger generation). Then verify `player_path` matches an installed player, update if needed
+4. **Config player_path** — run `anipy-cli --config-path` to get the path, then verify the config file exists. If not, run `anipy-cli --version 2>&1` to attempt generation; if config still missing, run a search command like `anipy-cli -s "test:1:sub" 2>&1` to trigger full initialization. Then verify `player_path` matches an installed player, update if needed
 
 **Important**: After installing scoop or any tool, the current shell session may not have updated PATH. Use full paths or `pwsh.exe` to invoke scoop commands. For exact install commands, see `references/setup-guide.md`.
 
@@ -33,7 +33,7 @@ anipy-cli supports non-interactive mode via the `-s` flag, which is essential fo
 anipy-cli -s "query:episode:sub/dub"
 ```
 
-**Format:** `{search_term}:{episode_or_range}:{sub|dub}`
+**Format:** `{search_term}:{episode_or_range}:{sub|dub}` (default: `sub` when user doesn't specify)
 
 Examples:
 - `anipy-cli -s "frieren:1:sub"` — Play Frieren episode 1, subbed
@@ -49,10 +49,10 @@ Examples:
 | `-s` | Search | Non-interactive search with `query:ep:type` |
 | `-D` | Download | Download mode, combine with `-s` |
 | `-B` | Binge | Binge mode for episode ranges |
-| `-H` | History | Show watch history (interactive) |
-| `-S` | Seasonal | Seasonal anime tracking (interactive) |
-| `-A` | AniList | AniList integration (interactive) |
-| `-M` | MAL | MyAnimeList integration (interactive) |
+| `-H` | History | Show watch history (interactive — will hang, read history.json instead) |
+| `-S` | Seasonal | Seasonal anime tracking (interactive — will hang, do not use) |
+| `-A` | AniList | AniList integration (interactive — will hang, do not use) |
+| `-M` | MAL | MyAnimeList integration (interactive — will hang, do not use) |
 
 ### Common Options
 
@@ -62,6 +62,7 @@ Examples:
 | `-q best\|worst\|720\|1080` | Set quality |
 | `-v` | Show version |
 | `-h` | Show help |
+| `-VVV` | Verbose debug output (`-V` = fatal only, `-VVV` = full info) |
 | `--config-path` | Print config file path |
 | `--delete-history` | Clear history |
 
@@ -84,6 +85,25 @@ anipy-cli -B -s "frieren:1-5:sub"
 ### History
 
 To view history non-interactively, read `history.json` from the `user_files_path` directory specified in config.yaml. Do NOT use the `-H` flag — it is interactive and will hang in Claude Code's Bash tool. Always discover the config path dynamically via `anipy-cli --config-path`.
+
+If `history.json` does not exist, tell the user "No watch history found."
+
+### Continue Watching
+
+To resume where the user left off:
+1. Read `history.json` from `user_files_path` (discover via `anipy-cli --config-path` → read config → get `user_files_path`)
+2. Find the entry for the requested anime (match by title)
+3. Get the last watched episode number and increment by 1
+4. Play the next episode: `anipy-cli -s "title:next_ep:sub" 2>&1`
+
+If the user says "next episode" without specifying an anime, show recent history entries and ask which one to continue.
+
+### Search Tips
+
+The `-s` flag auto-selects the first search result via fuzzy matching. To improve accuracy:
+- Use specific titles: `steins gate` not `gate`, `my hero academia` not `hero`
+- Romaji titles often match better: `boku no hero academia`
+- Include distinguishing words for common titles
 
 ## Player Routing
 

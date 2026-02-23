@@ -1,6 +1,6 @@
 ---
 description: Search, play, download, or manage anime via anipy-cli
-argument-hint: [action and query, e.g. "play frieren ep 1 sub"]
+argument-hint: "[action and query, e.g. play frieren ep 1 sub]"
 allowed-tools:
   - Bash(*)
   - Read
